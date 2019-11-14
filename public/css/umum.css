@@ -1,0 +1,68 @@
+.btn-sm {
+	height: 38px;
+}
+.navbar-brand{
+	padding: 5px;
+	margin: 0 auto;
+}
+.navbar-face {
+	height: 38px; 
+	border-radius:50%;
+}
+
+.flat {
+	border-radius: 1px;
+}
+.bg-container{
+	position: absolute;
+	top:0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+}
+.bg {
+	position: absolute;
+	top:0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	/*max-width:100vw;*/
+	background: url('/img/bg.jpg');
+	background-size: 100%;
+	background-position: bottom;
+	background-attachment: fixed;
+	filter: blur(3px);
+	/*margin: -2px;*/
+	overflow: hidden;
+	transform: scale(1.1);
+}
+.login-content {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	/*background-color: rgba(35,10,75,0.5);*/
+}
+.logo-front img {
+	margin-bottom: 20px;s
+}
+.txt_box{
+	background-color: rgba(255,255,255,0.5);
+	background-size: 26px;
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	height: 30px;
+	border: none;
+	padding: 5px 5px 5px 40px;	
+}
+.txt_username {
+	background-image: url('/img/avatar-2.png');
+	
+}
+.txt_password{
+	background-image: url('/img/fingerprint.png');
+}
+
