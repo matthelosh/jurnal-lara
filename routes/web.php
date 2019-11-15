@@ -61,11 +61,14 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::get('/mapels', 'MapelController@index')->name('indexmapel');
 	Route::post('/add/mapel', 'MapelController@create')->name('createmapel');
 	Route::put('/update/mapel', 'MapelController@update')->name('updatemapel');
+	Route::delete('/delete/mapel/{mapel_id}', 'MapelController@delete')->name('hapusmapel');
+
 });
 
 
 Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 	Route::post('/users', 'UserController@import')->name('importusers');
 	Route::post('/siswas', 'SiswaController@import')->name('importsiswas');
+	Route::post('/mapels', 'MapelController@import')->name('importmapels');
 });
 

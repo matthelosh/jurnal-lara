@@ -751,6 +751,7 @@ $(document).ready(function(){
 	$(document).on('click', '.btn-add-mapel', function(){
 		$('#form-add-mapel .mode-form').val('add');
 		// $('#form-add-mapel #mapel_id').val();
+		$('#modal-mapel .modal-title').html('Tambah Mapel');
 		$('#modal-mapel').modal();
 	});
 
@@ -761,7 +762,7 @@ $(document).ready(function(){
 
 		var data = $(this).serialize();
 		console.log(data);
-		var url = ($('#form-add-mapel .mode-form').val() == 'add') ? '/ajax/add/mapel': '/ajax/update/mapel?id='+$('#form-add-mapel #mapel_id').val();
+		var url = ($('#form-add-mapel .mode-form').val() == 'add') ? '/ajax/add/mapel': '/ajax/update/mapel?id='+$('#form-add-mapel .mapel_id').val();
 		var tipe = ($('#form-add-mapel .mode-form').val() == 'add') ? 'post': 'put';
 		$.ajax({
 			headers	: headers,
@@ -774,12 +775,25 @@ $(document).ready(function(){
 					Swal.fire('info', res.msg, 'info');
 					tmapels.draw();
 				} else {
-					Swal.fire('error', res.msg, 'error');
-					tmapels.draw();
+					var patt = /23000/gi;
+					if(patt.test(res.msg)){ 
+						Swal.fire('error', 'Mapel ini sudah ada di database.', 'error');
+						tmapels.draw();
+					}
 				}
 			}
 		})
 	})
+	// Import Mapel
+	$(document).on('click', '.btn-import-mapels', function() {
+		$('#fileMapel').trigger('click');
+	});
+
+	$(document).on('change', '#fileMapel', function(e){
+    		var files = e.target.files;
+    		// console.log(files);
+    		$('#btn-import-mapels').css('display', 'block').text('Import File'+files[0].name);
+    	});
 
 	var tmapels = $('#table-mapels').DataTable({
 		dom: 'Bftlp',
@@ -824,7 +838,64 @@ $(document).ready(function(){
 	});
 
 	// Update Mapel
-	// Hapus Mapel
+	$(document).on('click', '.btn-edit-mapel', function() {
+		var data = tmapels.row($(this).parents('tr')).data();
+		// alert(data.nip);
+		if(data == undefined) {
+			var selected_row = $(this).parents('tr');
+			if(selected_row.hasClass('child')) {
+				selected_row = selected_row.prev();
+				data = tmapels.row(selected_row).data();
+			}
+		}
+		$('#form-add-mapel .mode-form').val('put');
+		$('#form-add-mapel .mapel_id').val(data.id);
 
+		$('#form-add-mapel #kode_mapel').val(data.kode_mapel);
+		$('#form-add-mapel #nama_mapel').val(data.nama_mapel);
+		$('#modal-mapel .modal-title').html('Perbarui Data Mapel');
+		$('#modal-mapel').modal();
+	});
+
+	// Hapus Mapel
+	$(document).on('click', '.btn-delete-mapel', function(){
+		// alert(data.nip);
+		var data = tmapels.row($(this).parents('tr')).data();
+		if(data == undefined) {
+			var selected_row = $(this).parents('tr');
+			if(selected_row.hasClass('child')) {
+				selected_row = selected_row.prev();
+				data = tmapels.row(selected_row).data();
+			}
+		}
+
+		Swal.fire({
+    			showConfirmButton: true,
+    			showCancelButton: true,
+    			confirmButtonColor: 'red',
+    			cancelButtonColor: 'green',
+				confirmButtonText: 'Lanjut',
+				cancelButtonText: 'Batal',
+				titleText: 'Yakin Menghapus mapel '+data.nama_mapel+'?'    			
+    		}).then(result => {
+    			if (result.value) {
+    				$.ajax({
+    					url: '/ajax/delete/mapel/'+data.id,
+    					type: 'delete',
+    					headers: headers,
+    					dataType: 'json',
+    					success: function(res) {
+    						if(res.status == 'sukses'){
+    							Swal.fire('Info', 'Mapel '+data.nama_mapel+' telah dihapus', 'info');
+    							tmapels.draw();
+    						} else {
+    							Swal.fire('Error', res.msg, 'error');
+    						}
+    					}
+    				});
+    			}
+    		});
+
+	})
 	// Jadwal
 });

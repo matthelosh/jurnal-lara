@@ -286,12 +286,12 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="form-group">
-								<input type="text" class="form-control" name="kode_mapel" id="kode_mapel" placeholder="Kode Mapel" autofocus>
+								<input type="text" class="form-control" name="kode_mapel" id="kode_mapel" placeholder="Kode Mapel" autofocus required>
 							</div>
 						</div>
 						<div class="col-sm-8">
 							<div class="form-group">
-								<input type="text" class="form-control" id="nama_mapel" name="nama_mapel" placeholder="Nama Mapel">
+								<input type="text" class="form-control" id="nama_mapel" name="nama_mapel" placeholder="Nama Mapel" required>
 							</div>
 						</div>
 					</div>

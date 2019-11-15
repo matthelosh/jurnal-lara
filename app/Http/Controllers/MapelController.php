@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mapel;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Imports\SiswasImport;
+use App\Imports\MapelsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MapelController extends Controller
@@ -51,12 +51,43 @@ class MapelController extends Controller
         }
     }
 
+
+
+    /**
+     * Import Data from spreadsheet
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+        $file = $request->file('fileMapel');
+        try {
+            Excel::import(new MapelsImport, $file);
+            $file->store('files');
+
+            return redirect('/dashboard/mapel')->with(['status' => 'sukses', 'msg' => 'Data Mapel berhasil diimport']);
+        } catch (\Exception $e) {
+            if ($e->getCode() == '23000') {
+                return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada Mapel yang sama.']);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada Mapel yang sama.']);
+            } else {
+                return back()->with(['status' => 'gagal', 'msg' => $e->getMEssage()]);
+            }
+        }
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
         //
@@ -91,9 +122,19 @@ class MapelController extends Controller
      * @param  \App\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mapel $mapel)
+    public function update(Request $request)
     {
         //
+        $mapel_id = $request->input('mapel_id');
+        try {
+            Mapel::find($request->query('id'))->update([
+                'kode_mapel' => $request->input('kode_mapel'),
+                'nama_mapel' => $request->input('nama_mapel')
+            ]);
+            return response()->json(['status' => 'sukses', 'msg' => 'Mapel '.$request->input('nama_mapel').' berhasil diperbarui.']);
+        }catch (\Exception $e) {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -102,8 +143,15 @@ class MapelController extends Controller
      * @param  \App\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mapel $mapel)
+    public function delete(Request $request, $mapel_id)
     {
         //
+        try {
+            Mapel::find($mapel_id)->delete();
+            return response()->json(['status' => 'sukses', 'msg' => 'Data Mapel telah dihapus.']);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
+        }
+
     }
 }
