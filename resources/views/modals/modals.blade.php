@@ -310,3 +310,46 @@
 	</div>
 </div>
 
+{{-- Modal Jam Pelajaran --}}
+<div class="modal fade" id="modal-jampel" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Tambah Jam Pelajaran</h4>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-add-jampel">
+					<input type="hidden" name="jampel_id" class="jampel_id">
+					<input type="hidden" name="mode-form" class="mode-form">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="text" class="form-control" name="label" id="label" placeholder="Label Jampel" autofocus required>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="time" class="form-control" id="mulai" name="mulai" placeholder="Waktu Awal" required>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="time" class="form-control" id="selesai" name="selesai" placeholder="Waktu Akhir" required>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="float-right">
+								<button class="btn btn-sm btn-danger" type="reset" data-dismiss="modal">batal</button>
+								<button class="btn btn-sm btn-info btn-submit-rombel" type="submit">Simpan</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

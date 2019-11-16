@@ -66,3 +66,8 @@
 	background-image: url('/img/fingerprint.png');
 }
 
+.btn-c{
+	border: none!important;
+	background: transparent!important;
+	padding:0!important;
+}

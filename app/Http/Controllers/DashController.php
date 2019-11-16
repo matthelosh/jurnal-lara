@@ -39,4 +39,9 @@ class DashController extends Controller
     {
         return view('dash-admin.index', ['page' => 'mapel']);
     }
+
+    public function indexSetting()
+    {
+        return view('dash-admin.index', ['page' => 'pengaturan']);
+    }
 }

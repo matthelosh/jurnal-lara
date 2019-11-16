@@ -898,4 +898,105 @@ $(document).ready(function(){
 
 	})
 	// Jadwal
+
+
+    // Jampel
+    var tjampels = $('#table-jampel').DataTable({
+        dom: 'ti',
+        serverSide: true,
+        processing: true,
+        pageLength: -1,
+        ajax: {
+            url: '/ajax/jampels',
+            type: 'get',
+            headers: headers
+        },
+        "columnDefs": [ {
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+                } ],
+            'order': [[3, 'asc']],
+            columns: [
+                { data: 'DT_RowIndex', 'orderable': false},
+                { data: 'label', name: 'label'},
+                { data: 'mulai', name: 'mulai'},
+                { data: 'selesai', name: 'selesai'},
+                { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-jampel"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-jampel"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
+            ]
+    });
+
+    $('#btn-add-jampel').on('click', function() {
+        $('#form-add-jampel .mode-form').val('post');
+        $('#modal-jampel').modal();
+    });
+
+    $(document).on('click', '.btn-edit-jampel', function(){
+        var data = tjampels.row($(this).parents('tr')).data();
+        
+        $('#form-add-jampel .mode-form').val('put');
+
+        $('#modal-jampel .modal-title').html('Perbarui data jam pelajaran.');
+
+        $('#form-add-jampel .jampel_id').val(data.id);
+        $('#form-add-jampel #label').val(data.label);
+        $('#form-add-jampel #mulai').val(data.mulai);
+        $('#form-add-jampel #selesai').val(data.selesai);
+
+        $('#modal-jampel').modal();
+    });
+
+    $(document).on('submit', '#form-add-jampel', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        var tipe = $('#form-add-jampel .mode-form').val();
+        var url = ($('#form-add-jampel .mode-form').val() == 'post') ? '/ajax/add/jampel' : '/ajax/update/jampel/'+$('#form-add-jampel .jampel_id').val();
+        $.ajax({
+            headers: headers,
+            url: url,
+            type: tipe,
+            data: data,
+            success: function(res) {
+                if(res.status == 'sukses') {
+                    Swal.fire('Sukses', res.msg, 'info');
+                    tjampels.draw();
+                    $('.modal form').trigger('reset');
+                } else {
+                    Swal.fire('Error', res.msg, 'error')
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-delete-jampel', function(){
+        var data = tjampels.row($(this).parents('tr')).data();
+        Swal.fire({
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                cancelButtonColor: 'green',
+                confirmButtonText: 'Lanjut',
+                cancelButtonText: 'Batal',
+                titleText: 'Yakin Menghapus Jampel:  '+data.label+'?'             
+            }).then(result => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/ajax/delete/jampel/'+data.id,
+                        type: 'delete',
+                        headers: headers,
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.status == 'sukses'){
+                                Swal.fire('Info', 'Mapel '+data.label+' telah dihapus', 'info');
+                                tjampels.draw();
+                            } else {
+                                Swal.fire('Error', res.msg, 'error');
+                            }
+                        }
+                    });
+                }
+            });
+    });
+
+
 });

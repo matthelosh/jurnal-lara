@@ -19,6 +19,9 @@
 				@case('mapel')
 					@include('dash-admin.mapel')
 				@break
+				@case('pengaturan')
+					@include('dash-admin.pengaturan')
+				@break
 			@endswitch
 
 		@else

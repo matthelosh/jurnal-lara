@@ -54,6 +54,12 @@
                                 <p>Data Sekolah</p>
                             </a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/pengaturan">
+                                <i class="nc-icon nc-preferences-circle-rotate"></i>
+                                <p>Pengaturan</p>
+                            </a>
+                        </li>
                         
                     </ul>
                 @elseif(Auth::user()->level == 'guru')
@@ -87,13 +93,13 @@
                         </li>
                     </ul>
                 @endif
-                <ul class="nav">
+                {{-- <ul class="nav">
                     <li class="nav-item  -pro">
                         <a class="nav-link " href="upgrade.html">
                             <i class="nc-icon nc-alien-33"></i>
                             <p>Upgrade to PRO</p>
                         </a>
                     </li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
