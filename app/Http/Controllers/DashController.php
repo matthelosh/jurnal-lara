@@ -40,6 +40,11 @@ class DashController extends Controller
         return view('dash-admin.index', ['page' => 'mapel']);
     }
 
+    public function indexJadwal()
+    {
+        return view('dash-admin.index', ['page' => 'jadwal']);
+    }
+
     public function indexSetting()
     {
         return view('dash-admin.index', ['page' => 'pengaturan']);

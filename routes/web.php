@@ -26,6 +26,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 
 	Route::get('/mapel', 'DashController@indexMapel')->name('dashboardmapel');
 
+	Route::get('/jadwal', 'DashController@indexJadwal')->name('dashboardjadwal');
+
 	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting');
 });
 
@@ -64,6 +66,9 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/add/mapel', 'MapelController@create')->name('createmapel');
 	Route::put('/update/mapel', 'MapelController@update')->name('updatemapel');
 	Route::delete('/delete/mapel/{mapel_id}', 'MapelController@delete')->name('hapusmapel');
+
+	// Jadwal
+	Route::get('/jadwals', 'JadwalController@index')->name('indexjadwal');
 
 	// Jampel
 	Route::post('/add/jampel', 'JampelController@create')->name('createjampel');

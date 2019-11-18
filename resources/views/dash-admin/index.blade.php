@@ -19,6 +19,9 @@
 				@case('mapel')
 					@include('dash-admin.mapel')
 				@break
+				@case('jadwal')
+					@include('dash-admin.jadwal')
+				@break
 				@case('pengaturan')
 					@include('dash-admin.pengaturan')
 				@break

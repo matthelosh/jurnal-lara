@@ -999,4 +999,35 @@ $(document).ready(function(){
     });
 
 
+    // Jadwals
+    var tjadwals = $('#table-jadwals').DataTable({
+        dom: 'Bftlip',
+        serverSide: true,
+        processing: true,
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            ['10', '25', '50', '100', 'Semua']
+        ],
+        ajax: {
+            url: '/ajax/jadwals',
+            type: 'get',
+            headers: headers
+        },
+        "columnDefs": [ {
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+                } ],
+            'order': [[1, 'asc']],
+            columns: [
+                { data: 'DT_RowIndex', 'orderable': false},
+                { data: 'hari', name: 'hari'},
+                { data: 'gurus.fullname', name: 'gurus.fullname'},
+                { data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
+                { data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
+                { data: 'jamke', name: 'jamke'},
+                { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-jadwal"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-jadwal"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
+            ]
+    });
+
 });
