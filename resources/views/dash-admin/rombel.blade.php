@@ -5,7 +5,7 @@
 				<div class="d-flex align-item-center">
 					<h4 class="card-title mr-auto p-3"><i class="fa fa-users d-md-inline"></i><span class="d-none d-sm-inline">Data Rombel</span></h4>
 					
-					<div class="btn-group">
+					<div class="btn-group"> 
 						<button class="btn btn-danger btn-sm btn-add-rombel">
 							<span class="d-md-none">
 								<i class="fa fa-plus"></i>
@@ -14,6 +14,13 @@
 								Tambah Rombel
 							</span>
 						</button>
+						<button class="btn btn-success btn-sm btn-import-rombels">Import</button>
+						<form action="/import/rombels" method="post" enctype="multipart/form-data">
+							@csrf
+						<input type="file" id="fileRombel" name="fileRombel" style="display:none;">
+						<button class="btn btn-primary btn-sm" type="submit" id="btn-import-rombels" style="display:none"></button>
+						</form>
+
 					</div>
 				</div>
 			</div>

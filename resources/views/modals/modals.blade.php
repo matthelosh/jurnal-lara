@@ -463,7 +463,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<textarea name="alamat_sekolah" class="form-control" id="alamat_sekolah" rows="4"></textarea>
+								<textarea name="alamat_sekolah" class="form-control" id="alamat_sekolah" rows="3"></textarea>
 							</div>
 						</div>
 					</div> {{-- End Row --}}

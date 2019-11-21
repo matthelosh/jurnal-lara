@@ -56,7 +56,7 @@ class UserController extends Controller
             Excel::import(new UsersImport, $file);
             $file->store('files');
             
-            return response()->json(['status' => 'sukses', 'msg' => 'Data User']);
+            return back()->with(['status' => 'sukses', 'msg' => 'data pengguna baru telah tersimpan.']);
         }
         catch(\Exception $e)
         {

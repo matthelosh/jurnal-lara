@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Rombel;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use App\Imports\RombelsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RombelController extends Controller
@@ -64,9 +65,20 @@ class RombelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function import(Request $request)
     {
-        //
+        $file = $request->file('fileRombel');
+        try {
+            Excel::import(new RombelsImport, $file);
+            $file->move(public_path('files'), $file->getClientOriginalName().'.'.$file->getClientOriginalExtension());
+            return redirect('/dashboard/rombel');
+        } catch (\Throwable $e) {
+            if ($e->getCode() == '23000') {
+                return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada siswa dengan nis/nisn yang sama sudah ada dalam basis data.']);
+            } else {
+                return back()->with(['status' => 'gagal', 'msg' => $e->getCode().' : '.$e->getMessage()]);
+            }
+        }
     }
 
     /**

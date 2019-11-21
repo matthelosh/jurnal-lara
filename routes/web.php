@@ -77,6 +77,8 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	// Data Sekolah
 	Route::get('/edit/data-sekolah', 'SekolahController@edit')->name('editsekolah');
+	Route::post('/upload/logo', 'SekolahController@updateLogo')->name('updatelogo');
+	Route::put('/update/sekolah', 'SekolahController@update')->name('updatesekolah');
 });
 
 
@@ -84,5 +86,6 @@ Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 	Route::post('/users', 'UserController@import')->name('importusers');
 	Route::post('/siswas', 'SiswaController@import')->name('importsiswas');
 	Route::post('/mapels', 'MapelController@import')->name('importmapels');
+	Route::post('/rombels', 'RombelController@import')->name('importrombel');
 });
 

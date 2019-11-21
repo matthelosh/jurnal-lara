@@ -53,7 +53,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">
-                        <i class="fa fa-power-off"></i>
+                        <i class="nc-icon nc-button-power"></i>
                         &nbsp;
                         <span class="no-icon">Keluar</span>
                     </a>

@@ -30,7 +30,7 @@
                         <form class="form form-login" action="/login" method="post">
                             @csrf()
                             <div class="form-group">
-                                <input class="txt_box txt_username" type="text" name="username" id="username" placeholder="Username">
+                                <input class="txt_box txt_username" type="text" name="username" id="username" placeholder="Username" autofocus>
                             </div>
                             <div class="form-group">
                                 <input class="txt_box txt_password" type="password" name="password" id="password" placeholder="*******">

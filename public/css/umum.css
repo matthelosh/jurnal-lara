@@ -113,10 +113,38 @@
 	z-index: 10;
 }
 
+.logo-sekolah:hover button.btn-edit-logo{
+	display:block!important;
+}
 .card-custom table tr {
 	border-top: 1px solid #efefef;
 	border-bottom: 1px solid #efefef;
 }
 .card-custom table td {
 	padding: 2px;
+}
+
+.zoomanimate {
+	animation: zoomix 3s infinite;
+}
+
+@keyframes zoomix {
+	0% {transform: scale(.5);opacity: .5;}
+	50% {transform: scale(1);opacity:1}
+	100% {transform: scale(.5);opacity: .5;}
+}
+
+/* Data Tables Custom CSS */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	padding: 0!important;
+}
+
+/* Light Bootstrap Custom CSS*/
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+    padding: 0 8px!important;
 }

@@ -26,7 +26,7 @@ $(document).ready(function(){
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
-    		select: true,
+    		// select: true,
     		responsive: true,
     		ajax: {
     			url: '/ajax/users',
@@ -49,7 +49,7 @@ $(document).ready(function(){
 	            { data: 'hp', name: 'hp'},
 	            { data: 'email', name: 'email'},
 	            { data: 'level', name: 'level'},
-	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn btn-sm btn-warning btn-edit-user"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn btn-sm btn-danger btn-delete-user"><i class="fa fa-trash"></i></button> ', 'targets': -1},
+	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-user"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-user"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],
 	        buttons:[
 	        	{
@@ -190,7 +190,7 @@ $(document).ready(function(){
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
-    		select: true,
+    		// select: true,
     		responsive: true,
     		ajax: {
     			url: '/ajax/siswas',
@@ -212,7 +212,7 @@ $(document).ready(function(){
 	            { data: 'nama_siswa', name: 'nama_siswa'},
 	            { data: 'jk', name: 'jk'},
 	            { data: 'rombel_id', name: 'rombel_id'},
-	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn btn-sm btn-warning btn-edit-siswa"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn btn-sm btn-danger btn-delete-siswa"><i class="fa fa-trash"></i></button> ', 'targets': -1},
+	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-siswa"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-siswa"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],
 	        buttons:[
 	        	{
@@ -362,7 +362,7 @@ $(document).ready(function(){
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
-    		select: true,
+    		// select: true,
     		responsive: true,
     		ajax: {
     			url: '/ajax/rombels',
@@ -381,7 +381,7 @@ $(document).ready(function(){
 	            { data: 'nama_rombel', name: 'nama_rombel'},
 	            { data: 'gurus.fullname', name: 'gurus.fullname', 'defaultContent': 'Belum Ada'},
 	            { data: 'jml_siswa', name: 'jml_siswa'},
-	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn btn-sm btn-info btn-mng-rombel"><i class="fa fa-cogs"></i></button> <button class="btn btn-sm btn-warning btn-edit-rombel"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn btn-sm btn-danger btn-delete-rombel"><i class="fa fa-trash"></i></button> ', 'targets': -1},
+	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-info btn-mng-rombel"><i class="fa fa-cogs"></i></button> &nbsp;<button class="btn-c btn-sm btn-warning btn-edit-rombel"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-rombel"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],
 	        buttons:[
 	        	{
@@ -399,7 +399,18 @@ $(document).ready(function(){
 	        	}
 	        ]
 
-    	});
+		});
+		
+	// Import Rombel
+	$(document).on('click', '.btn-import-rombels', function() {
+		$('#fileRombel').trigger('click');
+	})
+
+	$(document).on('change', '#fileRombel', function(e) {
+		var files = e.target.files;
+		// console.log(files);
+		$('#btn-import-rombels').css('display', 'block').text('Upload File'+files[0].name);
+	});
 
     // Add new Rombel
     $(document).on('click', '.btn-add-rombel', function(){
@@ -818,7 +829,7 @@ $(document).ready(function(){
 	            { data: 'DT_RowIndex', 'orderable': false},
 	            { data: 'kode_mapel', name: 'kode_mapel'},
 	            { data: 'nama_mapel', name: 'nama_mapel'},
-	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn btn-sm btn-warning btn-edit-mapel"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn btn-sm btn-danger btn-delete-mapel"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
+	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-mapel"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-mapel"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
 	        ],
 	        buttons: [
 	        	{
@@ -1127,6 +1138,56 @@ $(document).ready(function(){
 
     });
 
+	$(document).on('click', '.btn-edit-logo', function(){
+		Swal.fire({
+			showConfirmButton: true,
+			showCancelButton: true,
+			confirmButtonColor: 'teal',
+			cancelButtonColor: 'orangered',
+			confirmButtonText: 'Lanjut',
+			cancelButtonText: 'Batal',
+			html: 'Yakin Mengganti Logo Sekolah? <br> Pastikan formatnya <b>.jpg</b> atau <b>.png</b>.'             
+		}).then(result => {
+			if (result.value) {
+				$('#imgLogo').trigger('click');
+			}
+		})
+		
+	});
+
+	
+
+	$(document).on('change', '#imgLogo', function(e) {
+		var file = e.target.files[0];
+		console.log(file);
+		if (!file.type.match('image.*')) {
+			Swal.fire('error', 'File gambar harus bertipe jpg atau png.', 'error');
+		} else if(file.size > 2000000) {
+			Swal.fire('error', 'File tidak boleh lebih dari 2MB', 'error');
+		} else {
+			$('.logo-sekolah').addClass('zoomanimate');
+			var fd = new FormData();
+			fd.append('img_logo', file);
+			$.ajax({
+				url: '/ajax/upload/logo',
+				type: 'post',
+				data: fd,
+				headers: headers,
+				contentType: false,
+				processData: false,
+				success: function (res) {
+					if ( res.status == 'sukses') {
+						$('.logo-sekolah').removeClass('zoomanimate');
+						Swal.fire('info', res.msg, 'info');
+						window.location.reload();
+					} else {
+						Swal.fire('error', res.msg, 'error');
+					}
+				}
+			})
+		}
+	});
+
 	$('.btn-edit-sekolah').on('click', function() {
 		$.ajax({
 			headers: headers,
@@ -1151,4 +1212,23 @@ $(document).ready(function(){
 			}
 		})
 	});
+
+	$(document).on('submit', '#form-data-sekolah', function(e) {
+		e.preventDefault();
+		var data = $(this).serialize();
+		$.ajax({
+			url: '/ajax/update/sekolah',
+			type:'put',
+			data: data,
+			headers: headers,
+			success: function(res) {
+				if ( res.status == 'sukses' ) {
+					Swal.fire('info', res.msg, 'info');
+					window.location.reload();
+				} else {
+					Swal.fire('error', res.msg, 'error');
+				}
+			}
+		})
+	})
 });

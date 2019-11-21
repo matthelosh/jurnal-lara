@@ -31,8 +31,11 @@ class SiswaController extends Controller
             return redirect('/dashboard/siswa')->with(['status' => 'sukses', 'msg' => 'Data Siswa berhasil diimport']);
         } catch (\Illuminate\Database\QueryException $e) {
             // dd($e->getCode());
-            if ($e->getCode() == '23000')
-            return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada siswa dengan nis/nisn yang sama sudah ada dalam basis data.']);
+            if ($e->getCode() == '23000') {
+                return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada siswa dengan nis/nisn yang sama sudah ada dalam basis data.']);
+            } else {
+                return back()->with(['status' => 'gagal', 'msg' => $e->getCode().' : '.$e->getMessage()]);
+            }
         }
     }
 
