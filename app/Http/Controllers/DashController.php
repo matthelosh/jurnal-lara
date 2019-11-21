@@ -45,6 +45,12 @@ class DashController extends Controller
         return view('dash-admin.index', ['page' => 'jadwal']);
     }
 
+    public function indexSekolah()
+    {
+        $data = \App\Sekolah::first();
+        return view('dash-admin.index', ['page' => 'sekolah', 'info_sekolah' => $data ]);
+    }
+
     public function indexSetting()
     {
         return view('dash-admin.index', ['page' => 'pengaturan']);

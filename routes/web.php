@@ -1,20 +1,14 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('login');
 })->name('login');
 Route::post('/login', 'LoginController@authenticate')->name('authenticateuser');
+Route::get('/logout', function() {
+	Auth::logout();
+	return redirect('/');
+});
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
@@ -27,6 +21,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/mapel', 'DashController@indexMapel')->name('dashboardmapel');
 
 	Route::get('/jadwal', 'DashController@indexJadwal')->name('dashboardjadwal');
+
+	Route::get('/sekolah', 'DashController@indexSekolah')->name('indexsekolah');
 
 	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting');
 });
@@ -69,6 +65,8 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	// Jadwal
 	Route::get('/jadwals', 'JadwalController@index')->name('indexjadwal');
+	Route::post('/add/jadwal', 'JadwalController@create')->name('createjadwal');
+	Route::delete('/delete/jadwal/{id}', 'JadwalController@delete')->name('deletejadwal');
 
 	// Jampel
 	Route::post('/add/jampel', 'JampelController@create')->name('createjampel');
@@ -76,6 +74,9 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::delete('/delete/jampel/{id}', 'JampelController@destroy')->name('deletejampel');
 	Route::put('/update/jampel/{id}', 'JampelController@update')->name(
 		'updatejampel');
+
+	// Data Sekolah
+	Route::get('/edit/data-sekolah', 'SekolahController@edit')->name('editsekolah');
 });
 
 

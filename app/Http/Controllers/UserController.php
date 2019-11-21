@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
             User::create([
                 'nip' => $request->input('txt-nip'),
                 'username' => $request->input('txt-username'),
-                'password' => $request->input('txt-password'),
+                'password' => Hash::make($request->input('txt-password')),
                 'fullname' => $request->input('txt-fullname'),
                 'email'    => $request->input('txt-email'),
                 'hp'       => $request->input('txt-hp'),

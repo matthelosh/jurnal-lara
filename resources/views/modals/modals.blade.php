@@ -344,7 +344,7 @@
 						<div class="col-sm-12">
 							<div class="float-right">
 								<button class="btn btn-sm btn-danger" type="reset" data-dismiss="modal">batal</button>
-								<button class="btn btn-sm btn-info btn-submit-rombel" type="submit">Simpan</button>
+								<button class="btn btn-sm btn-info btn-submit-jampel" type="submit">Simpan</button>
 							</div>
 						</div>
 					</div>
@@ -352,4 +352,148 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+{{-- Modal Jadwal Pelajaran --}}
+<div class="modal fade" id="modal-jadwal" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Tambah Jadwal Pelajaran</h5>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-add-jadwal">
+					<input type="hidden" name="jadwal_id" class="jadwal_id">
+					<input type="hidden" name="mode-form" class="mode-form">
+					<div class="row">
+						
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" class="form-control" id="hari" name="hari" placeholder="Hari" required>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" class="form-control" id="guru_id" name="guru_id" placeholder="ID/NIP Guru" required>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<input type="text" class="form-control" name="mapel_id" id="mapel_id" placeholder="Kode Mapel">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-group">
+								<input type="text" class="form-control" name="rombel_id" id="rombel_id" placeholder="Kode Rombel">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="text" class="form-control" name="jamke" id="jampe" placeholder="Jamke">
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="float-right">
+								<button class="btn btn-sm btn-danger" type="reset" data-dismiss="modal">batal</button>
+								<button class="btn btn-sm btn-info btn-submit-jadwal" type="submit">Simpan</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{-- Modal Data Sekolah --}}
+<div class="modal fade" id="modal-sekolah" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Data Sekolah</h4>
+				<button class="close" data-dismiss="modal">
+					&times;
+				</button>		
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-data-sekolah">
+					<input type="hidden" name="id" id="id">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="text" class="form-control" name="npsn" id="npsn" placeholder="NPSN">
+							</div>
+						</div>
+						<div class="col-sm-8">
+							<div class="form-group">
+								<input type="text" class="form-control" name="nss" id="nss" placeholder="NSS">
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-10">
+							<div class="form-group">
+								<input type="text" class="form-control" name="nama_sekolah" id="nama_sekolah" placeholder="Nama Sekolah">
+							</div>
+						</div>
+						
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="kepsek" id="kepsek" placeholder="Kepala Sekolah">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="nip_kepsek" id="nip_kepsek" placeholder="NIP Kepala Sekolah">
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<textarea name="alamat_sekolah" class="form-control" id="alamat_sekolah" rows="4"></textarea>
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<input type="text" class="form-control" name="telepon" id="telepon" placeholder="No. Telepon">
+								</div>
+							</div>
+							<div class="col-sm-8">
+								<div class="form-group">
+									<input type="text" class="form-control" name="email" id="email" placeholder="Email">
+								</div>
+							</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<input type="text" class="form-control" name="website" id="website" placeholder="Website">
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-12">
+							<button type="reset" class="btn btn-danger block-center">batal</button>
+							<button type="submit" class="btn btn-primary block-center">Simpan</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>		
 </div>

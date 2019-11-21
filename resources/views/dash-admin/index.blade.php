@@ -22,6 +22,9 @@
 				@case('jadwal')
 					@include('dash-admin.jadwal')
 				@break
+				@case('sekolah')
+					@include('dash-admin.sekolah')
+				@break
 				@case('pengaturan')
 					@include('dash-admin.pengaturan')
 				@break

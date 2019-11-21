@@ -19,7 +19,7 @@ $(document).ready(function(){
     	$(this).find('table').DataTable().destroy();
     });
 
-    // alert('hi');
+    
     // Users
     	// Get Users Datatables
     	var tusers = $('#table-users').DataTable({
@@ -1004,6 +1004,7 @@ $(document).ready(function(){
         dom: 'Bftlip',
         serverSide: true,
         processing: true,
+        responsive: true,
         lengthMenu: [
             [10, 25, 50, 100, -1],
             ['10', '25', '50', '100', 'Semua']
@@ -1022,12 +1023,132 @@ $(document).ready(function(){
             columns: [
                 { data: 'DT_RowIndex', 'orderable': false},
                 { data: 'hari', name: 'hari'},
-                { data: 'gurus.fullname', name: 'gurus.fullname'},
-                { data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
-                { data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
+                { data: 'gurus.fullname', name: 'gurus.fullname','defaultContent': 'Belum ada guru.'},
+                { data: 'mapels.nama_mapel', name: 'mapels.nama_mapel','defaultContent': 'Belum ada mapel.'},
+                { data: 'rombels.nama_rombel', name: 'rombels.nama_rombel','defaultContent': 'Belum ada rombel.'},
                 { data: 'jamke', name: 'jamke'},
                 { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-jadwal"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-jadwal"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
             ]
     });
 
+    // Submi Jadwal
+    $(document).on('submit', '#form-add-jadwal', function(e) {
+        e.preventDefault();
+
+        var data = $(this).serialize();
+        var url = ($('#form-add-jadwal .mode-form').val() == 'post') ? '/ajax/add/jadwal' : '/ajax/update/jadwal/'+$('#form-add-jadwal .jadwal_id').val();
+        var tipe = $('#form-add-jadwal .mode-form').val();
+
+        $.ajax({
+            headers: headers,
+            url: url,
+            type: tipe,
+            data: data,
+            dataType: 'json',
+            success: function(res) {
+                if ( res.status == 'sukses') {
+                    Swal.fire('info', res.msg, 'info');
+                    $('#form-add-jadwal').trigger('reset');
+                    tjadwals.draw();
+                } else {
+                    Swal.fire('Error', res.msg, 'error');
+                }
+            }
+        })
+    });
+
+    // New Jadwal
+    $(document).on('click', '.btn-add-jadwal', function() {
+        $('#modal-jadwal').modal();
+        $('#form-add-jadwal .mode-form').val('post');
+    });
+
+    // delete jadwal
+    $(document).on('click', '.btn-delete-jadwal', function() {
+        var data = tjadwals.row($(this).parents('tr')).data();
+        if(data == undefined) {
+            var selected_row = $(this).parents('tr');
+            if(selected_row.hasClass('child')) {
+                selected_row = selected_row.prev();
+                data = tmapels.row(selected_row).data();
+            }
+        }
+        Swal.fire({
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                cancelButtonColor: 'green',
+                confirmButtonText: 'Lanjut',
+                cancelButtonText: 'Batal',
+                titleText: 'Yakin Menghapus Jadwal:  '+data.kode_jadwal+'?'             
+            }).then(result => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/ajax/delete/jadwal/'+data.id,
+                        type: 'delete',
+                        headers: headers,
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.status == 'sukses'){
+                                Swal.fire('Info', 'Mapel '+data.kode_jadwal+' telah dihapus', 'info');
+                                tjadwals.draw();
+                            } else {
+                                Swal.fire('Error', res.msg, 'error');
+                            }
+                        }
+                    });
+                }
+        })
+    });
+
+    // Update Jadwal
+    $(document).on('click', '.btn-edit-jadwal', function() {
+        var data = tjadwals.row($(this).parents('tr')).data();
+        if(data == undefined) {
+            var selected_row = $(this).parents('tr');
+            if(selected_row.hasClass('child')) {
+                selected_row = selected_row.prev();
+                data = tjadwals.row(selected_row).data();
+            }
+        }
+
+        $('#form-add-jadwal .mode-form').val('put');
+        $('#form-add-jadwal .jadwal_id').val(data.id);
+        $('#form-add-jadwal #hari').val(data.hari);
+        $('#form-add-jadwal #guru_id').val(data.guru_id);
+        $('#form-add-jadwal #mapel_id').val(data.mapel_id);
+        $('#form-add-jadwal #rombel_id').val(data.rombel_id);
+        $('#form-add-jadwal #jamke').val(data.mapels.jamke);
+        $('#form-add-jadwal button[type="submit"]').text('perbarui');
+
+        $('#modal-jadwal').modal();
+
+
+
+    });
+
+	$('.btn-edit-sekolah').on('click', function() {
+		$.ajax({
+			headers: headers,
+			url: '/ajax/edit/data-sekolah',
+			type: 'get',
+			success: function(res) {
+				if (res.status == 'sukses') {
+					$('#form-data-sekolah #id').val(res.data.id);
+					$('#npsn').val(res.data.npsn);
+					$('#nss').val(res.data.nss);
+					$('#nama_sekolah').val(res.data.nama_sekolah);
+					$('#kepsek').val(res.data.kepsek);
+					$('#nip_kepsek').val(res.data.nip_kepsek);
+					$('#alamat_sekolah').val(res.data.alamat_sekolah);
+					$('#telepon').val(res.data.telepon);
+					$('#email').val(res.data.email);
+					$('#website').val(res.data.website);
+					$('#modal-sekolah').modal();
+				} else {
+					Swal.fire('Error', res.msg, 'error');
+				}
+			}
+		})
+	});
 });
