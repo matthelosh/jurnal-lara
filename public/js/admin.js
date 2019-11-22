@@ -1074,6 +1074,14 @@ $(document).ready(function(){
         $('#form-add-jadwal .mode-form').val('post');
     });
 
+	$(document).on('click','.btn-import-jadwals', function() {
+		$('#fileJadwal').trigger('click');
+	});
+
+	$(document).on('change', '#fileJadwal', function(e) {
+		var file = e.target.files[0];
+		$('#btn-import-jadwals').css('display', 'block').text('Upload '+file.name);
+	});
     // delete jadwal
     $(document).on('click', '.btn-delete-jadwal', function() {
         var data = tjadwals.row($(this).parents('tr')).data();

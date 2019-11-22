@@ -87,5 +87,6 @@ Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 	Route::post('/siswas', 'SiswaController@import')->name('importsiswas');
 	Route::post('/mapels', 'MapelController@import')->name('importmapels');
 	Route::post('/rombels', 'RombelController@import')->name('importrombel');
+	Route::post('/jadwals', 'JadwalController@import')->name('importjadwals');
 });
 
