@@ -24,7 +24,9 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         
-                        <div class="text-greet hide-sm"><h3 class="text-white">Selamat Datang</h3></div>
+                        <div class="text-greet hide-sm">
+                            <h3 class="text-white">Selamat Datang di Jurnal Presensi {{Session::get('sekolah')}}</h3>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-center">
                         <form class="form form-login" action="/login" method="post">

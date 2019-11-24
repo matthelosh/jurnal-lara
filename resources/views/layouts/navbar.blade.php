@@ -45,8 +45,8 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#pablo">
-                        <img src="{{ asset('/img/faces/face-5.jpg') }}" alt="Avatar" class="img navbar-face" >
+                    <a class="nav-link" href="#">
+                        <img src="{{ asset('/img/faces/'.Auth::user()->username.'.jpg') }}" alt="Avatar" class="img navbar-face" >
                         &nbsp;
                         <span class="no-icon">{{ Auth::user()->fullname }}</span>
                     </a>

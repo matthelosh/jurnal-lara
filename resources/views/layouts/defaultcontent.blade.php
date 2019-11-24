@@ -1,204 +1,118 @@
-<div class="row">
-    <div class="col-md-4">
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title">Email Statistics</h4>
-                <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-body ">
-                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-                <div class="legend">
-                    <i class="fa fa-circle text-info"></i> Open
-                    <i class="fa fa-circle text-danger"></i> Bounce
-                    <i class="fa fa-circle text-warning"></i> Unsubscribe
-                </div>
-                <hr>
-                <div class="stats">
-                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title">Users Behavior</h4>
-                <p class="card-category">24 Hours performance</p>
-            </div>
-            <div class="card-body ">
-                <div id="chartHours" class="ct-chart"></div>
-            </div>
-            <div class="card-footer ">
-                <div class="legend">
-                    <i class="fa fa-circle text-info"></i> Open
-                    <i class="fa fa-circle text-danger"></i> Click
-                    <i class="fa fa-circle text-warning"></i> Click Second Time
-                </div>
-                <hr>
-                <div class="stats">
-                    <i class="fa fa-history"></i> Updated 3 minutes ago
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title">2017 Sales</h4>
-                <p class="card-category">All products including Taxes</p>
-            </div>
-            <div class="card-body ">
-                <div id="chartActivity" class="ct-chart"></div>
-            </div>
-            <div class="card-footer ">
-                <div class="legend">
-                    <i class="fa fa-circle text-info"></i> Tesla Model S
-                    <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                </div>
-                <hr>
-                <div class="stats">
-                    <i class="fa fa-check"></i> Data information certified
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card  card-tasks">
-            <div class="card-header ">
-                <h4 class="card-title">Tasks</h4>
-                <p class="card-category">Backend development</p>
-            </div>
-            <div class="card-body ">
-                <div class="table-full-width">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                </td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" checked>
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Read "Following makes Medium better"</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" disabled>
-                                            <span class="form-check-sign"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Unfollow 5 enemies from twitter</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                    <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                    <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer ">
-                <hr>
-                <div class="stats">
-                    <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                </div>
+@if(Auth::user()->level == 'admin')
+   <div class="row">
+       <div class="col-sm-12">
+           <div class="card">
+               <div class="card-header">
+                   <h5 class="card-title">Jadwal Pelajaran Hari {{$hari}}</h5>
+                   <h4>
+                       @php($tgl = date('Y m d h:i:s'))
+                       {{$tgl}}
+                   </h4>
+               </div>
+               <div class="card-body">
+                   @if($jadwals->count() > 0 )
+                        <div class="table-responsive">
+                                <table class="table table-sm" id="table-log-absen" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Kelas</th>
+                                            <th>Mapel</th>
+                                            <th>Guru</th>
+                                            <th>Jam Ke</th>
+                                            <th>Jml Siswa</th>
+                                            <th>H</th>
+                                            <th>I</th>
+                                            <th>S</th>
+                                            <th>A</th>
+                                            <th>T</th>
+                                            <th>Jurnal/Materi</th>
+                                            <th>Keterangan</th>
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($jadwals as $jadwal)
+                                            <tr>
+                                                <td>{{$jadwal->rombels->nama_rombel}}</td>
+                                                <td>{{$jadwal->mapels->nama_mapel}}</td>
+                                                <td>{{$jadwal->gurus->fullname}}</td>
+                                                <td>{{$jadwal->jamke}}</td>
+                                                <td>{{$jadwal->jml_siswa}}</td>
+                                                <td>{{$jadwal->hadir}}</td>
+                                                <td>{{$jadwal->ijin}}</td>
+                                                <td>{{$jadwal->sakit}}</td>
+                                                <td>{{$jadwal->alpa}}</td>
+                                                <td>{{$jadwal->telat}}</td>
+                                                <td>{{$jadwal->jurnal}}</td>
+                                                <td>
+                                                    @if($jadwal->ket == 'jamkos')
+                                                        <span style="color:red;font-weight: 600;">
+                                                            {{$jadwal->ket}}
+                                                        </span>
+                                                    @else
+                                                        {{$jadwal->ket}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <button class="btn-c btn-warning ijinkan-guru">Ijinkan Guru</button>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>   
+                        </div>
+                    @else
+                        <div class="alert bg-danger center-text">
+                            @if($hari != 'Sabtu' || $hari != 'Minggu')
+                                <div class="alert bg-danger text-center">
+                                    <h3>Jadwal hari {{$hari}}, belum diaktifkan.</h3>
+                                    <button class="btn btn-warning btn-lg" id="btn-aktifkan-jadwal">Aktifkan Jadwal</button>
+                                </div>
+                            @else
+                                <div class="alert bg-warning d-flex">
+                                    <h3>Hari ini Libur</h3>    
+                                </div>    
+                            @endif
+                        </div>
+                    @endif
+               </div>
+           </div>
+       </div>
+   </div>
+@elseif(Auth::user()->level == 'guru')
+    <div class="row">
+        <div class="container">
+            <h3 class="text-center">
+                Jadwal Anda hari ini:
+            </h3>
+        
+            <div class="d-flex justify-content-around flex-wrap">
+                @if($jadwals->count() < 1)
+                    <div class="alert bg-danger text-center">
+                        <h3>Tidak ada jadwal mengajar :)</h3>
+                    </div>
+                @else
+                    @foreach($jadwals as $jadwal)
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{$jadwal->mapels->nama_mapel}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>{{$jadwal->rombels->nama_rombel}}</h4>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
-</div>
+@elseif(Auth::user()->level == 'staf')
+    <div class="row">
+        <h3>Jurnal Staf</h3>
+    </div>
+@else
+    <div class="row">
+        <h3>Guru Piket</h3>
+    </div>
+@endif

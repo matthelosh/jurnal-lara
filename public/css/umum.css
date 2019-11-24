@@ -148,3 +148,7 @@
 .table>tfoot>tr>td {
     padding: 0 8px!important;
 }
+
+.sidebar .logo .simple-text, body>.navbar-collapse .logo .simple-text{
+	line-height: 1.5em;
+}

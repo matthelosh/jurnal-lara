@@ -74,7 +74,7 @@ class SiswaController extends Controller
 
     public function getNonMembers(Request $request)
     {
-        $nonmembers = Siswa::where('rombel_id', '0')->get();
+        $nonmembers = Siswa::where('rombel_id', '0')->orWhere('rombel_id', '')->get();
 
         return Datatables::of($nonmembers)->addIndexColumn()->make(true);
     }

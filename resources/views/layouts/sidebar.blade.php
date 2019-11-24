@@ -6,8 +6,9 @@
     -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        Creative Tim
+                    <a href="/" class="simple-text" style="margin:0;padding:0">
+                        <small>JURNAL</small><br>
+                        {{Session::get('sekolah')}}
                     </a>
                 </div>
                 @if(Auth::user()->level == 'admin')
@@ -65,7 +66,7 @@
                 @elseif(Auth::user()->level == 'guru')
                     <ul class="nav">
                         <li class="nav-item ">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" href="/guru/dashboard">
                                 <i class="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -76,7 +77,16 @@
                                 <p>User Profile</p>
                             </a>
                         </li>
+                        @if(Session::get('wali') == true)
+                        <li>
+                            <a class="nav-link" href="{{route('guru.siswa')}}">
+                                <i class="nc-icon nc-satisfied"></i>
+                                <p>Siswa</p>
+                            </a>
+                        </li>
+                        @endif
                     </ul>
+
                 @elseif(Auth::user()->level == 'ops')
                     <ul class="nav">
                         <li class="nav-item ">

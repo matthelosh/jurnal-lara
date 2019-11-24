@@ -1,7 +1,9 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+	$sekolah = \App\Sekolah::first();
+	$request->session()->put('sekolah', $sekolah->nama_sekolah);
     return view('login');
 })->name('login');
 Route::post('/login', 'LoginController@authenticate')->name('authenticateuser');
@@ -79,6 +81,11 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::get('/edit/data-sekolah', 'SekolahController@edit')->name('editsekolah');
 	Route::post('/upload/logo', 'SekolahController@updateLogo')->name('updatelogo');
 	Route::put('/update/sekolah', 'SekolahController@update')->name('updatesekolah');
+
+	// Logabsen
+	Route::post('/aktifkan-jadwal', 'LogabsenController@activate')->name('activatejadwal');
+	// Pesan Telegram
+	Route::post('/cek/pesan', 'PesanController@cek')->name('cekpesan');
 });
 
 
@@ -90,3 +97,9 @@ Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 	Route::post('/jadwals', 'JadwalController@import')->name('importjadwals');
 });
 
+
+// Route Guru
+Route::group(['prefix' => 'guru', 'as' => 'guru.'], function() {
+	Route::get('/dashboard', 'DashController@indexGuru')->name('dashguru');
+	Route::get('/siswa', 'DashController@guruSiswa')->name('siswa');
+});

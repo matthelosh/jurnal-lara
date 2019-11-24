@@ -30,7 +30,7 @@ class RombelController extends Controller
             $rombels = Rombel::with(['siswas','gurus'])->get();
             
             return Datatables::of($rombels)->addColumn('jml_siswa', function($rombel){
-                    return $rombel->siswas->count();
+                    return $rombel->siswas->count().' orang';
                 })->addIndexColumn()->make(true);
         }
     }

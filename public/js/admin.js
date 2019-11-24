@@ -211,7 +211,7 @@ $(document).ready(function(){
 	            { data: 'nisn', name: 'nisn'},
 	            { data: 'nama_siswa', name: 'nama_siswa'},
 	            { data: 'jk', name: 'jk'},
-	            { data: 'rombel_id', name: 'rombel_id'},
+	            { data: 'rombel_id', name: 'rombel_id', 'defaultContent': '<span style="color:red">Belum masuk rombel</span>'},
 	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-siswa"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-siswa"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],
 	        buttons:[
@@ -1239,4 +1239,35 @@ $(document).ready(function(){
 			}
 		})
 	})
+
+	// Aktifkan Jadwal
+	$(document).on('click', '#btn-aktifkan-jadwal', function() {
+		$.ajax({
+			headers: headers,
+			url: '/ajax/aktifkan-jadwal',
+			type: 'post',
+			dataType: 'json',
+			success: function(res) {
+				if( res.status == 'kosong' ) {
+					Swal.fire('error', res.msg, 'error');
+				} else {
+					Swal.fire('info', res.msg, 'info');
+					window.location.reload();
+				}
+			}
+		})
+	});
+
+	// Cek PEsan Telegram
+	$(document).on('click', '.btn-cek-pesan', function() {
+		$.ajax({
+			headers: headers,
+			url: '/ajax/cek/pesan',
+			type: 'post',
+			dataType: 'json',
+			success: function(res) {
+				$('.msg-box').html(res.data);
+			}
+		})
+	});
 });

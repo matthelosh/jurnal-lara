@@ -16,12 +16,22 @@ class LoginController extends Controller
     	{
     		if(Auth::user()->level == 'admin')
             {
+                $request->session()->put('wali', false);
                 return redirect('/dashboard');
             }
             else if(Auth::user()->level == 'guru')
             {
-                return redirect('/'.Auth::user()->username.'/profil');
+                $wali = \App\Rombel::where('guru_id', Auth::user()->nip)->first();
+                if ($wali) {
+                    $request->session()->put('wali', true);
+                    return redirect('/guru/dashboard');
+                } else {
+                    $request->session()->put('wali', false);
+                    return redirect('/guru/dashboard');
+                }
+                
             }
+            // return redirect('/dashboard');
     	}
     	else
     	{

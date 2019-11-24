@@ -29,13 +29,6 @@
 					@include('dash-admin.pengaturan')
 				@break
 			@endswitch
-
-		@else
-			
 		@endif
-	@elseif(Auth::user()->level == 'guru')
-
-	@elseif(Auth::user()->level == 'ops')
-	
 	@endif
 @endsection
