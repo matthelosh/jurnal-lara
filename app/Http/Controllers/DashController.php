@@ -24,10 +24,10 @@ class DashController extends Controller
         $today = $haris[$day];
         $date = date('Y-m-d');
 
-        $jadwals = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
+        // $jadwals = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
 
 
-    	return view('dash-admin.index', ['page' => 'dashboard', 'hari' => $today, 'jadwals' => $jadwals]);
+    	return view('dash-admin.index', ['page' => 'dashboard', 'hari' =>$today]);
     }
 
     public function indexUsers()

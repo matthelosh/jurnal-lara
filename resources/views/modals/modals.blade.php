@@ -497,3 +497,35 @@
 		</div>
 	</div>		
 </div>
+
+<div class="modal fade" id="modal-ijinkan-guru" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Ijinkan Guru: <span id="nama-guru-ijin"></span></h4>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-ijinkan-guru">
+					{{-- <input type="hidden" name="nip"> --}}
+					<div class="row">
+						<div class="form-group">
+							<label for="nip"></label>
+							<input type="text" name="nip" id="nip" class="form-control" disabled>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<textarea name="keperluan" id="keperluan" cols="30" rows="10" placeholder="Keperluan" class="form-control" ></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit">Kirim</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

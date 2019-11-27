@@ -84,8 +84,11 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	// Logabsen
 	Route::post('/aktifkan-jadwal', 'LogabsenController@activate')->name('activatejadwal');
+	Route::get('/get-log-absen', 'LogabsenController@index')->name('indexlogabsen');
+	Route::post('/tutup/jadwal', 'LogabsenController@deactivate')->name('tutupjadwal');
 	// Pesan Telegram
 	Route::post('/cek/pesan', 'PesanController@cek')->name('cekpesan');
+	Route::post('/kirim/pesan', 'PesanController@kirimPesan')->name('kirimpesan');
 });
 
 

@@ -1246,16 +1246,19 @@ $(document).ready(function(){
 			headers: headers,
 			url: '/ajax/aktifkan-jadwal',
 			type: 'post',
-			dataType: 'json',
-			success: function(res) {
-				if( res.status == 'kosong' ) {
-					Swal.fire('error', res.msg, 'error');
-				} else {
-					Swal.fire('info', res.msg, 'info');
-					window.location.reload();
+			// dataType: 'json',
+		}).done(function(res) {
+				Swal.fire('info', 'Jadwal hari ini diaktifkan', 'info');
+				tlogabsen.draw();
+				$('.alert-logabsen').css('display', 'none');
+		}).fail(function(err){
+				if(err.responseJSON.message == "Bad Request: chat not found") {
+					Swal.fire('warning', 'Jadwal hari ini aktif. Tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon untuk verifikasi ulang chat DI telegram pemangku kepentingan.', 'warning');
+					$('.alert-logbasen').css('display', 'none');
+					tlogabsen.draw();
 				}
-			}
-		})
+		});
+		
 	});
 
 	// Cek PEsan Telegram
@@ -1266,8 +1269,148 @@ $(document).ready(function(){
 			type: 'post',
 			dataType: 'json',
 			success: function(res) {
-				$('.msg-box').html(res.data);
+				var updates = res.data;
+				if(res.status == 'sukses') {
+					var msgs = '';
+					updates.forEach(update => {
+						msgs += `<div class="card">
+								<div class="card-header"><h4>${update.message.from.username}<small>${update.message.chat.id}</small></h4></div>
+								<div class="card-body">${update.message.text}</div>
+								</div>`;
+					});
+
+					$('.msg-box').html(msgs);
+				}
 			}
 		})
 	});
+
+	$(document).on('click', '.btn-kirim-pesan', function(e) {
+		e.preventDefault();
+		var fd = new FormData();
+		var cid = $('#chat_id').val();
+		var cids = cid.split(',');
+		var text = $('#text').val();
+		var data = {
+			chatIds: cids,
+			text: text
+		}
+		$.ajax({
+			headers: headers,
+			type: 'post',
+			url: '/ajax/kirim/pesan',
+			data: data,
+			success: function(res) {
+				Swal.fire('info', res.msg, 'info');
+			}
+		})
+	});
+
+
+	// Get Jadwal hari ini
+	// <th>Kelas</th>
+    //                                         <th>Mapel</th>
+    //                                         <th>Guru</th>
+    //                                         <th>Jam Ke</th>
+    //                                         <th>Jml Siswa</th>
+    //                                         <th>H</th>
+    //                                         <th>I</th>
+    //                                         <th>S</th>
+    //                                         <th>A</th>
+    //                                         <th>T</th>
+    //                                         <th>Jurnal/Materi</th>
+    //                                         <th>Keterangan</th>
+    //                                         <th>Opsi</th>
+	var tlogabsen = $('#table-log-absen').DataTable({
+		dom: 'Bftlip',
+		language: {"emptyTable": function(){
+				$('.alert-logabsen').css('display', 'block');
+				$('#btn-tutup-jadwal').hide();
+				return "data kosong.";
+			}
+		},
+        serverSide: true,
+        processing: true,
+        responsive: true,
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            ['10', '25', '50', '100', 'Semua']
+        ],
+        ajax: {
+            url: '/ajax/get-log-absen',
+            type: 'get',
+            headers: headers
+        },
+        "columnDefs": [ {
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+                } ],
+            'order': [[1, 'asc']],
+            columns: [
+				{ data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
+				{ data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
+                { data: 'gurus.fullname', name: 'gurus.fullname'},
+                { data: 'jamke', name: 'jamke'},
+                { data: 'jml_siswa', name: 'jml_siswa', 'defaultContent': '0'},
+                { data: 'hadir', name: 'hadir', 'defaultContent': '0'},
+                { data: 'ijin', name: 'ijin', 'defaultContent': '0'},
+                { data: 'sakit', name: 'sakit', 'defaultContent': '0'},
+                { data: 'alpa', name: 'alpa', 'defaultContent': '0'},
+                { data: 'telat', name: 'telat', 'defaultContent': '0'},
+                { data: 'jurnal', name: 'jurnal', 'defaultContent': '0'},
+                { data: 'ket', name: 'ket', 'defaultContent': 'Jamkos'},
+                // { data: 'ijin', name: 'ijin'},
+                { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
+            ]
+	});
+
+	$(document).on('click', '.btn-ijinkan-guru', function() {
+		var data = tlogabsen.row($(this).parents('tr')).data();
+		// alert(data.gurus.fullname);
+		if(data == undefined) {
+            var selected_row = $(this).parents('tr');
+            if(selected_row.hasClass('child')) {
+                selected_row = selected_row.prev();
+                data = tlogabsen.row(selected_row).data();
+            }
+        }
+		$('#nama-guru-ijin').text(data.gurus.fullname);
+		$('#nip').val(data.gurus.nip);
+		$('#modal-ijinkan-guru').modal();
+	});
+
+	$('#modal-ijinkan-guru').on('bs.hide.modal', function(){
+		$('#form-ijinkan-guru').trigger('reset');
+	});
+
+	$(document).on('click', '#btn-tutup-jadwal', function() {
+		Swal.fire({
+			showConfirmButton: true,
+			showCancelButton: true,
+			confirmButtonColor: 'red',
+			cancelButtonColor: 'green',
+			confirmButtonText: 'Lanjut',
+			cancelButtonText: 'Batal',
+			titleText: 'Yakin Menutup Jadwal hari ini?'             
+		}).then(result => {
+			if (result.value) {
+				$.ajax({
+					url: '/ajax/tutup/jadwal',
+					type: 'post',
+					headers: headers,
+					dataType: 'json',
+					success: function(res) {
+						if(res.status == 'sukses'){
+							Swal.fire('Info', 'Jadwal hari ini telah ditutup', 'info');
+							tlogabsen.draw();
+						} else {
+							Swal.fire('Error', res.msg, 'error');
+						}
+					}
+				});
+			}
+	})
+	});
+
 });

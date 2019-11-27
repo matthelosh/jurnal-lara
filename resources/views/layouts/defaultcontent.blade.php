@@ -3,14 +3,28 @@
        <div class="col-sm-12">
            <div class="card">
                <div class="card-header">
-                   <h5 class="card-title">Jadwal Pelajaran Hari {{$hari}}</h5>
-                   <h4>
-                       @php($tgl = date('Y m d h:i:s'))
-                       {{$tgl}}
-                   </h4>
+                    @php($tgl = date('d M Y'))
+                   <h5 class="card-title">Jadwal Pelajaran Hari {{$hari}}, {{$tgl}}</h5>
+                   <button class="btn btn-danger float-right" id="btn-tutup-jadwal">Tutup Jadwal</button>
                </div>
                <div class="card-body">
-                   @if($jadwals->count() > 0 )
+                   <div class="row">
+                       <div class="container">
+                            <div class="alert bg-danger center-text alert-logabsen" style="display:none;">
+                                    @if($hari != 'Sabtu' || $hari != 'Minggu')
+                                        <div class="alert bg-danger text-center">
+                                            <h3>Jadwal hari {{$hari}}, belum diaktifkan.</h3>
+                                            <button class="btn btn-warning btn-lg" id="btn-aktifkan-jadwal">Aktifkan Jadwal</button>
+                                        </div>
+                                    @else
+                                        <div class="alert bg-warning d-flex">
+                                            <h3>Hari ini Libur</h3>    
+                                        </div>    
+                                    @endif
+                                </div>
+                       </div>
+                   </div>
+                   {{-- @if($jadwals->count() > 0 ) --}}
                         <div class="table-responsive">
                                 <table class="table table-sm" id="table-log-absen" width="100%">
                                     <thead>
@@ -31,7 +45,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($jadwals as $jadwal)
+                                        {{-- @foreach($jadwals as $jadwal)
                                             <tr>
                                                 <td>{{$jadwal->rombels->nama_rombel}}</td>
                                                 <td>{{$jadwal->mapels->nama_mapel}}</td>
@@ -49,6 +63,10 @@
                                                         <span style="color:red;font-weight: 600;">
                                                             {{$jadwal->ket}}
                                                         </span>
+                                                    @elseif($jadwal->ket == 'mohon_ijin')
+                                                        <button class="btn-c btn-danger btn-mohon-ijin">
+                                                            Mohon Ijin
+                                                        </button>
                                                     @else
                                                         {{$jadwal->ket}}
                                                     @endif
@@ -58,12 +76,12 @@
                                                 </td>
 
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>   
                         </div>
-                    @else
-                        <div class="alert bg-danger center-text">
+                    {{-- @else --}}
+                        {{-- <div class="alert bg-danger center-text alert-logabsen" style="display:none;">
                             @if($hari != 'Sabtu' || $hari != 'Minggu')
                                 <div class="alert bg-danger text-center">
                                     <h3>Jadwal hari {{$hari}}, belum diaktifkan.</h3>
@@ -74,8 +92,8 @@
                                     <h3>Hari ini Libur</h3>    
                                 </div>    
                             @endif
-                        </div>
-                    @endif
+                        </div> --}}
+                    {{-- @endif --}}
                </div>
            </div>
        </div>

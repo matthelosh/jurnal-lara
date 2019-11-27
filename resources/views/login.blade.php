@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>LOGIN</title>
+        <title>LOGIN | {{Session::get('sekolah')}}</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
@@ -23,9 +23,8 @@
                         <div class="logo-front"><img src="/img/logokab.png" alt="Logo" width="100px"></div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        
-                        <div class="text-greet hide-sm">
-                            <h3 class="text-white">Selamat Datang di Jurnal Presensi {{Session::get('sekolah')}}</h3>
+                        <div class="text-greet d-none d-md-block">
+                            <h3 class="text-white text-center">Selamat Datang <br> di Jurnal Presensi {{Session::get('sekolah')}}</h3>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
