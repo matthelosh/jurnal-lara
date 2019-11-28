@@ -506,25 +506,50 @@
 				<button class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<form action="" class="form" id="form-ijinkan-guru">
-					{{-- <input type="hidden" name="nip"> --}}
-					<div class="row">
-						<div class="form-group">
-							<label for="nip"></label>
-							<input type="text" name="nip" id="nip" class="form-control" disabled>
+				<div class="container">
+					<form action="" class="form" id="form-ijinkan-guru">
+						<input type="hidden" name="kode_absen" id="kode_absen">
+								<input type="hidden" name="nip" id="nip">
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<label for="keperluan">Keperluan</label>
+								<select name="keperluan" id="keperluan" class="form-control">
+									<option value="0">Keperluan</option>
+									<option value="dinas">Tugas Dinas</option>
+									<option value="keluarga">Keluarga</option>
+									<option value="sakit">Sakit</option>
+								</select>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="form-group">
-							<textarea name="keperluan" id="keperluan" cols="30" rows="10" placeholder="Keperluan" class="form-control" ></textarea>
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<label for="ada_tugas">
+									<input type="checkbox" name="ada_tugas" id="ada_tugas">
+									Ada Tugas?
+								</label>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="form-group">
-							<button class="btn btn-primary" type="submit">Kirim</button>
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<textarea name="tugas" id="tugas" cols="30" rows="4" placeholder="Tugas" class="form-control" disabled></textarea>
+							</div>
 						</div>
-					</div>
-				</form>
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<textarea name="ket" id="ket" cols="30" rows="4" placeholder="Keterangan Tambahan" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-sm-12">
+								<div class="d-flex justify-content-center">
+									<button class="btn btn-danger" type="reset" data-dismiss="modal">Batal</button>
+									&nbsp;
+									<button class="btn btn-primary" type="submit" >Kirim</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

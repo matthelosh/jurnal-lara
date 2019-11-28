@@ -25,8 +25,15 @@ $(document).ready(function(){
     	var tusers = $('#table-users').DataTable({
     		dom: 'Bftlp',
     		processing: true,
-    		serverSide: true,
+    		serverSide: false,
     		// select: true,
+            language: {
+                processing: '<span>Mohon Tunggu ...</span>'
+                },
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		responsive: true,
     		ajax: {
     			url: '/ajax/users',
@@ -53,18 +60,24 @@ $(document).ready(function(){
 	        ],
 	        buttons:[
 	        	{
-	        		extend: 'print',
-	        		title: 'Data Pengguna'
-	        	},
-	        	{
-	        		extend: 'csv',
-	        		title: 'Data Pengguna'
-	        	},
-	        	{
-	        		extend: 'copy',
-	        		title: 'Data Pengguna',
-
-	        	}
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Pengguna',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Pengguna',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
 	        ]
     	})
 
@@ -79,6 +92,7 @@ $(document).ready(function(){
     		var data = $(this).serialize();
     		console.log(data);
     		var url = ($('#form-add-user .mode-form').val() == 'post') ? '/ajax/add/user' : '/ajax/update/user/'+$('#form-add-user #id_user').val();
+            $('#progress').addClass('progress d-flex').removeClass('d-none');
     		$.ajax({
     			type: $('#form-add-user .mode-form').val(), 
     			url: url,
@@ -88,6 +102,7 @@ $(document).ready(function(){
     			},
     			dataType: 'json',
     			success: function(res){
+                    $('#progress').removeClass('progress d-flex').addClass('d-none');
     				if(res.status == 'sukses') {
 	    				Swal.fire(res.status, res.msg, 'info');
 	    				$('#modal-user').modal('hide');
@@ -165,17 +180,20 @@ $(document).ready(function(){
 				titleText: 'Yakin Menghapus Pengguna '+data.fullname+'?'    			
     		}).then(result => {
     			if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
     				$.ajax({
     					url: '/ajax/delete/user/'+data.nip,
     					type: 'delete',
     					headers: headers,
     					dataType: 'json',
     					success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
     						if(res.status == 'sukses'){
     							Swal.fire('Info', 'Pengguna '+data.fullname+' telah dihapus', 'info');
     							tusers.draw();
     						} else {
     							Swal.fire('Error', res.msg, 'error');
+                                tusers.draw();
     						}
     					}
     				});
@@ -189,9 +207,13 @@ $(document).ready(function(){
     var tsiswas = $('#table-siswas').DataTable({
     		dom: 'Bftlp',
     		processing: true,
-    		serverSide: true,
+    		serverSide: false,
     		// select: true,
     		responsive: true,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		ajax: {
     			url: '/ajax/siswas',
     			type: 'get',
@@ -216,18 +238,24 @@ $(document).ready(function(){
 	        ],
 	        buttons:[
 	        	{
-	        		extend: 'print',
-	        		title: 'Data Siswa'
-	        	},
-	        	{
-	        		extend: 'csv',
-	        		title: 'Data Siswa'
-	        	},
-	        	{
-	        		extend: 'copy',
-	        		title: 'Data Siswa',
-
-	        	}
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Siswa',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Siswa',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
 	        ]
     	})
 
@@ -245,6 +273,7 @@ $(document).ready(function(){
     	var data = $(this).serialize();
 
     	var url = ($('#form-add-siswa .mode-form').val() == 'post') ? 'add' : 'update';
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			type: $('#form-add-siswa .mode-form').val(), 
 			url: '/ajax/'+url+'/siswa/'+$('#id_siswa').val(),
@@ -254,6 +283,7 @@ $(document).ready(function(){
 			},
 			dataType: 'json',
 			success: function(res){
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
 				if(res.status == 'sukses') {
     				Swal.fire(res.status, res.msg, 'info');
     				$('#modal-user').modal('hide');
@@ -337,12 +367,14 @@ $(document).ready(function(){
 				titleText: 'Yakin Menghapus Siswa '+data.nama_siswa+'?'    			
     		}).then(result => {
     			if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
     				$.ajax({
     					url: '/ajax/delete/siswa/'+data.nisn,
     					type: 'delete',
     					headers: headers,
     					dataType: 'json',
     					success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
     						if(res.status == 'sukses'){
     							Swal.fire('Info', 'Siswa '+data.nama_siswa+' telah dihapus', 'info');
     							tsiswas.draw();
@@ -361,9 +393,13 @@ $(document).ready(function(){
     var trombels = $('#table-rombels').DataTable({
     		dom: 'Bftlp',
     		processing: true,
-    		serverSide: true,
+    		serverSide: false,
     		// select: true,
     		responsive: true,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		ajax: {
     			url: '/ajax/rombels',
     			type: 'get',
@@ -385,18 +421,24 @@ $(document).ready(function(){
 	        ],
 	        buttons:[
 	        	{
-	        		extend: 'print',
-	        		title: 'Data Siswa'
-	        	},
-	        	{
-	        		extend: 'csv',
-	        		title: 'Data Siswa'
-	        	},
-	        	{
-	        		extend: 'copy',
-	        		title: 'Data Siswa',
-
-	        	}
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Rombel',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Rombel',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
 	        ]
 
 		});
@@ -425,6 +467,7 @@ $(document).ready(function(){
     	var data = $(this).serialize();
 
     	var url = $('#modal-rombel .mode-form').val() == 'post' ? '/ajax/add/rombel' : '/ajax/update/rombel/'+$('#form-add-rombel .rombel_id').val();
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
     	$.ajax({
     		headers: headers,
     		type: $(this).find('.mode-form').val(),
@@ -432,6 +475,7 @@ $(document).ready(function(){
     		data: data,
     		dataType: 'json', 
     		success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
     			if (res.status == 'sukses') {
     				Swal.fire('Info', res.msg, 'info');
     				trombels.draw();
@@ -493,12 +537,14 @@ $(document).ready(function(){
 				titleText: 'Yakin Menghapus rombel '+data.nama_rombel+'?'    			
     		}).then(result => {
     			if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
     				$.ajax({
     					url: '/ajax/delete/rombel/'+data.id,
     					type: 'delete',
     					headers: headers,
     					dataType: 'json',
     					success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
     						if(res.status == 'sukses'){
     							Swal.fire('Info', 'Rombel '+data.nama_rombel+' telah dihapus', 'info');
     							trombels.draw();
@@ -527,11 +573,13 @@ $(document).ready(function(){
 			}
 		}
     	// get Rombels
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
     	$.ajax({
     		type: 'get',
     		url: '/ajax/rombels?mode=select',
     		dataType: 'json',
     		success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
     			var options= '';
     			res.forEach(item => {
     				if(item.kode_rombel == data.kode_rombel) {
@@ -552,6 +600,10 @@ $(document).ready(function(){
     		processing: true,
     		serverSide: true,
     		select: true,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		// responsive: true,
     		ajax: {
     			url: '/ajax/members/rombel/'+data.kode_rombel,
@@ -582,6 +634,10 @@ $(document).ready(function(){
     		serverSide: true,
     		select: true,
     		// responsive: true,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		ajax: {
     			url: '/ajax/nonmembers',
     			type: 'get',
@@ -634,6 +690,7 @@ $(document).ready(function(){
                         allowOutsideClick: false,
                         preConfirm: function() {
                             return new Promise(function(resolve) {
+                                $('#progress').addClass('progress d-flex').removeClass('d-none');
                                 $.ajax({
                                 	headers: headers,
                                     type: 'put',
@@ -641,6 +698,7 @@ $(document).ready(function(){
                                     data: {nisns: nisns, tujuan: newRombel},
                                     dataType: 'json'
                                }).done(function(res) {
+                                    $('#progress').removeClass('progress d-flex').addClass('d-none');
                                    Swal.fire('Berhasil!', res.msg, 'info');
                                    tmembers.draw();
                                    trombels.draw();
@@ -680,6 +738,7 @@ $(document).ready(function(){
                     allowOutsideClick: false,
                     preConfirm: function() {
                         return new Promise(function(resolve) {
+                            $('#progress').addClass('progress d-flex').removeClass('d-none');
                             $.ajax({
                             	headers:headers,
                                 type: 'put',
@@ -687,6 +746,7 @@ $(document).ready(function(){
                                 data: {nisns: nisns},
                                 dataType: 'json', 
                                 success: function(res) {
+                                    $('#progress').removeClass('progress d-flex').addClass('d-none');
                                     if (res.status == 'sukses'){
                                         Swal.fire('Berhasil!', res.msg, 'info');
                                         tmembers.draw();
@@ -730,6 +790,7 @@ $(document).ready(function(){
                         allowOutsideClick: false,
                         preConfirm: function() {
                             return new Promise(function(resolve) {
+                                $('#progress').addClass('progress d-flex').removeClass('d-none');
                                 $.ajax({
                                 	headers: headers,
                                     type: 'put',
@@ -737,6 +798,7 @@ $(document).ready(function(){
                                     data: {nisns: nisns, tujuan: newRombel},
                                     dataType: 'json', 
                                     success: function(res) {
+                                        $('#progress').removeClass('progress d-flex').addClass('d-none');
                                         if (res.status == 'sukses'){
                                             Swal.fire('Berhasil!', res.msg, 'info');
                                             tmembers.draw();
@@ -775,6 +837,7 @@ $(document).ready(function(){
 		console.log(data);
 		var url = ($('#form-add-mapel .mode-form').val() == 'add') ? '/ajax/add/mapel': '/ajax/update/mapel?id='+$('#form-add-mapel .mapel_id').val();
 		var tipe = ($('#form-add-mapel .mode-form').val() == 'add') ? 'post': 'put';
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			headers	: headers,
 			url		: url,
@@ -782,6 +845,7 @@ $(document).ready(function(){
 			data 	: data,
 			dataType: 'json',
 			success	: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
 				if (res.status == 'sukses') {
 					Swal.fire('info', res.msg, 'info');
 					tmapels.draw();
@@ -812,6 +876,10 @@ $(document).ready(function(){
     		serverSide: true,
     		// select: true,
     		responsive: true,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', '100', 'Semua']
+            ],
     		ajax: {
     			url: '/ajax/mapels',
     			type: 'get',
@@ -833,18 +901,24 @@ $(document).ready(function(){
 	        ],
 	        buttons: [
 	        	{
-	        		extend: 'print',
-	        		title: 'Data Mapel'
-	        	},
-	        	{
-	        		extend: 'csv',
-	        		title: 'Data Mapel'
-	        	},
-	        	{
-	        		extend: 'copy',
-	        		title: 'Data Mapel',
-
-	        	}
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Mapel',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Mapel',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
 	        ]
 	});
 
@@ -890,12 +964,14 @@ $(document).ready(function(){
 				titleText: 'Yakin Menghapus mapel '+data.nama_mapel+'?'    			
     		}).then(result => {
     			if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
     				$.ajax({
     					url: '/ajax/delete/mapel/'+data.id,
     					type: 'delete',
     					headers: headers,
     					dataType: 'json',
     					success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
     						if(res.status == 'sukses'){
     							Swal.fire('Info', 'Mapel '+data.nama_mapel+' telah dihapus', 'info');
     							tmapels.draw();
@@ -917,6 +993,7 @@ $(document).ready(function(){
         serverSide: true,
         processing: true,
         pageLength: -1,
+
         ajax: {
             url: '/ajax/jampels',
             type: 'get',
@@ -962,12 +1039,14 @@ $(document).ready(function(){
         var data = $(this).serialize();
         var tipe = $('#form-add-jampel .mode-form').val();
         var url = ($('#form-add-jampel .mode-form').val() == 'post') ? '/ajax/add/jampel' : '/ajax/update/jampel/'+$('#form-add-jampel .jampel_id').val();
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
         $.ajax({
             headers: headers,
             url: url,
             type: tipe,
             data: data,
             success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
                 if(res.status == 'sukses') {
                     Swal.fire('Sukses', res.msg, 'info');
                     tjampels.draw();
@@ -991,12 +1070,14 @@ $(document).ready(function(){
                 titleText: 'Yakin Menghapus Jampel:  '+data.label+'?'             
             }).then(result => {
                 if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
                     $.ajax({
                         url: '/ajax/delete/jampel/'+data.id,
                         type: 'delete',
                         headers: headers,
                         dataType: 'json',
                         success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
                             if(res.status == 'sukses'){
                                 Swal.fire('Info', 'Mapel '+data.label+' telah dihapus', 'info');
                                 tjampels.draw();
@@ -1039,6 +1120,27 @@ $(document).ready(function(){
                 { data: 'rombels.nama_rombel', name: 'rombels.nama_rombel','defaultContent': 'Belum ada rombel.'},
                 { data: 'jamke', name: 'jamke'},
                 { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-jadwal"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-jadwal"><i class="fa fa-trash"></i></button> ', 'targets': -1 }
+            ],
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Jadwal',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Jadwal',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
             ]
     });
 
@@ -1049,7 +1151,7 @@ $(document).ready(function(){
         var data = $(this).serialize();
         var url = ($('#form-add-jadwal .mode-form').val() == 'post') ? '/ajax/add/jadwal' : '/ajax/update/jadwal/'+$('#form-add-jadwal .jadwal_id').val();
         var tipe = $('#form-add-jadwal .mode-form').val();
-
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
         $.ajax({
             headers: headers,
             url: url,
@@ -1057,6 +1159,7 @@ $(document).ready(function(){
             data: data,
             dataType: 'json',
             success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
                 if ( res.status == 'sukses') {
                     Swal.fire('info', res.msg, 'info');
                     $('#form-add-jadwal').trigger('reset');
@@ -1102,12 +1205,14 @@ $(document).ready(function(){
                 titleText: 'Yakin Menghapus Jadwal:  '+data.kode_jadwal+'?'             
             }).then(result => {
                 if (result.value) {
+                    $('#progress').addClass('progress d-flex').removeClass('d-none');
                     $.ajax({
                         url: '/ajax/delete/jadwal/'+data.id,
                         type: 'delete',
                         headers: headers,
                         dataType: 'json',
                         success: function(res) {
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
                             if(res.status == 'sukses'){
                                 Swal.fire('Info', 'Mapel '+data.kode_jadwal+' telah dihapus', 'info');
                                 tjadwals.draw();
@@ -1176,6 +1281,7 @@ $(document).ready(function(){
 			$('.logo-sekolah').addClass('zoomanimate');
 			var fd = new FormData();
 			fd.append('img_logo', file);
+            $('#progress').addClass('progress d-flex').removeClass('d-none');
 			$.ajax({
 				url: '/ajax/upload/logo',
 				type: 'post',
@@ -1184,6 +1290,7 @@ $(document).ready(function(){
 				contentType: false,
 				processData: false,
 				success: function (res) {
+                    $('#progress').removeClass('progress d-flex').addClass('d-none');
 					if ( res.status == 'sukses') {
 						$('.logo-sekolah').removeClass('zoomanimate');
 						Swal.fire('info', res.msg, 'info');
@@ -1197,11 +1304,13 @@ $(document).ready(function(){
 	});
 
 	$('.btn-edit-sekolah').on('click', function() {
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			headers: headers,
 			url: '/ajax/edit/data-sekolah',
 			type: 'get',
 			success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
 				if (res.status == 'sukses') {
 					$('#form-data-sekolah #id').val(res.data.id);
 					$('#npsn').val(res.data.npsn);
@@ -1224,6 +1333,7 @@ $(document).ready(function(){
 	$(document).on('submit', '#form-data-sekolah', function(e) {
 		e.preventDefault();
 		var data = $(this).serialize();
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			url: '/ajax/update/sekolah',
 			type:'put',
@@ -1234,35 +1344,18 @@ $(document).ready(function(){
 					Swal.fire('info', res.msg, 'info');
 					window.location.reload();
 				} else {
+                    $('#progress').removeClass('progress d-flex').addClass('d-none');
 					Swal.fire('error', res.msg, 'error');
 				}
 			}
 		})
 	})
 
-	// Aktifkan Jadwal
-	$(document).on('click', '#btn-aktifkan-jadwal', function() {
-		$.ajax({
-			headers: headers,
-			url: '/ajax/aktifkan-jadwal',
-			type: 'post',
-			// dataType: 'json',
-		}).done(function(res) {
-				Swal.fire('info', 'Jadwal hari ini diaktifkan', 'info');
-				tlogabsen.draw();
-				$('.alert-logabsen').css('display', 'none');
-		}).fail(function(err){
-				if(err.responseJSON.message == "Bad Request: chat not found") {
-					Swal.fire('warning', 'Jadwal hari ini aktif. Tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon untuk verifikasi ulang chat DI telegram pemangku kepentingan.', 'warning');
-					$('.alert-logbasen').css('display', 'none');
-					tlogabsen.draw();
-				}
-		});
-		
-	});
+	
 
 	// Cek PEsan Telegram
 	$(document).on('click', '.btn-cek-pesan', function() {
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			headers: headers,
 			url: '/ajax/cek/pesan',
@@ -1278,7 +1371,7 @@ $(document).ready(function(){
 								<div class="card-body">${update.message.text}</div>
 								</div>`;
 					});
-
+                    $('#progress').removeClass('progress d-flex').addClass('d-none');
 					$('.msg-box').html(msgs);
 				}
 			}
@@ -1295,32 +1388,21 @@ $(document).ready(function(){
 			chatIds: cids,
 			text: text
 		}
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			headers: headers,
 			type: 'post',
 			url: '/ajax/kirim/pesan',
 			data: data,
 			success: function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
 				Swal.fire('info', res.msg, 'info');
 			}
 		})
 	});
 
 
-	// Get Jadwal hari ini
-	// <th>Kelas</th>
-    //                                         <th>Mapel</th>
-    //                                         <th>Guru</th>
-    //                                         <th>Jam Ke</th>
-    //                                         <th>Jml Siswa</th>
-    //                                         <th>H</th>
-    //                                         <th>I</th>
-    //                                         <th>S</th>
-    //                                         <th>A</th>
-    //                                         <th>T</th>
-    //                                         <th>Jurnal/Materi</th>
-    //                                         <th>Keterangan</th>
-    //                                         <th>Opsi</th>
+// Log Absen
 	var tlogabsen = $('#table-log-absen').DataTable({
 		dom: 'Bftlip',
 		language: {"emptyTable": function(){
@@ -1329,7 +1411,7 @@ $(document).ready(function(){
 				return "data kosong.";
 			}
 		},
-        serverSide: true,
+        serverSide: false,
         processing: true,
         responsive: true,
         lengthMenu: [
@@ -1338,7 +1420,7 @@ $(document).ready(function(){
         ],
         ajax: {
             url: '/ajax/get-log-absen',
-            type: 'get',
+            type: 'post',
             headers: headers
         },
         "columnDefs": [ {
@@ -1360,10 +1442,80 @@ $(document).ready(function(){
                 { data: 'telat', name: 'telat', 'defaultContent': '0'},
                 { data: 'jurnal', name: 'jurnal', 'defaultContent': '0'},
                 { data: 'ket', name: 'ket', 'defaultContent': 'Jamkos'},
-                // { data: 'ijin', name: 'ijin'},
+                { data: 'isActive', name: 'isActive', 
+                    "render": function(data, type, row) {
+                        if(row.isActive === 0) {
+                            $('#btn-tutup-jadwal').css('display', 'none');
+                            return '<span style="color: red">Tutup</span>';
+                        } else {
+                            return '<span style="color: green">Aktif</span>';
+                        }
+                    }
+                },
                 { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
+            ],
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i> Salin',
+                    className: 'copyBtn'
+                }, 
+                {
+                    extend:'excel', 
+                    title: 'Data Jadwal',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-file-excel-o"></i> Excel',
+                    className: 'xlsBtn'
+                }, 
+                {
+                    extend: 'print',
+                    title: 'Data Jadwal',
+                    messageTop: new Date(),
+                    text: '<i class="fa fa-print"></i> Cetak',
+                    className: 'printBtn'
+                }
             ]
 	});
+
+    // Aktifkan Jadwal
+    $(document).on('click', '#btn-aktifkan-jadwal', function() {
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
+        $.ajax({
+            headers: headers,
+            url: '/ajax/aktifkan-jadwal',
+            type: 'post',
+            dataType: 'json',
+        }).done(function(res) {
+            $('#progress').removeClass('progress d-flex').addClass('d-none');
+            if (res.status == 'sukses') {
+                Swal.fire('Info', 'Jadwal hari ini telah diaktifkan.', 'info');
+                window.location.reload();
+            } else {
+                if(res.errCode == '400') {
+                    Swal.fire('warning', 'Jadwal hari ini aktif. Tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon untuk verifikasi ulang chat DI telegram pemangku kepentingan.', 'warning');
+                    $('.alert-logbasen').css('display', 'none');
+                    tlogabsen.draw();
+                } else {
+                    Swal.fire('error', res.msg, 'error');
+                    tlogabsen.draw();
+                }
+            }
+        }).fail(function(err){
+            $('#progress').removeClass('progress d-flex').addClass('d-none');
+            if(err.responseJSON.message == "Bad Request: chat not found") {
+
+                Swal.fire('warning', 'Jadwal hari ini aktif. Tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon untuk verifikasi ulang chat DI telegram pemangku kepentingan.', 'warning');
+                $('.alert-logbasen').css('display', 'none');
+                tlogabsen.draw();
+            }
+        }).always(function(){
+            $('#progress').removeClass('progress d-flex').addClass('d-none');
+            $('.alert-logabsen').css('display', 'none');
+            $('#btn-tutup-jadwal').css('display', 'block');
+            tlogabsen.draw();
+        });
+        
+    });
 
 	$(document).on('click', '.btn-ijinkan-guru', function() {
 		var data = tlogabsen.row($(this).parents('tr')).data();
@@ -1374,14 +1526,51 @@ $(document).ready(function(){
                 selected_row = selected_row.prev();
                 data = tlogabsen.row(selected_row).data();
             }
-        }
+		}
+		$('#kode_absen').val(data.kode_absen);
 		$('#nama-guru-ijin').text(data.gurus.fullname);
 		$('#nip').val(data.gurus.nip);
 		$('#modal-ijinkan-guru').modal();
 	});
 
+	$(document).on('click', '#ada_tugas', function(){
+		if($(this).prop('checked')) {
+			$('#tugas').prop('disabled', '');
+		} else {
+			$('#tugas').prop('disabled', 'disabled');
+		}
+	});
+
 	$('#modal-ijinkan-guru').on('bs.hide.modal', function(){
 		$('#form-ijinkan-guru').trigger('reset');
+	});
+
+	// Form Submit Ijinkan Guru
+	$(document).on('submit', '#form-ijinkan-guru', function(e) {
+		e.preventDefault();
+		if($('#keperluan').val() == "0" ) {
+			$('#keperluan').append('<span style="color:red">Mohon memilih keperluan</span>').focus();
+			return false;
+		} else {
+            $('#progress').addClass('progress d-flex').removeClass('d-none');
+			var data = $(this).serialize();
+			$.ajax({
+				headers: headers,
+				url: '/ajax/ijinkan/guru',
+				type: 'put',
+				data: data
+			}).done(function(res) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
+				Swal.fire('info', 'Guru: '+$('#nama-guru-ijin').text()+' telah diijinkan', 'info');
+			}).fail(function(err) {
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
+				Swal.fire('error', err, 'error');
+			}).always(function(){
+                $('#progress').removeClass('progress d-flex').addClass('d-none');
+				$('#modal-ijinkan-guru').modal('hide');
+				tlogabsen.draw();
+			});
+		}
 	});
 
 	$(document).on('click', '#btn-tutup-jadwal', function() {
@@ -1395,6 +1584,7 @@ $(document).ready(function(){
 			titleText: 'Yakin Menutup Jadwal hari ini?'             
 		}).then(result => {
 			if (result.value) {
+                $('#progress').addClass('progress d-flex').removeClass('d-none');
 				$.ajax({
 					url: '/ajax/tutup/jadwal',
 					type: 'post',
@@ -1402,15 +1592,23 @@ $(document).ready(function(){
 					dataType: 'json',
 					success: function(res) {
 						if(res.status == 'sukses'){
-							Swal.fire('Info', 'Jadwal hari ini telah ditutup', 'info');
+                            if(res.errCode){
+                                Swal.fire('Info', 'Jadwal sudah ditutup, tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon verifikasi ulang chat ID.', 'info');
+                                $('#progress').removeClass('progress d-flex').addClass('d-none');
+                            } else {
+                                Swal.fire('Info', 'Jadwal hari ini telah ditutup', 'info');
+                                $('#progress').removeClass('progress d-flex').addClass('d-none');
+                            }
+							
 							tlogabsen.draw();
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
 						} else {
 							Swal.fire('Error', res.msg, 'error');
+                            $('#progress').removeClass('progress d-flex').addClass('d-none');
 						}
 					}
 				});
 			}
-	})
+		});
 	});
-
 });

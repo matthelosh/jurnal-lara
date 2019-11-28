@@ -41,59 +41,15 @@
                                             <th>T</th>
                                             <th>Jurnal/Materi</th>
                                             <th>Keterangan</th>
+                                            <th>Status</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($jadwals as $jadwal)
-                                            <tr>
-                                                <td>{{$jadwal->rombels->nama_rombel}}</td>
-                                                <td>{{$jadwal->mapels->nama_mapel}}</td>
-                                                <td>{{$jadwal->gurus->fullname}}</td>
-                                                <td>{{$jadwal->jamke}}</td>
-                                                <td>{{$jadwal->jml_siswa}}</td>
-                                                <td>{{$jadwal->hadir}}</td>
-                                                <td>{{$jadwal->ijin}}</td>
-                                                <td>{{$jadwal->sakit}}</td>
-                                                <td>{{$jadwal->alpa}}</td>
-                                                <td>{{$jadwal->telat}}</td>
-                                                <td>{{$jadwal->jurnal}}</td>
-                                                <td>
-                                                    @if($jadwal->ket == 'jamkos')
-                                                        <span style="color:red;font-weight: 600;">
-                                                            {{$jadwal->ket}}
-                                                        </span>
-                                                    @elseif($jadwal->ket == 'mohon_ijin')
-                                                        <button class="btn-c btn-danger btn-mohon-ijin">
-                                                            Mohon Ijin
-                                                        </button>
-                                                    @else
-                                                        {{$jadwal->ket}}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <button class="btn-c btn-warning ijinkan-guru">Ijinkan Guru</button>
-                                                </td>
-
-                                            </tr>
-                                        @endforeach --}}
                                     </tbody>
                                 </table>   
                         </div>
-                    {{-- @else --}}
-                        {{-- <div class="alert bg-danger center-text alert-logabsen" style="display:none;">
-                            @if($hari != 'Sabtu' || $hari != 'Minggu')
-                                <div class="alert bg-danger text-center">
-                                    <h3>Jadwal hari {{$hari}}, belum diaktifkan.</h3>
-                                    <button class="btn btn-warning btn-lg" id="btn-aktifkan-jadwal">Aktifkan Jadwal</button>
-                                </div>
-                            @else
-                                <div class="alert bg-warning d-flex">
-                                    <h3>Hari ini Libur</h3>    
-                                </div>    
-                            @endif
-                        </div> --}}
-                    {{-- @endif --}}
+
                </div>
            </div>
        </div>

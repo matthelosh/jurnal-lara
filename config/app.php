@@ -177,7 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Telegram\Bot\Laravel\TelegramServiceProvider::class,        
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class
 
     ],
 

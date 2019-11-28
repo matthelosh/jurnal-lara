@@ -58,7 +58,9 @@
             @include('layouts.footer')
         </div>
     </div>
-  
+    <div id="progress" class="d-none justify-content-center align-items-center" >
+        <img src="{{ asset('/img/loader.png') }}" alt="" class="loader" style="height:100px;height:100px;">
+    </div>
 </body>
 <!--   Core JS Files   -->
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"> </script>
@@ -78,6 +80,9 @@
 <script src="{{ asset('/DataTables/Buttons-1.6.1/js/buttons.bootstrap4.js') }}"></script>
 <script src="{{ asset('/DataTables/Buttons-1.6.1/js/buttons.print.js') }}"></script>
 <script src="{{ asset('/DataTables/Buttons-1.6.1/js/buttons.html5.js') }}"></script>
+<script src="{{ asset('/DataTables/Buttons-1.6.1/js/buttons.flash.js') }}"></script>
+<script src="{{ asset('/DataTables/JSZip-2.5.0/jszip.min.js') }}"></script>
+<script src="{{ asset('/DataTables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
 <script src="{{ asset('/DataTables/Responsive-2.2.3/js/dataTables.responsive.js') }}"></script>
 <script src="{{ asset('/DataTables/Responsive-2.2.3/js/responsive.bootstrap4.js') }}"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
