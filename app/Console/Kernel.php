@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Telegram;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,6 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\ActivateJadwal::class,
+        Commands\DeactivateJadwal::class,
+
     ];
 
     /**
@@ -26,6 +30,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('activate:jadwal')
+                ->dailyAt('6:45')
+                ->timezone('Asia/Jakarta');
+
+        $schedule->command('deactivate:jadwal')
+                ->dailyAt('15:30')
+                ->timezone('Asia/Jakarta');
     }
 
     /**

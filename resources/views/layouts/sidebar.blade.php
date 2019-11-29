@@ -50,6 +50,13 @@
                             </a>
                         </li>
                         <li>
+                            <a class="nav-link" href="/dashboard/laporan">
+                                <i class="nc-icon nc-layers-3"></i>
+                                <p>Laporan</p>
+                            </a>
+                        </li>
+                        
+                        <li>
                             <a class="nav-link" href="/dashboard/sekolah">
                                 <i class="nc-icon nc-bank"></i>
                                 <p>Data Sekolah</p>
