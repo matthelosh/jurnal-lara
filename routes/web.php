@@ -17,8 +17,10 @@ Route::get('/logout', function() {
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
+
+	// Dashboard Admin
 	Route::get('/users', 'DashController@indexUsers')->name('dashboardusers')->middleware('forAdmin');
-	Route::get('/users/detail/{username}','DashController@detilUser');
+	Route::get('/users/detail/{username}','DashController@detilUser')->middleware('forAdmin');
 
 	Route::get('/siswa', 'DashController@indexSiswa')->name('dashboardsiswas')->middleware('forAdmin');
 
@@ -32,7 +34,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 
 	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting')->middleware('forAdmin');
 
-	// Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen');
+	// Dashboard Guru
+
+	Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen')->middleware('forGuru');
 });
 
 

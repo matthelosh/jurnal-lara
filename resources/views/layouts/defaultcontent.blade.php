@@ -62,22 +62,24 @@
                 Jadwal Anda hari ini:
             </h3>
         
-            <div class="d-flex justify-content-around flex-wrap">
+            <div class="d-flex justify-content-around flex-md-row flex-wrap">
                 @if($jadwals->count() < 1)
                     <div class="alert bg-danger text-center">
                         <h3>Tidak ada jadwal mengajar :)</h3>
                     </div>
                 @else
-                    @foreach($jadwals ?? '' as $jadwal)
-                        <div class="card {{ ($jadwal->ket == 'jamkos') ? 'bg-danger' : 'bg-success' }}" >
-                            <div class="card-body text-white">
-                                <h5>{{$jadwal->rombels->nama_rombel}}</h5>
-                                <h5>{{ $jadwal->jamke }}</h5>
-                                <h5>{{ $jadwal->mapels->nama_mapel }}</h5>
-                                <a href="/dashboard/guru/absen/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
+                    <div class="card-deck">
+                        @foreach($jadwals ?? '' as $jadwal)
+                            <div class="card {{ ($jadwal->ket == 'jamkos') ? 'bg-danger border-success' : 'bg-success border-danger' }} " >
+                                <div class="card-body text-white">
+                                    <h5>{{$jadwal->rombels->nama_rombel}}</h5>
+                                    <h5>{{ $jadwal->jamke }}</h5>
+                                    <h5>{{ $jadwal->mapels->nama_mapel }}</h5>
+                                    <a href="/dashboard/do-absen/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 @endif
             </div>
         </div>

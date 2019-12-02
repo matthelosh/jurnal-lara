@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     //
-    protected $fillable = ['nis', 'nisn', 'nama_siswa', 'jk', 'rombel_id'];
+    protected $fillable = ['nis', 'nisn', 'nama_siswa', 'jk', 'rombel_id', 'foto'];
 
     public function rombels()
     {
     	return $this->belongsTo('App\Rombel', 'rombel_id', 'kode_rombel');
+    }
+
+    public function absens()
+    {
+    	return  $this->hasMany(\App\Absen, 'siswa_id', 'nisn');
     }
 }
