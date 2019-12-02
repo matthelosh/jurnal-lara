@@ -1,6 +1,9 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\GuruMiddleware;
+
 Route::get('/', function (Request $request) {
 	$sekolah = \App\Sekolah::first();
 	$request->session()->put('sekolah', $sekolah->nama_sekolah);
@@ -14,19 +17,22 @@ Route::get('/logout', function() {
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
-	Route::get('/users', 'DashController@indexUsers')->name('dashboardusers');
+	Route::get('/users', 'DashController@indexUsers')->name('dashboardusers')->middleware('forAdmin');
+	Route::get('/users/detail/{username}','DashController@detilUser');
 
-	Route::get('/siswa', 'DashController@indexSiswa')->name('dashboardsiswas');
+	Route::get('/siswa', 'DashController@indexSiswa')->name('dashboardsiswas')->middleware('forAdmin');
 
-	Route::get('/rombel', 'DashController@indexRombel')->name('dashboardrombel');
+	Route::get('/rombel', 'DashController@indexRombel')->name('dashboardrombel')->middleware('forAdmin');
 
-	Route::get('/mapel', 'DashController@indexMapel')->name('dashboardmapel');
+	Route::get('/mapel', 'DashController@indexMapel')->name('dashboardmapel')->middleware('forAdmin');
 
-	Route::get('/jadwal', 'DashController@indexJadwal')->name('dashboardjadwal');
+	Route::get('/jadwal', 'DashController@indexJadwal')->name('dashboardjadwal')->middleware('forAdmin');
 
-	Route::get('/sekolah', 'DashController@indexSekolah')->name('indexsekolah');
+	Route::get('/sekolah', 'DashController@indexSekolah')->name('indexsekolah')->middleware('forAdmin');
 
-	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting');
+	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting')->middleware('forAdmin');
+
+	// Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen');
 });
 
 
@@ -104,7 +110,7 @@ Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 
 
 // Route Guru
-Route::group(['prefix' => 'guru', 'as' => 'guru.'], function() {
-	Route::get('/dashboard', 'DashController@indexGuru')->name('dashguru');
-	Route::get('/siswa', 'DashController@guruSiswa')->name('siswa');
-});
+// Route::group(['prefix' => 'guru', 'as' => 'guru.'], function() {
+// 	Route::get('/dashboard', 'DashController@indexGuru')->name('dashguru');
+// 	Route::get('/siswa', 'DashController@guruSiswa')->name('siswa');
+// });

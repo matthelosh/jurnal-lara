@@ -3,9 +3,10 @@
        <div class="col-sm-12">
            <div class="card">
                <div class="card-header">
-                    @php($tgl = date('d M Y'))
+                @php($tgl = date('d M Y'))
                    <h5 class="card-title">Jadwal Pelajaran Hari {{$hari}}, {{$tgl}}</h5>
                    <button class="btn btn-danger float-right" id="btn-tutup-jadwal">Tutup Jadwal</button>
+                {{-- {{ $jadwals->count() }} --}}
                </div>
                <div class="card-body">
                    <div class="row">
@@ -49,7 +50,7 @@
                                     </tbody>
                                 </table>   
                         </div>
-
+                    {{-- @endif --}}
                </div>
            </div>
        </div>
@@ -67,13 +68,13 @@
                         <h3>Tidak ada jadwal mengajar :)</h3>
                     </div>
                 @else
-                    @foreach($jadwals as $jadwal)
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">{{$jadwal->mapels->nama_mapel}}</h5>
-                            </div>
-                            <div class="card-body">
-                                <h4>{{$jadwal->rombels->nama_rombel}}</h4>
+                    @foreach($jadwals ?? '' as $jadwal)
+                        <div class="card {{ ($jadwal->ket == 'jamkos') ? 'bg-danger' : 'bg-success' }}" >
+                            <div class="card-body text-white">
+                                <h5>{{$jadwal->rombels->nama_rombel}}</h5>
+                                <h5>{{ $jadwal->jamke }}</h5>
+                                <h5>{{ $jadwal->mapels->nama_mapel }}</h5>
+                                <a href="/dashboard/guru/absen/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
                             </div>
                         </div>
                     @endforeach

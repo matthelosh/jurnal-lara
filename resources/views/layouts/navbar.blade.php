@@ -46,7 +46,11 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <img src="{{ asset('/img/faces/'.Auth::user()->username.'.jpg') }}" alt="Avatar" class="img navbar-face" >
+                        @if(file_exists(public_path('/img/faces/'.Auth::user()->nip.'.jpg')))
+                            <img src="{{ asset('/img/faces/'.Auth::user()->nip.'.jpg') }}" alt="Avatar" class="img navbar-face" >
+                        @else
+                            <img src="{{ asset('/img/avatar-1.png') }}" alt="Avatar" class="img navbar-face" >
+                        @endif
                         &nbsp;
                         <span class="no-icon">{{ Auth::user()->fullname }}</span>
                     </a>

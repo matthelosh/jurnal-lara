@@ -73,24 +73,38 @@
                 @elseif(Auth::user()->level == 'guru')
                     <ul class="nav">
                         <li class="nav-item ">
-                            <a class="nav-link" href="/guru/dashboard">
+                            <a class="nav-link" href="/dashboard">
                                 <i class="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="./user.html">
-                                <i class="nc-icon nc-circle-09"></i>
-                                <p>User Profile</p>
+                            <a class="nav-link" href="/dashboard/profil/{{ Auth::user()->username }}">
+                                <i class="nc-icon nc-badge"></i>
+                                <p>Profil</p>
                             </a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/absenku">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>Absenku</p>
+                            </a>
+                        </li>
+                        
                         @if(Session::get('wali') == true)
                         <li>
-                            <a class="nav-link" href="{{route('guru.siswa')}}">
+                            <a class="nav-link" href="/dashboard/siswaku">
                                 <i class="nc-icon nc-satisfied"></i>
                                 <p>Siswa</p>
                             </a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/rekap-absen">
+                                <i class="nc-icon nc-chart-pie-36"></i>
+                                <p>Rekap Absen</p>
+                            </a>
+                        </li>
+                        
                         @endif
                     </ul>
 

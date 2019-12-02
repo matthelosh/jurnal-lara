@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function jadwals()
+    {
+        return $this->hasMany(\App\Jadwal, 'guru_id', 'nip');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        self::deleting(function($user) {
+            $user->jadwals()->each(function($jadwal) {
+                $jadwal->delete();
+            });
+        });
+    }
 }

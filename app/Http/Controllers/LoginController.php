@@ -14,23 +14,31 @@ class LoginController extends Controller
 
     	if(Auth::attempt($credentials))
     	{
-    		if(Auth::user()->level == 'admin')
-            {
+            $wali = \App\Rombel::where('guru_id', Auth::user()->nip)->first();
+            if ($wali) {
+                $request->session()->put('wali', true);
+                return redirect('/dashboard');
+            } else {
                 $request->session()->put('wali', false);
                 return redirect('/dashboard');
             }
-            else if(Auth::user()->level == 'guru')
-            {
-                $wali = \App\Rombel::where('guru_id', Auth::user()->nip)->first();
-                if ($wali) {
-                    $request->session()->put('wali', true);
-                    return redirect('/guru/dashboard');
-                } else {
-                    $request->session()->put('wali', false);
-                    return redirect('/guru/dashboard');
-                }
+    		// if(Auth::user()->level == 'admin')
+      //       {
+      //           $request->session()->put('wali', false);
+      //           return redirect('/dashboard');
+      //       }
+      //       else if(Auth::user()->level == 'guru')
+      //       {
+      //           $wali = \App\Rombel::where('guru_id', Auth::user()->nip)->first();
+      //           if ($wali) {
+      //               $request->session()->put('wali', true);
+      //               return redirect('/guru/dashboard');
+      //           } else {
+      //               $request->session()->put('wali', false);
+      //               return redirect('/guru/dashboard');
+      //           }
                 
-            }
+      //       }
             // return redirect('/dashboard');
     	}
     	else

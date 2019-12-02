@@ -22,6 +22,15 @@ $(document).ready(function(){
     
     // Users
     	// Get Users Datatables
+        $(document).on('mouseenter', '.user-detail-link', function(){
+            var data = tusers.row($(this).parents('tr')).data();
+            $(this).tooltip({
+                title: `<img class="img img-circle img-avatar" src="/img/faces/${data.nip}.jpg" with="50px" height="50px" onerror="this.src='/img/avatar-1.png'">`,
+                html: true,
+                placement: 'right'
+            });
+        });
+
     	var tusers = $('#table-users').DataTable({
     		dom: 'Bftlp',
     		processing: true,
@@ -48,7 +57,11 @@ $(document).ready(function(){
 	        columns: [
 	            { data: 'DT_RowIndex', 'orderable': false},
 	            { data: 'nip', 'name': 'nip'},
-	            { data: 'username', name: 'username'},
+	            { data: 'username', 
+                    "render": function(data, type, row, meta) {
+                        return "<a href='/dashboard/users/detail/"+row.username+"' class='user-detail-link'>"+row.username+"</a>"
+                    }
+                },
 	            { data: 'fullname', name: 'fullname'},
 	            { data: 'hp', name: 'hp'},
 	            { data: 'email', name: 'email'},
@@ -1098,7 +1111,7 @@ $(document).ready(function(){
             columns: [
                 { data: 'DT_RowIndex', 'orderable': false},
                 { data: 'hari', name: 'hari'},
-                { data: 'gurus.fullname', name: 'gurus.fullname','defaultContent': 'Belum ada guru.'},
+                { data: 'gurus.fullname', name: 'gurus.fullname','defaultContent': 'Belum ada guru.', 'defaultContent': '<span bg-danger>Tidak ada guru</span>'},
                 { data: 'mapels.nama_mapel', name: 'mapels.nama_mapel','defaultContent': 'Belum ada mapel.'},
                 { data: 'rombels.nama_rombel', name: 'rombels.nama_rombel','defaultContent': 'Belum ada rombel.'},
                 { data: 'jamke', name: 'jamke'},
@@ -1353,6 +1366,7 @@ $(document).ready(function(){
 
 	// Aktifkan Jadwal
 	$(document).on('click', '#btn-aktifkan-jadwal', function() {
+        $('#progress').addClass('progress d-flex').removeClass('d-none');
 		$.ajax({
 			headers: headers,
 			url: '/ajax/aktifkan-jadwal',
@@ -1360,7 +1374,7 @@ $(document).ready(function(){
 			// dataType: 'json',
 		}).done(function(res) {
 			if (res.status == 'sukses') {
-                Swal.fire('info', 'Jadwal hari ini telah diaktifkan.', 'info');
+                Swal.fire('info', res.msg, 'info');
             } else {
                 if(res.errCode == '400') {
                     Swal.fire('warning', 'Jadwal hari ini aktif. Tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon untuk verifikasi ulang chat DI telegram pemangku kepentingan.', 'warning');
@@ -1379,6 +1393,8 @@ $(document).ready(function(){
 		}).always(function(){
 			$('.alert-logabsen').css('display', 'none');
 			$('#btn-tutup-jadwal').css('display', 'block');
+            tlogabsen.draw();
+            $('#progress').removeClass('progress d-flex').addClass('d-none');
 		});
 		
 	});
@@ -1519,7 +1535,7 @@ $(document).ready(function(){
 			titleText: 'Yakin Menutup Jadwal hari ini?'             
 		}).then(result => {
 			if (result.value) {
-                $('#progress').addClass('progress');
+                $('#progress').addClass('progress d-flex').removeClass('d-none');
 				$.ajax({
 					url: '/ajax/tutup/jadwal',
 					type: 'post',
@@ -1529,20 +1545,18 @@ $(document).ready(function(){
 						if(res.status == 'sukses'){
                             if(res.errCode){
                                 Swal.fire('Info', 'Jadwal sudah ditutup, tapi ada chat id pemangku kepentingan yang sudah tidak aktif. Mohon verifikasi ulang chat ID.', 'info');
-                                $('#progress').removeClass('progress');
                             } else {
                                 Swal.fire('Info', 'Jadwal hari ini telah ditutup', 'info');
-                                $('#progress').removeClass('progress');
                             }
 							
 							tlogabsen.draw();
-                            $('#progress').removeClass('progress');
 						} else {
 							Swal.fire('Error', res.msg, 'error');
-                            $('#progress').removeClass('progress');
 						}
 					}
-				});
+				}).always(function(){
+                    $('#progress').removeClass('progress d-flex').addClass('d-none');
+                });
 			}
 		});
 	});

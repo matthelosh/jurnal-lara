@@ -10,6 +10,9 @@
 				@case('users')
 					@include('dash-admin.users')
 				@break
+				@case('detiluser')
+				    @include('dash-admin.detiluser')
+				@break
 				@case('siswa')
 					@include('dash-admin.siswa')
 				@break

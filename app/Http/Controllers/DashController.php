@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -24,46 +24,55 @@ class DashController extends Controller
         $today = $haris[$day];
         $date = date('Y-m-d');
 
-        // $jadwals = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
+        $logabsens = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
+        $jadwals = \App\LogAbsen::where(['guru_id' => Auth::user()->nip, 'hari' => $today])->with('rombels', 'mapels')->get();
 
+        $params = ['page' => 'dashboard', 'hari' =>$today, 'jadwals' => (Auth::user()->level == 'admin')?$logabsens:$jadwals];
 
-    	return view('dash-admin.index', ['page' => 'dashboard', 'hari' =>$today]);
+        // if(Auth::user()->level == 'guru') {
+        //     array_push($params, ['jadwals' => $jadwals]);
+        // }
+
+    	return view('index', ['page' => 'dashboard', 'hari' =>$today, 'jadwals' => $jadwals]);
     }
-
+    public function detilUser(Request $request, $username) {
+	$user = \App\User::where('username', $username)->first();
+	return view('index', ['page' => 'detiluser', 'data' => $user]);
+    }
     public function indexUsers()
     {
-    	return view('dash-admin.index', ['page' => 'users']);
+    	return view('index', ['page' => 'users']);
     }
 
     public function indexSiswa()
     {
-        return view('dash-admin.index', ['page' => 'siswa']);
+        return view('index', ['page' => 'siswa']);
     }
 
     public function indexRombel()
     {
-        return view('dash-admin.index', ['page' => 'rombel']);
+        return view('index', ['page' => 'rombel']);
     }
 
     public function indexMapel()
     {
-        return view('dash-admin.index', ['page' => 'mapel']);
+        return view('index', ['page' => 'mapel']);
     }
 
     public function indexJadwal()
     {
-        return view('dash-admin.index', ['page' => 'jadwal']);
+        return view('index', ['page' => 'jadwal']);
     }
 
     public function indexSekolah()
     {
         $data = \App\Sekolah::first();
-        return view('dash-admin.index', ['page' => 'sekolah', 'info_sekolah' => $data ]);
+        return view('index', ['page' => 'sekolah', 'info_sekolah' => $data ]);
     }
 
     public function indexSetting()
     {
-        return view('dash-admin.index', ['page' => 'pengaturan']);
+        return view('index', ['page' => 'pengaturan']);
     }
 // End Admin
 
