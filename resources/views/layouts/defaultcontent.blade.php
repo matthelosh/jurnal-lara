@@ -75,7 +75,7 @@
                                     <h5>{{$jadwal->rombels->nama_rombel}}</h5>
                                     <h5>{{ $jadwal->jamke }}</h5>
                                     <h5>{{ $jadwal->mapels->nama_mapel }}</h5>
-                                    <a href="/dashboard/do-absen/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
+                                    <a href="/dashboard/{{ ($jadwal->ket == 'jamkos') ? 'do-absen' : 'detail-absen' }}/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
                                 </div>
                             </div>
                         @endforeach

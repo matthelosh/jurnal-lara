@@ -15,6 +15,10 @@ Route::get('/logout', function() {
 	return redirect('/');
 });
 
+Route::group(['prefix' => 'absen', 'as' => 'absen'], function() {
+	Route::post('/do', 'AbsenController@saveAbsen')->name('saveabsen')->middleware('forGuru');
+});
+
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
 
@@ -35,8 +39,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting')->middleware('forAdmin');
 
 	// Dashboard Guru
-
+	Route::get('/absenku', 'LogabsenController@absenKu')->name('absenku')->middleware('forGuru');
 	Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen')->middleware('forGuru');
+	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru');
 });
 
 
