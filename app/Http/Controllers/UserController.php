@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserController extends Controller
 {
@@ -19,7 +20,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        return Datatables::of(User::all())->addIndexColumn()->make(true);
+        return Datatables::of(User::all())->addIndexColumn()->addColumn('qr', function($user) {
+            return QrCode::size(50)->generate('/dashboard/users/detail/'.$user->username);
+        })->rawColumns(['qr'])->make(true);
     }
 
     /**
