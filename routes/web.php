@@ -7,6 +7,9 @@ use App\Http\Middleware\GuruMiddleware;
 Route::get('/', function (Request $request) {
 	$sekolah = \App\Sekolah::first();
 	$request->session()->put('sekolah', $sekolah->nama_sekolah);
+	if(Auth::check()){
+		return redirect('/dashboard');
+	}
     return view('login');
 })->name('login');
 Route::post('/login', 'LoginController@authenticate')->name('authenticateuser');
@@ -15,9 +18,9 @@ Route::get('/logout', function() {
 	return redirect('/');
 });
 
-Route::group(['prefix' => 'absen', 'as' => 'absen'], function() {
-	Route::post('/do', 'AbsenController@saveAbsen')->name('saveabsen')->middleware('forGuru');
-});
+// Route::group(['prefix' => 'absen', 'as' => 'absen'], function() {
+// 	Route::post('/do', 'AbsenController@saveAbsen')->name('saveabsen')->middleware('forGuru');
+// });
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
@@ -41,7 +44,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	// Dashboard Guru
 	Route::get('/absenku', 'LogabsenController@absenKu')->name('absenku')->middleware('forGuru');
 	Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen')->middleware('forGuru');
-	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru');
+	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru'); 
 });
 
 
@@ -106,6 +109,10 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// Pesan Telegram
 	Route::post('/cek/pesan', 'PesanController@cek')->name('cekpesan');
 	Route::post('/kirim/pesan', 'PesanController@kirimPesan')->name('kirimpesan');
+
+	// Absen
+	Route::post('/absen/do', 'AbsenController@saveAbsen')->name('doabsen')->middleware('forGuru');
+	Route::put('/absen/update/{nisn}', 'AbsenController@updatePresensi')->name('updatepresensi')->middleware('forGuru');
 });
 
 
