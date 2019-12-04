@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('/DataTables/Buttons-1.6.1/css/buttons.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('/DataTables/Responsive-2.2.3/css/responsive.dataTables.css') }}">
     <link rel="stylesheet" href="{{ asset('/DataTables/Responsive-2.2.3/css/responsive.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">
     <link href="{{ asset('/css/light-bootstrap-dashboard.css?v=2.0.0 ') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('/css/utama.css') }}" rel="stylesheet" />
@@ -89,8 +90,10 @@
 <script src="{{ asset('/js/light-bootstrap-dashboard.js?v=2.0.0') }} " type="text/javascript"></script>
 {{-- <script src="{{ asset('/js/light-bootstrap-dashboard.js') }} " type="text/javascript"></script> --}}
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="{{ asset('/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('/js/sweetalert.js') }}"></script>
 <script src="{{ asset('/js/utama.js') }}"></script>
+<script src="{{ asset('/js/umum.js') }}"></script>
 @if(Auth::user()->level == 'admin')
     <script src="{{ asset('/js/admin.js') }}"></script>
 @elseif(Auth::user()->level == 'guru')

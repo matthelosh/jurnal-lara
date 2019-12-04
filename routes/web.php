@@ -39,6 +39,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 
 	Route::get('/sekolah', 'DashController@indexSekolah')->name('indexsekolah')->middleware('forAdmin');
 
+	Route::get('/laporan', 'DashController@indexLaporan')->name('indexlaporan')->middleware('forAdmin');
+	Route::get('/laporan/presensi', 'DashController@indexPresensi')->name('indexlaporan')->middleware('forAdmin');
+	Route::get('/laporan/jurnal', 'DashController@indexJurnal')->name('indexlaporan')->middleware('forAdmin');
+
 	Route::get('/pengaturan', 'DashController@indexSetting')->name('dashboardsetting')->middleware('forAdmin');
 
 	// Dashboard Guru
@@ -113,6 +117,11 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// Absen
 	Route::post('/absen/do', 'AbsenController@saveAbsen')->name('doabsen')->middleware('forGuru');
 	Route::put('/absen/update/{nisn}', 'AbsenController@updatePresensi')->name('updatepresensi')->middleware('forGuru');
+	Route::get('/rekap/kelas', 'AbsenController@rekapKelas')->name('rekapkelas');
+
+	// Select2
+	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');
+	Route::post('/select/guru', 'UserController@select')->name('selectguru');
 });
 
 

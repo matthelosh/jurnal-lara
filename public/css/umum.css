@@ -175,7 +175,13 @@
 	0% {transform: rotate(0deg);}
 	100% {transform: rotate(360deg);}
 }
+.bg-success-gradient {
+	background-image: linear-gradient(to right, #78aa99, #7899ef);
+}
 
+.bg-danger-gradient {
+	background-image: linear-gradient(to right, #bf4b4b, #ef7242);
+}
 /*Data Tables BUtton*/
 /*.copyBtn{
 	background: teal;

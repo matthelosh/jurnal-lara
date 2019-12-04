@@ -25,6 +25,24 @@ class UserController extends Controller
         })->rawColumns(['qr'])->make(true);
     }
 
+    public function select(Request $request)
+    {
+        $search = $request->input('q');
+
+        if ($search == '') {
+            $gurus = User::where('level', 'guru')->select('nip', 'fullname')->get();
+        } else {
+            $gurus = User::where('level', 'guru')->select('nip', 'fullname')->where('fullname', 'like', '%'.$search.'%')->get();
+        }
+
+        $response = [];
+        foreach($gurus as $guru)
+        {
+            array_push($response, ["id" =>$guru->nip,"text" => $guru->fullname]);
+        }
+
+        return response()->json($response);
+    }
     /**
      * Show the form for creating a new resource.
      *

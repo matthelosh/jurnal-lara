@@ -139,8 +139,28 @@ class RombelController extends Controller
             Rombel::where('id', $rombel)->delete();
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Rombel: '.$rombel.' dihapus.']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
+    }
+
+    // Select2
+    public function select(Request $request)
+    {
+        $search = $request->input('q');
+
+        if ($search == '') {
+            $rombels = Rombel::select('kode_rombel', 'nama_rombel')->get();
+        } else {
+            $rombels = Rombel::select('kode_rombel', 'nama_rombel')->where('nama_rombel', 'like', '%'.$search.'%')->get();
+        }
+
+        $response = [];
+        foreach($rombels as $rombel)
+        {
+            array_push($response, ["id" =>$rombel->kode_rombel,"text" => $rombel->nama_rombel]);
+        }
+
+        return response()->json($response);
     }
 }

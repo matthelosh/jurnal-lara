@@ -498,6 +498,7 @@
 	</div>		
 </div>
 
+{{-- Modal Ijinkan Guru --}}
 <div class="modal fade" id="modal-ijinkan-guru" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -553,4 +554,44 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+{{-- Modal Admin Rekap Kelas --}}
+<div class="modal fade" id="modal-rekap-kelas" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				
+				<h4 class="modal-title">Rekap Absensi Kelas <br>
+					<small>
+						Kelas 
+						<span id="nama_kelas"></span><br>
+						Bulan 
+						<span id="bulan"></span> 
+						<span id="tahun"></span>
+					</small>
+				</h4>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-sm" width="100%">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>NISN</th>
+								<th>Nama</th>
+								<th>Hadir</th>
+								<th>Ijin</th>
+								<th>Sakit</th>
+								<th>Alpa</th>
+								<th>Telat</th>
+								<th>Ket</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>

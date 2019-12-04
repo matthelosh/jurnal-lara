@@ -11,8 +11,8 @@ $(document).ready(function(){
 
 
     var headers =  {
-    				'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-    			};
+		'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+	};
 
     $('.modal').on('hide.bs.modal', function(){
     	$(this).find('form').trigger('reset');
@@ -1561,6 +1561,28 @@ $(document).ready(function(){
 		});
 	});
 
+	// Laporan
+		// Presensi
+	$(document).on('submit', '#form-rekap-kelas', function(e){
+		e.preventDefault();
+		var data = $(this).serialize();
+		$('#progress').addClass('progress d-flex').removeClass('d-none');
+		// $.ajax({
+		// 	headers: headers,
+		// 	url: '/ajax/rekap/kelas',
+		// 	type: 'get',
+		// 	data: data,
+		// }).done(res => {
+		// 	$('#modal-rekap-kelas').modal();
+		// }).fail(err => {
 
+		// }).always(function() {
+		// 	$('#progress').removeClass('progress d-flex').addClass('d-none');
+		// });
+		var trekapbulans = $('#table-rekap-bulan').DataTable({
+
+		});
+		$('#modal-rekap-kelas').modal();
+	});
 
 });

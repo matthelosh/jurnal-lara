@@ -70,6 +70,21 @@ class DashController extends Controller
         return view('index', ['page' => 'sekolah', 'info_sekolah' => $data ]);
     }
 
+    public function indexLaporan()
+    {
+        return view('index', ['page' => 'laporan']);
+    }
+
+    public function indexPresensi()
+    {
+        return view('index', ['page' => 'laporan_presensi']);
+    }
+
+    public function indexJurnal()
+    {
+        return view('index', ['page' => 'laporan_jurnal']);
+    }
+
     public function indexSetting()
     {
         return view('index', ['page' => 'pengaturan']);
