@@ -27,6 +27,6 @@ class LogAbsen extends Model
 
     public function absens()
     {
-        return $this->hasMany(\App\Absen, 'absen_id', 'kode_absen');
+        return $this->hasMany('App\Absen', 'absen_id', 'kode_absen');
     }
 }

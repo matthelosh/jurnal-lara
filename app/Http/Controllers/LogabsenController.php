@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\LogAbsen;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Telegram;
 use Yajra\DataTables\Facades\DataTables;
@@ -38,14 +39,18 @@ class LogabsenController extends Controller
     // Get Data Absen ku (guru)
     public function absenKu(Request $request)
     {
-        $absenkus = \App\LogAbsen::where('guru_id', $request->user()->nip)->get();
-
-
-
-        return view('index', ['page' => 'absenku', 'mode' => 'absenkus', 'datas' => $absenkus]);
+        // $absenkus = \App\LogAbsen::where('guru_id', $request->user()->nip)->get();
+        return view('index', ['page' => 'absenku', 'mode' => 'absenkus']);
     }
 
+    public function getAbsenKu(Request $request)
+    {
+        $absenkus = \App\LogAbsen::where('guru_id', $request->user()->nip)->with('rombels')->get();
 
+        return DataTables::of($absenkus)->addColumn('kode', function($absen) {
+            return QrCode::size(40)->generate($absen->kode_absen);
+        })->rawColumns(['kode'])->addIndexColumn()->make(true);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -219,5 +224,16 @@ class LogabsenController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'msg' => $e->getCode()." : ".$e->getMessage()]);
         }
+    }
+
+    // Rekap Log Absen
+    public function rekap(Request $request)
+    {
+        $rekaps = LogAbsen::orderByDesc('tanggal')->with('mapels', 'rombels', 'gurus')->get();
+
+        return DataTables::of($rekaps)->addColumn('kode', function($rekap){
+            return QrCode::size(40)->generate($rekap->kode_absen);
+            // return '<h1>Kode</h1>';
+        })->rawColumns(['kode'])->addIndexColumn()->make(true);
     }
 }

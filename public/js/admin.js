@@ -31,7 +31,9 @@ $(document).ready(function(){
             });
         });
 
-    	var tusers = $('#table-users').DataTable({
+    	var tusers = $('#table-users').on('init.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		}).DataTable({
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
@@ -46,7 +48,10 @@ $(document).ready(function(){
     			type: 'get',
     			headers: {
     				'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-    			}
+				},
+				beforeSend: function(){
+					$('#progress').addClass('progress d-flex').removeClass('d-none');
+				}
     		},
     		"columnDefs": [ {
 	            "searchable": false,
@@ -208,7 +213,9 @@ $(document).ready(function(){
 
 
     // Siswas
-    var tsiswas = $('#table-siswas').DataTable({
+    var tsiswas = $('#table-siswas').on('init.dt', function(){
+		$('#progress').removeClass('progress d-flex').addClass('d-none');
+	}).DataTable({
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
@@ -223,7 +230,10 @@ $(document).ready(function(){
     			type: 'get',
     			headers: {
     				'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-    			}
+				},
+				beforeSend: function(){
+					$('#progress').addClass('progress d-flex').removeClass('d-none');
+				}
     		},
     		"columnDefs": [ {
 	            "searchable": false,
@@ -389,7 +399,9 @@ $(document).ready(function(){
 
 
     // Rombel
-    var trombels = $('#table-rombels').DataTable({
+    var trombels = $('#table-rombels').on('init.dt', function(){
+		$('#progress').removeClass('progress d-flex').addClass('d-none');
+	}).DataTable({
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
@@ -402,7 +414,10 @@ $(document).ready(function(){
     		ajax: {
     			url: '/ajax/rombels',
     			type: 'get',
-    			headers: headers
+				headers: headers,
+				beforeSend: function(){
+					$('#progress').addClass('progress d-flex').removeClass('d-none');
+				}
     		},
     		"columnDefs": [ {
 	            "searchable": false,
@@ -587,7 +602,9 @@ $(document).ready(function(){
 
 
     	// Get Members
-    	var tmembers = $('#tmembers').DataTable({
+    	var tmembers = $('#tmembers').on('init.dt', function(){
+			$('#progress-tmembers').removeClass('progress-sm d-flex').addClass('d-none')
+		}).DataTable({
     		dom: 'ftlp',
     		processing: true,
     		serverSide: true,
@@ -602,7 +619,10 @@ $(document).ready(function(){
     			type: 'get',
     			headers: {
     				'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-    			}
+				},
+				beforeSend:function(){
+					$('progress-tmembers').addClass('d-flex progress-sm').removeClass('d-none');
+				}
     		},
     		"columnDefs": [ {
 	            "searchable": false,
@@ -854,7 +874,9 @@ $(document).ready(function(){
     		$('#btn-import-mapels').css('display', 'block').text('Import File'+files[0].name);
     	});
 
-	var tmapels = $('#table-mapels').DataTable({
+	var tmapels = $('#table-mapels').on('init.dt', function() {
+		$('#progress').removeClass('d-flex progress').addClass('d-none');
+	}).DataTable({
 		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
@@ -869,7 +891,10 @@ $(document).ready(function(){
     			type: 'get',
     			headers: {
     				'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-    			}
+				},
+				beforeSend: function(){
+					$('#progress').addClass('d-flex progress').removeClass('d-none');
+				}
     		},
     		"columnDefs": [ {
 	            "searchable": false,
@@ -1068,7 +1093,9 @@ $(document).ready(function(){
 
 
     // Jadwals
-    var tjadwals = $('#table-jadwals').DataTable({
+    var tjadwals = $('#table-jadwals').on('init.dt', function(){
+		$('#progress').removeClass('d-flex progress').addClass('d-none');
+	}).DataTable({
         dom: 'Bftlip',
         buttons: [
              {
@@ -1100,7 +1127,10 @@ $(document).ready(function(){
         ajax: {
             url: '/ajax/jadwals',
             type: 'get',
-            headers: headers
+			headers: headers,
+			beforeSend: function(){
+				$('#progress').addClass('d-flex progress').removeClass('d-none');
+			}
         },
         "columnDefs": [ {
                 "searchable": false,
@@ -1399,7 +1429,9 @@ $(document).ready(function(){
 		
 	});
 
-	var tlogabsen = $('#table-log-absen').DataTable({
+	var tlogabsen = $('#table-log-absen').on('init.dt', function(){
+		$('#progress').removeClass('d-flex progress').addClass('d-none');
+	}).DataTable({
 		dom: 'Bftlip',
         buttons: [
             {
@@ -1436,38 +1468,41 @@ $(document).ready(function(){
         ajax: {
             url: '/ajax/get-log-absen',
             type: 'post',
-            headers: headers
+			headers: headers,
+			beforeSend: function(){
+				$('#progress').addClass('d-flex progress').removeClass('d-none');
+			}
         },
         "columnDefs": [ {
-                "searchable": false,
-                "orderable": false,
-                "targets": 0
-                } ],
-            'order': [[1, 'asc']],
-            columns: [
-				{ data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
-				{ data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
-                { data: 'gurus.fullname', name: 'gurus.fullname'},
-                { data: 'jamke', name: 'jamke'},
-                { data: 'jml_siswa', name: 'jml_siswa', 'defaultContent': '0'},
-                { data: 'hadir', name: 'hadir', 'defaultContent': '0'},
-                { data: 'ijin', name: 'ijin', 'defaultContent': '0'},
-                { data: 'sakit', name: 'sakit', 'defaultContent': '0'},
-                { data: 'alpa', name: 'alpa', 'defaultContent': '0'},
-                { data: 'telat', name: 'telat', 'defaultContent': '0'},
-                { data: 'jurnal', name: 'jurnal', 'defaultContent': '0'},
-                { data: 'ket', name: 'ket', 'defaultContent': 'Jamkos'},
-                // { data: 'ijin', name: 'ijin'},
-                {data: 'isActive', 'render': function(data, type, row) {
-                        if(row.isActive === 0) {
-                            return 'Tutup';
-                        } else {
-                            return 'Aktif';
-                        }
-                    }
-                },
-                { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
-            ]
+			"searchable": false,
+			"orderable": false,
+			"targets": 13
+			} ],
+		'order': [[1, 'asc']],
+		columns: [
+			{ data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
+			{ data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
+			{ data: 'gurus.fullname', name: 'gurus.fullname'},
+			{ data: 'jamke', name: 'jamke'},
+			{ data: 'jml_siswa', name: 'jml_siswa', 'defaultContent': '0'},
+			{ data: 'hadir', name: 'hadir', 'defaultContent': '0'},
+			{ data: 'ijin', name: 'ijin', 'defaultContent': '0'},
+			{ data: 'sakit', name: 'sakit', 'defaultContent': '0'},
+			{ data: 'alpa', name: 'alpa', 'defaultContent': '0'},
+			{ data: 'telat', name: 'telat', 'defaultContent': '0'},
+			{ data: 'jurnal', name: 'jurnal', 'defaultContent': '0'},
+			{ data: 'ket', name: 'ket', 'defaultContent': 'Jamkos'},
+			// { data: 'ijin', name: 'ijin'},
+			{data: 'isActive', 'render': function(data, type, row) {
+					if(row.isActive === 0) {
+						return 'Tutup';
+					} else {
+						return 'Aktif';
+					}
+				}
+			},
+			{ data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
+		]
 	});
 
 	$(document).on('click', '.btn-ijinkan-guru', function() {
@@ -1566,7 +1601,7 @@ $(document).ready(function(){
 	$(document).on('submit', '#form-rekap-kelas', function(e){
 		e.preventDefault();
 		var data = $(this).serialize();
-		$('#progress').addClass('progress d-flex').removeClass('d-none');
+		// $('#progress').addClass('progress d-flex').removeClass('d-none');
 		// $.ajax({
 		// 	headers: headers,
 		// 	url: '/ajax/rekap/kelas',
@@ -1579,10 +1614,137 @@ $(document).ready(function(){
 		// }).always(function() {
 		// 	$('#progress').removeClass('progress d-flex').addClass('d-none');
 		// });
-		var trekapbulans = $('#table-rekap-bulan').DataTable({
-
+		
+		var trekapbulans = $('#table-rekap-bulan').on('init.dt', function(){
+			$('#progress').removeClass('d-flex progress').addClass('d-none');
+		}).DataTable({
+			dom: 'Bftlip',
+			buttons: [
+				{
+					extend: 'copy',
+					text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+				},
+				{
+					extend: 'excel',
+					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					messageTop: new Date(),
+					title: 'jadwal Harian',
+					exportOptions: {
+						
+					}
+				},
+				{
+					extend: 'print',
+					text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+				}
+			],
+			language: {"emptyTable": function(){
+					$('.alert-logabsen').css('display', 'block');
+					$('#btn-tutup-jadwal').hide();
+					return "data kosong.";
+				}
+			},
+			serverSide: true,
+			processing: true,
+			responsive: true,
+			lengthMenu: [
+				[10, 25, 50, 100, -1],
+				['10', '25', '50', '100', 'Semua']
+			],
+			ajax: {
+				url: '/ajax/rekap/kelas/bulan/'+$('.bulan').val()+'/tahun/'+$('.tahun').val()+'/rombel/'+$('.rombel').val(),
+				type: 'post',
+				headers: headers,
+				beforeSend: function(){
+					$('#progress').addClass('d-flex progress').removeClass('d-none');
+				}
+			},
+			"columnDefs": [ {
+					"searchable": false,
+					"orderable": false,
+					"targets": 0
+					} ],
+				'order': [[1, 'asc']],
+				columns: [
+					{ data: 'DT_RowIndex', 'orderable': false},
+					{ data: 'siswa_id', text: 'siswa_id' },
+					{ data: 'nama_siswa', text: 'nama_siswa'},
+					{ data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
+				]
 		});
 		$('#modal-rekap-kelas').modal();
+		$('#modal-rekap-kelas').on('bs.hide.bs.modal', function(){
+			trekapbulans.destroy();
+		});
 	});
 
+	var trekaplogabsens = $('#table-rekap-log-absen').on('init.dt', function(){
+		$('#progress-trekaplog').removeClass('progress-sm d-flex').addClass('d-none');
+	}).DataTable({
+		dom: 'Bftlip',
+		buttons: [
+			{
+				extend: 'copy',
+				text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+			},
+			{
+				extend: 'excel',
+				text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+				messageTop: new Date(),
+				title: 'jadwal Harian',
+			},
+			{
+				extend: 'print',
+				text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+				exportOptions: {
+					stripHtml: false
+				},
+			}
+		],
+		
+		serverSide: true,
+		processing: true,
+		"language": {
+			processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+		},
+		responsive: true,
+		lengthMenu: [
+			[10, 25, 50, 100, -1],
+			['10', '25', '50', '100', 'Semua']
+		],
+		ajax: {
+			url: '/ajax/rekap/logabsen',
+			type: 'post',
+			headers: headers,
+			beforeSend: function(){
+				$('#progress-trekaplog').addClass('progress-sm d-flex').removeClass('d-none');
+			}
+		},
+		"columnDefs": [ {
+			"searchable": false,
+			"orderable": false,
+			"targets": 0
+			} ],
+		'order': [[1, 'asc']],
+		columns: [
+			{ data: 'DT_RowIndex', 'orderable': false},
+			{ data: 'kode', render: function( data, type, row, meta ) {
+				// return data;
+				return '<a href="/dashboard/detil/absen/'+row.kode_absen+'" >'+data+'</a>';
+			}},
+			{ data: 'tanggal', text: 'tanggal'},
+			{ data: 'mapels.nama_mapel', text: 'mapels.nama_mapel'},
+			{ data: 'rombels.nama_rombel', text: 'rombels.nama_rombel'},
+			{ data: 'gurus.fullname', text: 'gurus.fullname'},
+			{ data: 'jml_siswa', text: 'jml_siswa'},
+			{ data: 'hadir', text: 'hadir'},
+			{ data: 'ijin', text: 'ijin'},
+			{ data: 'sakit', text: 'sakit' },
+			{ data: 'alpa', text: 'alpa' },
+			{ data: 'telat', text: 'telat' },
+			{ data: 'ket', text: 'ket'}
+		],
+		// "deferLoading": 57
+	})
+	
 });

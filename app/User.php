@@ -51,4 +51,9 @@ class User extends Authenticatable
             });
         });
     }
+
+    public function logabsens()
+    {
+        $this->hasMany('App\LogAbsen', 'guru_id', 'nip');
+    }
 }

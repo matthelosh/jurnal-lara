@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="table-responsive">
-				<table class="table table-sm">
+				<table class="table table-sm" id="table-absenkus" width="100%">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -21,7 +21,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($datas as $data)
+						{{-- @foreach($datas as $data)
 							<tr class="{{ ($data->ket == 'jamkos') ? 'bg-warning white-text ' : '' }}">
 								<td>{{ $loop->index+1 }}</td>
 								<td><a href="/dashboard/detail-absen/{{ $data->kode_absen }}">{!! QrCode::size(50)->generate($data->kode_absen) !!}</a></td>
@@ -37,7 +37,7 @@
 								<td>{{ substr($data->jurnal, 0, 38) }}..</td>
 								<td>{{ $data->ket }}</td>
 							</tr>
-						@endforeach
+						@endforeach --}}
 					</tbody>
 				</table>
 			</div>

@@ -18,4 +18,9 @@ class Rombel extends Model
     {
     	return $this->hasMany('App\Siswa', 'rombel_id', 'kode_rombel');
     }
+
+    public function logabsens()
+    {
+        return $this->hasMany('App\LogAbsen', 'rombel_id', 'kode_rombel');
+    }
 }

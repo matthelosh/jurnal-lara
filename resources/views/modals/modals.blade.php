@@ -214,6 +214,9 @@
 	                                    </div>
 	                                    <hr>
 	                                    <div class="row" id="data-member">
+											<div id="progress-tmembers" class="d-none progress-table justify-content-center align-items-center" >
+													<img src="{{ asset('/img/loader.png') }}" alt="" class="loader" style="height:100px;height:100px;">
+												</div>
 	                                        <div class="table-responsive">
 	                                            <table class="table table-sm" width="100%" id="tmembers" >
 	                                                {{-- <caption style="caption-side: top;">Anggota Rombel</caption> --}}
@@ -575,17 +578,17 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-bordered table-sm" width="100%">
+					<table class="table table-bordered table-sm" width="100%" id="table-rekap-bulan">
 						<thead>
 							<tr>
 								<th>No</th>
 								<th>NISN</th>
 								<th>Nama</th>
-								<th>Hadir</th>
+								{{-- <th>Hadir</th>
 								<th>Ijin</th>
 								<th>Sakit</th>
 								<th>Alpa</th>
-								<th>Telat</th>
+								<th>Telat</th> --}}
 								<th>Ket</th>
 							</tr>
 						</thead>

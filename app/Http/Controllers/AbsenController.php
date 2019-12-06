@@ -6,6 +6,7 @@ use App\Absen;
 use Cron\MonthField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class AbsenController extends Controller
 {
@@ -66,7 +67,7 @@ class AbsenController extends Controller
                 \App\Absen::create([
                     'absen_id' => $request->input('kode_absen'),
                     'siswa_id' => $nisn,
-                    'tanggal' => date('Y m d'),
+                    'tanggal' => date('Y-m-d'),
                     'ket' => $ket
                 ]);
             }
@@ -167,13 +168,21 @@ class AbsenController extends Controller
     }
     
     // Rekap Kelas
-    public function rekapKelas(Request $request)
+    public function rekapKelas(Request $request, $bulan, $tahun, $rombel)
     {
-        $rombel = $request->input('rombel');
-        $bulan = $request->input('bulan');
-        $tahun = $request->input('tahun');
-        // $kode_absen = \App\LogAbsen::where()
-        $absen = DB::table('absens')->where(['MONTH(STR_TO_DATE(tanggal,"%Y-%m-%d")' => $bulan, 'YEAR(STR_TO_DATE(tanggal, "%Y-%m-%d")' => $tahun, 'siswa_id'])->get();
+        // $rombel = $request->query('rombel');
+        // $bulan = $request->inqput('bulan');
+        // $tahun = $request->input('tahun');
+        $absenbulans = DB::table('absens')
+                    ->whereRaw('MONTH(tanggal) = ?', [$bulan])
+                    ->whereRaw('YEAR(tanggal) = ?', [$tahun])
+                    ->leftJoin('siswas', 'absens.siswa_id', '=', 'siswas.nisn')
+                    ->orderBy('tanggal')
+                    ->get();
+        // Sort per tanggal
+
+        return DataTables::of($absenbulans)->addIndexColumn()->make(true);
+        // dd($bulan);
     }
 
     /**

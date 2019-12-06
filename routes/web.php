@@ -47,6 +47,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 
 	// Dashboard Guru
 	Route::get('/absenku', 'LogabsenController@absenKu')->name('absenku')->middleware('forGuru');
+	
 	Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen')->middleware('forGuru');
 	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru'); 
 });
@@ -108,6 +109,8 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/aktifkan-jadwal', 'LogabsenController@activate')->name('activatejadwal');
 	Route::post('/get-log-absen', 'LogabsenController@index')->name('indexlogabsen');
 	Route::post('/tutup/jadwal', 'LogabsenController@deactivate')->name('tutupjadwal');
+	Route::post('/rekap/logabsen', 'LogabsenController@rekap')->name('rekaplogabsen')->middleware('forAdmin');
+	Route::post('/getabsenku', 'LogabsenController@getAbsenKu')->name('getabsenku')->middleware('forGuru');
 		// Ijinkan GUru
 	Route::put('/ijinkan/guru', 'LogabsenController@ijinkanGuru')->name('ijinkanguru');
 	// Pesan Telegram
@@ -117,7 +120,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// Absen
 	Route::post('/absen/do', 'AbsenController@saveAbsen')->name('doabsen')->middleware('forGuru');
 	Route::put('/absen/update/{nisn}', 'AbsenController@updatePresensi')->name('updatepresensi')->middleware('forGuru');
-	Route::get('/rekap/kelas', 'AbsenController@rekapKelas')->name('rekapkelas');
+	Route::post('/rekap/kelas/bulan/{bulan}/tahun/{tahun}/rombel/{rombel}', 'AbsenController@rekapKelas')->name('rekapkelas');
 
 	// Select2
 	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');
