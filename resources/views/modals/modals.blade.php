@@ -561,16 +561,17 @@
 
 {{-- Modal Admin Rekap Kelas --}}
 <div class="modal fade" id="modal-rekap-kelas" role="dialog">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				
+				{{-- <h4>{{Session::get('wali_kelas')}}</h4> --}}
 				<h4 class="modal-title">Rekap Absensi Kelas <br>
 					<small>
 						Kelas 
 						<span id="nama_kelas"></span><br>
 						Bulan 
 						<span id="bulan"></span> 
+						&nbsp;
 						<span id="tahun"></span>
 					</small>
 				</h4>
@@ -584,12 +585,11 @@
 								<th>No</th>
 								<th>NISN</th>
 								<th>Nama</th>
-								{{-- <th>Hadir</th>
+								<th>Hadir</th>
 								<th>Ijin</th>
 								<th>Sakit</th>
 								<th>Alpa</th>
-								<th>Telat</th> --}}
-								<th>Ket</th>
+								<th>Telat</th>
 							</tr>
 						</thead>
 					</table>
@@ -597,4 +597,30 @@
 			</div>
 		</div>
 	</div>	
+</div>
+
+{{-- Modal detil Absen ADmin --}}
+<div class="modal fade" id="modal-detil-absen" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-header">Detail Absen Kelas <span id="nama_kelas"></span></h5>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table" width="100%" id="table-detil-absen">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>NISN</th>
+								<th>Nama</th>
+								<th>Presensi</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1429,7 +1429,11 @@ $(document).ready(function(){
 		
 	});
 
-	var tlogabsen = $('#table-log-absen').on('init.dt', function(){
+	var tlogabsen = $('#table-log-absen')
+	.on('draw.dt', function(){
+		$('#progress').removeClass('d-flex progress').addClass('d-none');
+	})
+	.on('init.dt', function(){
 		$('#progress').removeClass('d-flex progress').addClass('d-none');
 	}).DataTable({
 		dom: 'Bftlip',
@@ -1601,21 +1605,34 @@ $(document).ready(function(){
 	$(document).on('submit', '#form-rekap-kelas', function(e){
 		e.preventDefault();
 		var data = $(this).serialize();
-		// $('#progress').addClass('progress d-flex').removeClass('d-none');
 		// $.ajax({
+		// 	url: '/ajax/rekap/kelas/bulan/'+$('.bulan').val()+'/tahun/'+$('.tahun').val()+'/rombel/'+$('.rombel').val(),
+		// 	type: 'post',
 		// 	headers: headers,
-		// 	url: '/ajax/rekap/kelas',
-		// 	type: 'get',
-		// 	data: data,
 		// }).done(res => {
-		// 	$('#modal-rekap-kelas').modal();
-		// }).fail(err => {
+		// 	console.log(res);
+		// }).faile(err => {
+		// 	console.log(err);
+		// })
+		$('#progress').addClass('progress d-flex').removeClass('d-none');
+		$.ajax({
+			headers: headers,
+			url: '/ajax/rekap/kelas',
+			type: 'get',
+			data: data,
+		}).done(res => {
+			$('#modal-rekap-kelas').modal();
+		}).fail(err => {
 
-		// }).always(function() {
-		// 	$('#progress').removeClass('progress d-flex').addClass('d-none');
-		// });
+		}).always(function() {
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		});
 		
-		var trekapbulans = $('#table-rekap-bulan').on('init.dt', function(){
+		var trekapbulans = $('#table-rekap-bulan')
+		.on('draw.dt', function(){
+			$('#progress').removeClass('d-flex progress').addClass('d-none');
+		})
+		.on('init.dt', function(){
 			$('#progress').removeClass('d-flex progress').addClass('d-none');
 		}).DataTable({
 			dom: 'Bftlip',
@@ -1629,6 +1646,7 @@ $(document).ready(function(){
 					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
 					messageTop: new Date(),
 					title: 'jadwal Harian',
+					stripHtml: false,
 					exportOptions: {
 						
 					}
@@ -1636,11 +1654,12 @@ $(document).ready(function(){
 				{
 					extend: 'print',
 					text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+					stripHtml: false,
+					messageTop: `Kelas: ${$('#form-rekap-kelas .rombel option:selected').text()} <br> Bulan : ${$('#form-rekap-kelas .bulan option:selected').text()} <br> Tahun: ${$('#form-rekap-kelas .tahun option:selected').text()}`,
+					title: 'Rekapitulasi Presensi Siswa'
 				}
 			],
 			language: {"emptyTable": function(){
-					$('.alert-logabsen').css('display', 'block');
-					$('#btn-tutup-jadwal').hide();
 					return "data kosong.";
 				}
 			},
@@ -1667,84 +1686,173 @@ $(document).ready(function(){
 				'order': [[1, 'asc']],
 				columns: [
 					{ data: 'DT_RowIndex', 'orderable': false},
-					{ data: 'siswa_id', text: 'siswa_id' },
+					{ data: 'nisn', text: 'nisn' },
 					{ data: 'nama_siswa', text: 'nama_siswa'},
-					{ data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-ijinkan-guru"><i class="fa fa-edit"></i> Ijinkan guru</button>', 'targets': -1 }
+					{ data: 'h', text: 'h'},
+					{ data: 'i', text: 'i'},
+					{ data: 's', text: 's'},
+					{ data: 'a', text: 'a'},
+					{ data: 't', text: 't'}
 				]
 		});
+		
+		$('#modal-rekap-kelas #nama_kelas').text($('.rombel option:selected').text());
+		$('#modal-rekap-kelas #bulan').text($('#form-rekap-kelas .bulan option:selected').text());
+		$('#modal-rekap-kelas #tahun').text($('#form-rekap-kelas .tahun option:selected').text());
 		$('#modal-rekap-kelas').modal();
 		$('#modal-rekap-kelas').on('bs.hide.bs.modal', function(){
 			trekapbulans.destroy();
 		});
 	});
 
-	var trekaplogabsens = $('#table-rekap-log-absen').on('init.dt', function(){
-		$('#progress-trekaplog').removeClass('progress-sm d-flex').addClass('d-none');
-	}).DataTable({
-		dom: 'Bftlip',
-		buttons: [
-			{
-				extend: 'copy',
-				text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
-			},
-			{
-				extend: 'excel',
-				text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
-				messageTop: new Date(),
-				title: 'jadwal Harian',
-			},
-			{
-				extend: 'print',
-				text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
-				exportOptions: {
-					stripHtml: false
-				},
-			}
-		],
+	var trekaplogabsens = $('#table-rekap-log-absen')
 		
-		serverSide: true,
-		processing: true,
-		"language": {
-			processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
-		},
-		responsive: true,
-		lengthMenu: [
-			[10, 25, 50, 100, -1],
-			['10', '25', '50', '100', 'Semua']
-		],
-		ajax: {
-			url: '/ajax/rekap/logabsen',
-			type: 'post',
-			headers: headers,
-			beforeSend: function(){
-				$('#progress-trekaplog').addClass('progress-sm d-flex').removeClass('d-none');
-			}
-		},
-		"columnDefs": [ {
-			"searchable": false,
-			"orderable": false,
-			"targets": 0
-			} ],
-		'order': [[1, 'asc']],
-		columns: [
-			{ data: 'DT_RowIndex', 'orderable': false},
-			{ data: 'kode', render: function( data, type, row, meta ) {
-				// return data;
-				return '<a href="/dashboard/detil/absen/'+row.kode_absen+'" >'+data+'</a>';
-			}},
-			{ data: 'tanggal', text: 'tanggal'},
-			{ data: 'mapels.nama_mapel', text: 'mapels.nama_mapel'},
-			{ data: 'rombels.nama_rombel', text: 'rombels.nama_rombel'},
-			{ data: 'gurus.fullname', text: 'gurus.fullname'},
-			{ data: 'jml_siswa', text: 'jml_siswa'},
-			{ data: 'hadir', text: 'hadir'},
-			{ data: 'ijin', text: 'ijin'},
-			{ data: 'sakit', text: 'sakit' },
-			{ data: 'alpa', text: 'alpa' },
-			{ data: 'telat', text: 'telat' },
-			{ data: 'ket', text: 'ket'}
-		],
+		.on('init.dt', function(){
+			$('#progress-trekaplog').removeClass('progress-sm d-flex').addClass('d-none');
+		})
+		.DataTable({
+			dom: 'Bftlip',
+			buttons: [
+				{
+					extend: 'copy',
+					text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+				},
+				{
+					extend: 'excel',
+					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					messageTop: new Date(),
+					title: 'jadwal Harian',
+				},
+				{
+					extend: 'print',
+					text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+					exportOptions: {
+						stripHtml: false
+					},
+				}
+			],
+			
+			serverSide: true,
+			processing: true,
+			responsive: true,
+			lengthMenu: [
+				[10, 25, 50, 100, -1],
+				['10', '25', '50', '100', 'Semua']
+			],
+			ajax: {
+				url: '/ajax/rekap/logabsen',
+				type: 'post',
+				headers: headers,
+				beforeSend: function(){
+					$('#progress-trekaplog').addClass('progress-sm d-flex').removeClass('d-none');
+				}
+			},
+			"columnDefs": [ {
+				"searchable": false,
+				"orderable": false,
+				"targets": 0
+				} ],
+			'order': [[1, 'asc']],
+			columns: [
+				{ data: 'DT_RowIndex', 'orderable': false},
+				{ data: 'kode', render: function( data, type, row, meta ) {
+					// return data;
+					return '<a href="'+row.kode_absen+'" class="detil-absen-link" data-kode="'+row.kode_absen+'">'+data+'</a>';
+				}},
+				{ data: 'tanggal', text: 'tanggal'},
+				{ data: 'mapels.nama_mapel', text: 'mapels.nama_mapel'},
+				{ data: 'rombels.nama_rombel', text: 'rombels.nama_rombel'},
+				{ data: 'gurus.fullname', text: 'gurus.fullname'},
+				{ data: 'jml_siswa', text: 'jml_siswa'},
+				{ data: 'hadir', text: 'hadir'},
+				{ data: 'ijin', text: 'ijin'},
+				{ data: 'sakit', text: 'sakit' },
+				{ data: 'alpa', text: 'alpa' },
+				{ data: 'telat', text: 'telat' },
+				{ data: 'ket', text: 'ket'}
+			],
 		// "deferLoading": 57
 	})
-	
+	$(document).on('draw.dt',trekaplogabsens, function(){
+		$('#progress-trekaplog').removeClass('progress-table progress-sm d-flex').addClass('d-none');
+		// alert('hi');
+	})
+
+	// Show Detail absen for laporan admin
+	$(document).on('click', '.detil-absen-link', function(e) {
+		e.preventDefault();
+		var kode = $(this).data('kode');
+		var text = kode.split('_');
+		$('#modal-detil-absen').modal();
+
+		var tdetilabsen = $('#table-detil-absen').on('init.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		}).DataTable({
+			dom: 'Bftlip',
+			buttons: [
+				{
+					extend: 'copy',
+					text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+				},
+				{
+					extend: 'excel',
+					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					messageTop: new Date(),
+					title: 'jadwal Harian',
+				},
+				{
+					extend: 'print',
+					text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+					exportOptions: {
+						stripHtml: false
+					},
+					title: 'Detil Absen '+text[4],
+					messageBottom: `<div style="position:relative;display:block;width: 100%;">
+										<div style="position:relative;margin-right:20px!important;">
+											Malang, 12-09-2019<br>
+											Guru Pengajar
+											<br>
+											<br>
+											<br>
+											<b><u>Joko Susilo</u></b><br>
+											NIP. 19871209 201909 1 003
+										</div>
+									</div>`
+				}
+			],
+			
+			serverSide: true,
+			processing: true,
+			responsive: true,
+			lengthMenu: [
+				[10, 25, 50, 100, -1],
+				['10', '25', '50', '100', 'Semua']
+			],
+			ajax: {
+				url: '/ajax/detil/absen/'+kode,
+				type: 'post',
+				headers: headers,
+				beforeSend: function(){
+					$('#progress').addClass('progress d-flex').removeClass('d-none');
+				}
+			},
+			"columnDefs": [ {
+				"searchable": false,
+				"orderable": false,
+				"targets": 0
+				} ],
+			'order': [[1, 'asc']],
+			columns: [
+				{ data: 'DT_RowIndex', 'orderable': false},
+				{ data: 'siswa_id', text: 'siswa_id'},
+				{ data: 'siswas.nama_siswa', text: 'siswas.nama_siswa'},
+				{ data: 'ket', render: function(data, type, row, meta) {
+					var status = (data == 'h')? 'Hadir': (data == 'i')? 'Ijin' : (data == 's')? 'Sakit' : (data == 'a')? 'Alpa': 'Telat';
+					return status;
+				} }
+			],
+		}).on('draw.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		})
+	});
 });

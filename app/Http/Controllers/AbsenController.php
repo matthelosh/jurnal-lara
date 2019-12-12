@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Absen;
 use Cron\MonthField;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -170,19 +171,77 @@ class AbsenController extends Controller
     // Rekap Kelas
     public function rekapKelas(Request $request, $bulan, $tahun, $rombel)
     {
-        // $rombel = $request->query('rombel');
-        // $bulan = $request->inqput('bulan');
-        // $tahun = $request->input('tahun');
-        $absenbulans = DB::table('absens')
+        // $Rombel = 'App\Rombel'::where('kode_rombel', $rombel)->first();
+        // $wali = 'App\User'::where('nip', $Rombel->guru_id)->first();
+        // $request->session()->put('wali_kelas',$wali->fullname);
+
+        $siswas = 'App\Siswa'::where('rombel_id', $rombel)->get();
+        $tgls = DB::table('absens')
+                    ->select(DB::raw('DAY(tanggal) as tgl'))
+                    ->where('absen_id', 'like', '%'.$rombel.'%')
                     ->whereRaw('MONTH(tanggal) = ?', [$bulan])
                     ->whereRaw('YEAR(tanggal) = ?', [$tahun])
-                    ->leftJoin('siswas', 'absens.siswa_id', '=', 'siswas.nisn')
-                    ->orderBy('tanggal')
+                    ->groupBy('tanggal')
                     ->get();
-        // Sort per tanggal
+        $datas = [];
 
-        return DataTables::of($absenbulans)->addIndexColumn()->make(true);
-        // dd($bulan);
+        foreach($siswas as $siswa) {
+            array_push($datas, ['nisn' => $siswa->nisn, 'nama_siswa' => $siswa->nama_siswa, 'h' => 0, 'i' => 0, 's' => 0, 'a' => 0, 't' => 0]);
+        }
+        $dumps =[];
+        foreach($siswas as $siswa)
+        {
+            $dumps[$siswa->nisn] = [];
+            foreach($tgls as $tgl)
+            {
+                // SELECT nis, tgl, GROUP_CONCAT(ket ORDER BY nis SEPARATOR ',') as keter FROM absen  WHERE nis='$res[nis]' AND MONTH(tgl)='$bulan' AND YEAR(tgl)='$tahun' GROUP BY nis,tgl
+                $ketPerTgl = Absen::select(DB::raw('GROUP_CONCAT(ket ORDER BY siswa_id SEPARATOR ",") as jmlKet'))
+                    ->whereRaw('DAY(tanggal) = ?', [$tgl->tgl])
+                    ->where('absen_id', 'like', '%'.$rombel.'%')
+                    ->whereRaw('MONTH(tanggal) = ?', [$bulan])
+                    ->whereRaw('YEAR(tanggal) = ?', [$tahun])
+                    ->where('siswa_id', $siswa->nisn)
+                    // ->groupBy('ket')
+                    // ->orderBy('jml')
+                    ->get();
+                foreach($ketPerTgl as $ket)
+                {
+                    // if(!isset($dumps[$siswa->nisn][$tgl->tgl])){
+                        $kets = explode(',',$ket->jmlKet);
+                        $dumps[$siswa->nisn][$tgl->tgl] = max($kets);
+                    // }
+                }
+            }
+        }
+        $i=0;
+
+        foreach($datas as $data)
+        {
+            foreach($dumps as $key=>$value)
+            {
+                if($data['nisn'] == $key) {
+                    $kets = array_count_values($value);
+                    $datas[$i]['h'] = isset($kets['h']) ? $kets['h'] : 0;
+                    $datas[$i]['i'] = isset($kets['i']) ? $kets['i'] : 0;
+                    $datas[$i]['s'] = isset($kets['s']) ? $kets['s'] : 0;
+                    $datas[$i]['a'] = isset($kets['a']) ? $kets['a'] : 0;
+                    $datas[$i]['t'] = isset($kets['t']) ? $kets['t'] : 0;
+                }
+            }
+            $i++;
+        }
+
+        $results = json_decode(json_encode($datas, FALSE));
+        return DataTables::of($results)->addIndexColumn()->make(true);
+        // dd($hs);
+        // dd($datas);
+    }
+
+    // Detail Absen for Admin
+    public function getDetil(Request $request, $kode)
+    {
+        $absen = Absen::where('absen_id', $kode)->with('siswas')->get();
+        return DataTables::of($absen)->addIndexColumn()->make(true);
     }
 
     /**

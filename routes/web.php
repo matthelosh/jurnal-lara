@@ -121,6 +121,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/absen/do', 'AbsenController@saveAbsen')->name('doabsen')->middleware('forGuru');
 	Route::put('/absen/update/{nisn}', 'AbsenController@updatePresensi')->name('updatepresensi')->middleware('forGuru');
 	Route::post('/rekap/kelas/bulan/{bulan}/tahun/{tahun}/rombel/{rombel}', 'AbsenController@rekapKelas')->name('rekapkelas');
+	Route::post('/detil/absen/{kode}', 'AbsenController@getDetil')->name('detilabsen');
 
 	// Select2
 	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');

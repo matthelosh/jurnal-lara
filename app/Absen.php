@@ -14,7 +14,7 @@ class Absen extends Model
 
     public function logabsens()
     {
-    	return $this->belongsTo(\App\LogAbsen, 'absen_id', 'kode_absen');
+    	return $this->belongsTo('App\LogAbsen', 'absen_id', 'kode_absen');
     }
 
     public function siswas()
