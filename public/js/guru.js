@@ -63,7 +63,14 @@ $(document).ready(function(){
 	});
 
 	// Table Absenku
-	var tabsenkus = $('#table-absenkus').DataTable({
+	var tabsenkus = $('#table-absenkus')
+		.on('init.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		})
+		.on('draw.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		})
+		.DataTable({
 		dom: 'Bftlip',
 		buttons: [
 			{
@@ -82,18 +89,6 @@ $(document).ready(function(){
 				exportOptions: {
 					stripHtml: false
 				},
-				// customize: function ( win ) {
-				// 	$(win.document.body)
-				// 		.css( 'font-size', '10pt' )
-				// 		.prepend(
-				// 			'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-				// 		);
-	
-				// 	$(win.document.body).find( 'table' ).outerHTML
-				// 		.addClass( 'compact' )
-				// 		.css( 'font-size', 'inherit' );
-				// 	win.print();
-				// }
 			}
 		],
 		language: {"emptyTable": function(){
@@ -111,7 +106,10 @@ $(document).ready(function(){
 		ajax: {
 			url: '/ajax/getabsenku',
 			type: 'post',
-			headers: headers
+			headers: headers,
+			beforeSend: function(){
+				$('#progress').addClass('progress d-flex').removeClass('d-none');
+			}
 		},
 		"columnDefs": [ {
 			"searchable": false,
@@ -139,4 +137,113 @@ $(document).ready(function(){
 		]
 	})
 	
+	$(document).on('click', '.btn-ganti-foto', function(){
+		Swal.fire({
+			showConfirmButton: true,
+			showCancelButton: true,
+			confirmButtonColor: 'teal',
+			cancelButtonColor: 'orangered',
+			confirmButtonText: 'Lanjut',
+			cancelButtonText: 'Batal',
+			html: 'Yakin Mengganti Foto Profil? <br> Pastikan formatnya <b>.jpg</b> atau <b>.png</b>.'             
+		}).then(result => {
+			if (result.value) {
+				$('#imgFoto').trigger('click');
+			}
+		})
+		
+	});
+	$(document).on('change', '#imgFoto', function(e) {
+		var file = e.target.files[0];
+		console.log(file);
+		if (!file.type.match('image.*')) {
+			Swal.fire('error', 'File gambar harus bertipe jpg atau png.', 'error');
+		} else if(file.size > 2000000) {
+			Swal.fire('error', 'File tidak boleh lebih dari 2MB', 'error');
+		} else {
+			$('.card-img-top').addClass('zoomanimate');
+			var fd = new FormData();
+			fd.append('img_foto', file);
+			$.ajax({
+				url: '/ajax/upload/foto',
+				type: 'post',
+				data: fd,
+				headers: headers,
+				contentType: false,
+				processData: false,
+				success: function (res) {
+					if ( res.status == 'sukses') {
+						$('.card-img-top').removeClass('zoomanimate');
+						Swal.fire('info', res.msg, 'info');
+						window.location.reload();
+					} else {
+						Swal.fire('error', res.msg, 'error');
+					}
+				}
+			})
+		}
+	});
+
+	// Siswaku
+	var tabsenkus = $('#table-siswaku')
+		.on('init.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		})
+		.on('draw.dt', function(){
+			$('#progress').removeClass('progress d-flex').addClass('d-none');
+		})
+		.DataTable({
+		dom: 'Bftlip',
+		buttons: [
+			{
+				extend: 'copy',
+				text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+			},
+			{
+				extend: 'excel',
+				text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+				messageTop: new Date(),
+				title: 'jadwal Harian',
+			},
+			{
+				extend: 'print',
+				text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+				exportOptions: {
+					stripHtml: false
+				},
+			}
+		],
+		language: {"emptyTable": function(){
+				$('.alert-logabsen').css('display', 'block');
+				return "data kosong.";
+			}
+		},
+		serverSide: true,
+		processing: true,
+		responsive: true,
+		lengthMenu: [
+			[10, 25, 50, 100, -1],
+			['10', '25', '50', '100', 'Semua']
+		],
+		ajax: {
+			url: '/ajax/getsiswaku',
+			type: 'post',
+			headers: headers,
+			beforeSend: function(){
+				$('#progress').addClass('progress d-flex').removeClass('d-none');
+			}
+		},
+		"columnDefs": [ {
+			"searchable": false,
+			"orderable": false,
+			"targets": 0
+			} ],
+		'order': [[1, 'asc']],
+		columns: [
+			{ data: 'DT_RowIndex', 'orderable': false},
+			{ data: 'nisn', text: 'nisn'},
+			{ data: 'nama_siswa', text: 'nama_siswa'},
+			{ data: 'jk', text: 'jk'}
+		]
+	})
 });

@@ -92,18 +92,30 @@ class DashController extends Controller
 // End Admin
 
 // Guru
-    public function indexGuru()
+    // public function indexGuru()
+    // {
+    //     // Get Today's Schedules
+    //     $haris = ['Minggu','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    //     $day = date('w');
+    //     $today = $haris[$day];
+    //     $date = date('Y-m-d');
+
+    //     $jadwals = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
+    //     $jadwals = \App\LogAbsen::where(['guru_id' => Auth::user()->nip, 'hari' => $today])->with('rombels', 'mapels')->get();
+
+    //     return view('dash-guru.index', ['page' => 'dashboard', 'jadwals' => $jadwals]);
+    // }
+
+    public function profil($username)
     {
-        // Get Today's Schedules
-        $haris = ['Minggu','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        $day = date('w');
-        $today = $haris[$day];
-        $date = date('Y-m-d');
+        $profil = 'App\User'::where('username', $username)->first();
 
-        $jadwals = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
-        $jadwals = \App\LogAbsen::where(['guru_id' => Auth::user()->nip, 'hari' => $today])->with('rombels', 'mapels')->get();
+        return view('index', ['page' => 'profilku']);
+    }
 
-        return view('dash-guru.index', ['page' => 'dashboard', 'jadwals' => $jadwals]);
+    public function siswaku()
+    {
+        return view('index', ['page' => 'siswaku']);
     }
 
 // End Guru

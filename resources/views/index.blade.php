@@ -48,11 +48,17 @@
 				@case('dashboard')
 					@include('layouts.defaultcontent')
 				@break
+				@case('profilku')
+					@include('dash-guru.profilku')
+				@break
 				@case('absen')
 					@include('dash-guru.absen')
 				@break
 				@case('absenku')
 					@include('dash-guru.absenku')
+				@break
+				@case('siswaku')
+					@include('dash-guru.siswaku')
 				@break
 			@endswitch
 		@endif

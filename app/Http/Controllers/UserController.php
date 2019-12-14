@@ -168,8 +168,23 @@ class UserController extends Controller
         try {
             User::where('nip', $nip)->delete();
             return response()->json(['status' => 'sukses', 'msg' => 'Pengguna dengan NIP '.$nip.' telah dihapus']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['status' => 'gagal', 'msg' => 'Gagal: '+$e->getMessage()]);
+        }
+    }
+    public function updateFoto(Request $request)
+    {   
+        try
+        {
+            $file = $request->file('img_foto');
+            // dd($file);
+            $newName = $request->user()->nip.'.jpg';
+            $file->move(public_path('img/faces'), $newName);
+
+            return response()->json(['status' => 'sukses', 'msg' => 'Foto Profil berhasil diupload.']);
+        } catch (\Exception $e)
+        {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
     }
 }

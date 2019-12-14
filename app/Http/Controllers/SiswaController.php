@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Imports\SiswasImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 
 class SiswaController extends Controller
 {
@@ -187,7 +188,7 @@ class SiswaController extends Controller
         catch(\Exception $e){
             return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
-        catch(Illuminate\Database\QueryException $e)
+        catch(\Illuminate\Database\QueryException $e)
         {
             return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
@@ -205,8 +206,16 @@ class SiswaController extends Controller
         try {
             Siswa::where('nisn', $siswa)->delete();
             return response()->json(['status' => 'sukses', 'msg' => 'Data Siswa dengan NISN: '.$siswa .' telah dihapus.']);
-        } catch (Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
+    }
+
+    public function getSiswaku(Request $request)
+    {
+        $rombel = 'App\Rombel'::where('guru_id', $request->user()->nip)->first();
+        $siswakus = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->get();
+
+        return FacadesDataTables::of($siswakus)->addIndexColumn()->make(true);
     }
 }

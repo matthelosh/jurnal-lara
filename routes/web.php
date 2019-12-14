@@ -49,7 +49,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/absenku', 'LogabsenController@absenKu')->name('absenku')->middleware('forGuru');
 	
 	Route::get('/do-absen/{kode_absen}', 'AbsenController@doAbsen')->name('doabsen')->middleware('forGuru');
-	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru'); 
+	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru');
+	Route::get('/profil/{username}', 'DashController@profil')->name('profiluser');
+	Route::get('/siswaku', 'DashController@siswaku')->name('indexsiswaku')->middleware('forGuru');
+	
 });
 
 
@@ -126,6 +129,9 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// Select2
 	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');
 	Route::post('/select/guru', 'UserController@select')->name('selectguru');
+
+	Route::post('/upload/foto', 'UserController@updateFoto')->name('gantifoto');
+	Route::post('/getsiswaku', 'SiswaController@getSiswaku')->name('getsiswaku')->middleware('forGuru');
 });
 
 
