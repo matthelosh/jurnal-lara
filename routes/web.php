@@ -52,11 +52,17 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/detail-absen/{kode_absen}', 'AbsenController@detilAbsen')->name('detilAbsen')->middleware('forGuru');
 	Route::get('/profil/{username}', 'DashController@profil')->name('profiluser');
 	Route::get('/siswaku', 'DashController@siswaku')->name('indexsiswaku')->middleware('forGuru');
+	Route::get('/rekap-absen', 'DashController@rekapAbsen')->name('indexrekapwali')->middleware('forGuru');
 	
 });
 
 
 Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
+	// Umum
+	Route::post('/getsekolah', 'SekolahController@show')->name('datasekolah');
+	Route::put('/update-lokasi-sekolah', 'SekolahController@updateLokasi')->name('updatelokasi');
+
+
 	Route::get('/users', 'UserController@index')->name('indexusers');
 	Route::post('/add/user', 'UserController@create')->name('adduser');
 	Route::delete('/delete/user/{nip}', 'UserController@destroy')->name('destroyuser');

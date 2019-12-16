@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center justify-content-center">
+<div class="d-flex align-items-top justify-content-around">
 	<div class="card card-custom" style="width:500px;">
 		<div class="card-header">
 			<div class="card-media">
@@ -48,9 +48,39 @@
                     <td> {{$info_sekolah->nip_kepsek}}</td>
                 </tr>
                 <tr>
+                    <td>Garis Bujur</td>
+                    <td>: </td>
+                    <td> {{$info_sekolah->lat}}</td>
+                </tr>
+                <tr>
+                    <td>Garis Lintang</td>
+                    <td>: </td>
+                    <td> {{$info_sekolah->long}}</td>
+                </tr>
+                <tr>
                     <td>Alamat</td>
                     <td>:</td>
                     <td> {{$info_sekolah->alamat_sekolah}}</td>
+                </tr>
+                <tr>
+                    <td>Desa/Kelurahan</td>
+                    <td>:</td>
+                    <td> {{$info_sekolah->kelurahan}}</td>
+                </tr>
+                <tr>
+                    <td>Kecamatan</td>
+                    <td>:</td>
+                    <td> {{$info_sekolah->kec}}</td>
+                </tr>
+                <tr>
+                    <td>Kota</td>
+                    <td>:</td>
+                    <td> {{$info_sekolah->kota}}</td>
+                </tr>
+                <tr>
+                    <td>Propinsi</td>
+                    <td>:</td>
+                    <td> {{$info_sekolah->prov}}</td>
                 </tr>
                 <tr>
                     <td>Telepon</td>
@@ -72,6 +102,29 @@
 			
 		</div>
 	</div>
-	
+	<div class="card">
+        <div class="card-body" style="width:400px">
+            <div class="container">
+                    <form class="col s12" id="form-lokasi-sekolah">
+                        <div class="row">
+                            <h4 class="card-title">Lokasi sekarang</h4>
+                            <div id="google-maps" style="height: 400px; width:100%"></div>
+        
+                            <!-- input untuk menampung koordinat -->
+                            <input type="hidden" name="longitude" value="" />
+                            <input type="hidden" name="latitude" value="" />
+        
+                            <br>
+                            
+                        </div>
+                        <hr>
+                        <div class="row">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save left"></i>Simpan</button>
+                        </div>
+                    </form>
+        
+                </div>
+        </div>
+    </div>
 </div>
 

@@ -71,7 +71,7 @@
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="{{ asset('/js/plugins/bootstrap-switch.js')}}"></script>
  {{-- Google Maps Plugin    --}}
-{{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYHjn0J8wRZFKodNIjBRsll3cm5Ym-fS0"></script>
 <!--  Chartist Plugin  -->
 <script src="{{ asset('/js/plugins/chartist.min.js') }}"></script>
 <!--  Notifications Plugin    -->
@@ -92,6 +92,8 @@
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('/js/sweetalert.js') }}"></script>
+<script src="{{ asset('/js/moment.min.js') }}"></script>
+<script src="{{ asset('/js/moment-with-locales.min.js') }}"></script>
 <script src="{{ asset('/js/utama.js') }}"></script>
 <script src="{{ asset('/js/umum.js') }}"></script>
 @if(Auth::user()->level == 'admin')
@@ -105,7 +107,7 @@
         // demo.initDashboardPageCharts();
 
         // demo.showNotification();
-
+        moment.locale('id');
     });
 </script>
 <script>

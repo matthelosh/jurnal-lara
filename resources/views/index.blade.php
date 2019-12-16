@@ -60,6 +60,9 @@
 				@case('siswaku')
 					@include('dash-guru.siswaku')
 				@break
+				@case('rekap_absen')
+					@include('dash-guru.rekap_absen')
+				@break
 			@endswitch
 		@endif
 	@endif

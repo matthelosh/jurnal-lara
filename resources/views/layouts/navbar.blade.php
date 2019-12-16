@@ -32,7 +32,8 @@
                             <img src="{{ asset('/img/avatar-1.png') }}" alt="Avatar" class="img navbar-face" >
                         @endif
                         &nbsp;
-                        <span class="no-icon">{{ Auth::user()->fullname }}</span>
+                        <span class="no-icon" id="user_fullname">{{ Auth::user()->fullname }}</span>
+                        <span class="d-none" id="user_nip">{{Auth::user()->nip}}</span>
                     </a>
                 </li>
                 <li class="nav-item">

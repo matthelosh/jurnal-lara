@@ -211,6 +211,7 @@ $(document).ready(function(){
 				exportOptions: {
 					stripHtml: false
 				},
+				
 			}
 		],
 		language: {"emptyTable": function(){
@@ -245,5 +246,91 @@ $(document).ready(function(){
 			{ data: 'nama_siswa', text: 'nama_siswa'},
 			{ data: 'jk', text: 'jk'}
 		]
-	})
+	});
+
+	// Rekap Absen
+	$(document).on('click', '.btn-rekap-presensi', function(e){
+		e.preventDefault();
+		var bulan = $('.bulan').val();
+		var nama_bulan = $('.bulan option:selected').text();
+		var tahun = $('.tahun').val();
+
+		if ( bulan == '0' || tahun =='0' ) {
+			Swal.fire('error', 'Pilih Bulan atau Tahun', 'error');
+		} else {
+			var date = new Date();
+			var tanggal = moment().format('DD MMM YYYY');
+			$('#bulan').text($('.bulan').val());
+			$('#tahun').text($('.tahun').val());
+			$('#table-rekap-absen')
+			.on('init.dt', function(){
+				$('#progress').removeClass('progress d-flex').addClass('d-none');
+			})
+			.on('draw.dt', function(){
+				$('#progress').removeClass('progress d-flex').addClass('d-none');
+			})
+			.DataTable({
+				dom: 'Bftlip',
+				buttons: [
+					{
+						extend: 'copy',
+						text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+					},
+					{
+						extend: 'excel',
+						text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+						messageTop: new Date(),
+						title: 'jadwal Harian',
+					},
+					{
+						extend: 'print',
+						text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+						exportOptions: {
+							stripHtml: false
+						},
+						title: $('#card-rekap-wali .card-title').text(),
+						messageTop: 'Bulan: '+$('#bulan').text()+' - '+$('#tahun').text(),
+						messageBottom: `<p style="text-align:center;margin:50px 20px 20px 70%;">${$('#kota').text()}, ${tanggal}, <br>Wali Kelas <br><br><br><b><u>${$('#user_fullname').text()}</u></b><br>Nip. ${$('#user_nip').text()}</p>`
+					}
+				],
+				language: {"emptyTable": function(){
+						$('.alert-logabsen').css('display', 'block');
+						return "data kosong.";
+					}
+				},
+				serverSide: true,
+				processing: true,
+				responsive: true,
+				lengthMenu: [
+					[10, 25, 50, 100, -1],
+					['10', '25', '50', '100', 'Semua']
+				],
+				ajax: {
+					// /rekap/kelas/bulan/{bulan}/tahun/{tahun}/rombel/{rombel}'
+					url: '/ajax/rekap/kelas/bulan/'+$('.bulan').val()+'/tahun/'+$('.tahun').val()+'/rombel/'+$('.kode_rombel').text(),
+					type: 'post',
+					headers: headers,
+					beforeSend: function(){
+						$('#progress').addClass('progress d-flex').removeClass('d-none');
+					}
+				},
+				"columnDefs": [ {
+					"searchable": false,
+					"orderable": false,
+					"targets": 0
+					} ],
+				'order': [[1, 'asc']],
+				columns: [
+					{ data: 'DT_RowIndex', 'orderable': false},
+					{ data: 'nisn', text: 'nisn'},
+					{ data: 'nama_siswa', text: 'nama_siswa'},
+					{ data: 'h', text: 'h'},
+					{ data: 'i', text: 'i'},
+					{ data: 's', text: 's'},
+					{ data: 'a', text: 'a'},
+					{ data: 't', text: 't'}
+				]
+			});
+		}
+	});
 });

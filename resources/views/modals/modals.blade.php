@@ -83,53 +83,55 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="" class="form" id="form-add-siswa">
-					<input type="hidden" id="id_siswa">
-					<input type="hidden" class="mode-form">
-					<div class="row">
-						<div class="col-sm-6">
+				<div class="card">
+					<form action="" class="form" id="form-add-siswa">
+						<input type="hidden" id="id_siswa">
+						<input type="hidden" class="mode-form">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<input type="text" class="form-control" name="nis" id="nis" placeholder="NIS">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<input type="text" class="form-control" name="nisn" id="nisn" placeholder="NISN">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-8">
+								<div class="form-group">
+									<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<select name="jk" id="jk" class="form-control">
+										<option value="0">Jenis Kelamin</option>
+										<option value="l">Laki-laki</option>
+										<option value="p">Perempuan</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<input type="text" class="form-control" id="rombel_id" name="rombel_id" placeholder="Rombel">
+								</div>
+							</div>
+						</div>
+						<div class="row">
 							<div class="form-group">
-								<input type="text" class="form-control" name="nis" id="nis" placeholder="NIS">
+								<div class="btn-group float-right">
+									<button class="btn btn-danger btn-sm" type="reset">Batal</button>&nbsp;
+									<button class="btn btn-info btn-sm" type="submit">Simpan</button>
+								</div>
 							</div>
 						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<input type="text" class="form-control" name="nisn" id="nisn" placeholder="NISN">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-8">
-							<div class="form-group">
-								<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<select name="jk" id="jk" class="form-control">
-									<option value="0">Jenis Kelamin</option>
-									<option value="l">Laki-laki</option>
-									<option value="p">Perempuan</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<input type="text" class="form-control" id="rombel_id" name="rombel_id" placeholder="Rombel">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group">
-							<div class="btn-group float-right">
-								<button class="btn btn-danger btn-sm" type="reset">Batal</button>&nbsp;
-								<button class="btn btn-info btn-sm" type="submit">Simpan</button>
-							</div>
-						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -464,12 +466,48 @@
 						</div>
 					</div> {{-- End Row --}}
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="form-group">
-								<textarea name="alamat_sekolah" class="form-control" id="alamat_sekolah" rows="3"></textarea>
+								<input type="text" class="form-control" name="lat" id="lat" placeholder="Garis Bujur">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="long" id="long" placeholder="Garis Lintang">
 							</div>
 						</div>
 					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" name="alamat_sekolah" class="form-control" id="alamat_sekolah" placeholder="Alamat Jl/Dusun">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" name="kelurahan" class="form-control" id="kelurahan" placeholder="Desa/Kelurahan">
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" name="kec" class="form-control" id="kec" placeholder="Kecamatan">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" name="kota" class="form-control" id="kota" placeholder="Kota/Kabupaten">
+							</div>
+						</div>
+					</div> {{-- End Row --}}
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<input type="text" name="prov" class="form-control" id="prov" placeholder="Propinsi">
+							</div>
+						</div>
+					</div>
 					<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">

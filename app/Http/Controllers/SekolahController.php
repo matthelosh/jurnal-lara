@@ -35,9 +35,19 @@ class SekolahController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function show(Request $request)
     {
         //
+        // try {
+        //     $sekolah = 'App\Sekolah'::first();
+        //     return response()->json(['status' => 'sukses', 'msg' => 'Data Sekolah', 'data' => $sekolah]);
+        //     dd($sekolah);
+        // } catch(\Exception $e) {
+        //     return response()->json(['status' => 'gagal', 'msg' => $e->getCode().': '.$e->getMessage()]);
+     
+        // }
+        $sekolah = 'App\Sekolah'::first();
+        return response()->json(['status' => 'sukses', 'msg' => 'Data Sekolah', 'data' => $sekolah]);
     }
 
     /**
@@ -46,7 +56,7 @@ class SekolahController extends Controller
      * @param  \App\Sekolah  $sekolah
      * @return \Illuminate\Http\Response
      */
-    public function show(Sekolah $sekolah)
+    public function store(Sekolah $sekolah)
     {
         //
     }
@@ -87,7 +97,13 @@ class SekolahController extends Controller
                 'nama_sekolah' => $request->input('nama_sekolah'), 
                 'kepsek' => $request->input('kepsek'), 
                 'nip_kepsek' => $request->input('nip_kepsek'), 
+                'lat' => $request->input('lat'),
+                'long' => $request->input('long'),
                 'alamat_sekolah' => $request->input('alamat_sekolah'), 
+                'kelurahan' => $request->input('kelurahan'), 
+                'kec' => $request->input('kec'), 
+                'kota' => $request->input('kota'), 
+                'prov' => $request->input('prov'), 
                 'telepon' => $request->input('telepon'), 
                 'email' => $request->input('email'), 
                 'website' => $request->input('website')
@@ -98,6 +114,12 @@ class SekolahController extends Controller
         {
             return response()->json(['status' => 'gagal', 'msg' => $e->getCode(). ' : '. $e->getMessage()]);
         }
+    }
+
+    public function updateLokasi(Request $request)
+    {
+        'App\Sekolah'::find(1)->update(['lat' => $request->input('lat'), 'long' => $request->input('long')]);
+        return response()->json(['status' => 'sukses', 'msg' => 'Data lokasi diperbarui.']);
     }
 
     public function updateLogo(Request $request)

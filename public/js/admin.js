@@ -1316,7 +1316,13 @@ $(document).ready(function(){
 					$('#nama_sekolah').val(res.data.nama_sekolah);
 					$('#kepsek').val(res.data.kepsek);
 					$('#nip_kepsek').val(res.data.nip_kepsek);
+					$('#lat').val(res.data.lat);
+					$('#long').val(res.data.long);
 					$('#alamat_sekolah').val(res.data.alamat_sekolah);
+					$('#kelurahan').val(res.data.kelurahan);
+					$('#kec').val(res.data.kec);
+					$('#kota').val(res.data.kota);
+					$('#prov').val(res.data.prov);
 					$('#telepon').val(res.data.telepon);
 					$('#email').val(res.data.email);
 					$('#website').val(res.data.website);

@@ -118,5 +118,13 @@ class DashController extends Controller
         return view('index', ['page' => 'siswaku']);
     }
 
+    public function rekapAbsen(Request $request)
+    {
+        $sekolah = 'App\Sekolah'::find(1);
+        $rombel = 'App\Rombel'::where('guru_id', $request->user()->nip)->first();
+        $logs = 'App\LogAbsen'::where(['rombel_id' => $rombel->kode_rombel, 'ket' => 'diabsen'])->with('mapels', 'gurus')->paginate(5);
+        return view('index', ['page' => 'rekap_absen', 'rombel' =>$rombel, 'logs' => $logs, 'sekolah' => $sekolah]);
+    }
+
 // End Guru
 }
