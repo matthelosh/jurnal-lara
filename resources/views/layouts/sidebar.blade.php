@@ -107,19 +107,33 @@
                         
                         @endif
                     </ul>
-
-                @elseif(Auth::user()->level == 'ops')
+                @elseif(Auth::user()->level == 'staf')
                     <ul class="nav">
                         <li class="nav-item ">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" href="/dashboard">
                                 <i class="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="./user.html">
+                            <a class="nav-link" href="/dashboard/profil/{{ Auth::user()->username }}">
+                                <i class="nc-icon nc-badge"></i>
+                                <p>Profil</p>
+                            </a>
+                        </li>
+                    </ul>
+                @elseif(Auth::user()->level == 'katu')
+                    <ul class="nav">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/dashboard">
+                                <i class="nc-icon nc-chart-pie-35"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/stafs">
                                 <i class="nc-icon nc-circle-09"></i>
-                                <p>User Profile</p>
+                                <p>Data Staf</p>
                             </a>
                         </li>
                     </ul>

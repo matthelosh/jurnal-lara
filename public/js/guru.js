@@ -63,7 +63,7 @@ $(document).ready(function(){
 	});
 
 	// Table Absenku
-	var tabsenkus = $('#table-absenkus')
+	var tabsenkus = $('#table-absenku')
 		.on('init.dt', function(){
 			$('#progress').removeClass('progress d-flex').addClass('d-none');
 		})
@@ -328,7 +328,10 @@ $(document).ready(function(){
 					{ data: 'i', text: 'i'},
 					{ data: 's', text: 's'},
 					{ data: 'a', text: 'a'},
-					{ data: 't', text: 't'}
+					{ data: 't', text: 't'},
+					{ data: null, render: function(data, type, row, meta) {
+						return `<a class="btn-c btn-danger" href="/dashboard/rekap-absen?mod=detil&nisn=${row.nisn}&bulan=${$('#form-rekap-kelas .bulan').val()}&tahun=${$('#form-rekap-kelas .tahun').val()}"><i class="fa fa-search"></i>Detil</a>`;
+					}}
 				]
 			});
 		}

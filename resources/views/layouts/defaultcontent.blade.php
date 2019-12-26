@@ -73,7 +73,7 @@
                             <div class="card {{ ($jadwal->ket == 'jamkos') ? 'bg-danger-gradient' : 'bg-success-gradient' }} " >
                                 <div class="card-body text-white">
                                     <h5>Kelas: {{$jadwal->rombels->nama_rombel}}</h5>
-                                    <h5>Jamke: {{ $jadwal->jamke }}</h5>
+                                    <h5>Tanggal: {{ $jadwal->tanggal }} <br> Jamke: {{ $jadwal->jamke }}</h5>
                                     <h5>Mapel: {{ $jadwal->mapels->nama_mapel }}</h5>
                                     <a href="/dashboard/{{ ($jadwal->ket == 'jamkos') ? 'do-absen' : 'detail-absen' }}/{{ $jadwal->kode_absen }}" class="card-link stretched-link"></a>
                                 </div>
@@ -86,8 +86,118 @@
     </div>
 @elseif(Auth::user()->level == 'staf')
     <div class="row">
-        <h3>Jurnal Staf</h3>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-primary" id="btn-modal-jurnal-staf">Isi Jurnal</button>
+                    </div>
+                    <h5 class="card-title">Jurnal Saya</h5>
+                    <br>
+                    <hr>
+                    <div class="table-responseive">
+                        <table class="table" id="table-jurnalku" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kode Jurnal</th>
+                                    <th>Tanggal</th>
+                                    <th>Uraian Kegiatan</th>
+                                    <th>Mulai</th>
+                                    <th>Selesai</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- <tr>
+                                    <td>1</td>
+                                    <td>12-09-2019</td>
+                                    <td>TEs Saja</td>
+                                    <td>08:00</td>
+                                    <td>08:30</td>
+                                    <td>Valid</td>
+                                    <td>Selesai</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>12-09-2019</td>
+                                    <td>Halo Saja</td>
+                                    <td>08:00</td>
+                                    <td>08:30</td>
+                                    <td>Valid</td>
+                                    <td>Selesai</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>12-09-2019</td>
+                                    <td>Hi Saja</td>
+                                    <td>08:00</td>
+                                    <td>08:30</td>
+                                    <td>Valid</td>
+                                    <td>Selesai</td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+@elseif(Auth::user()->level == 'katu')
+    <div class="row">
+        <div class="card" style="width:100%;">
+            <div class="card-body">
+                <h5 class="card-title">Jurnal Harian Staf</h5>
+                <div class="card">
+                    <div class="card-body">
+                        Cek Jurnal Staf
+                        <form action="" class="form" id="form-cek-jurnal-staf">
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label for="tanggal">Tangal</label>
+                                    <input type="date" class="form-control" id="tanggal" name="tanggal">
+                                </div>
+                                <div class="form-group col-sm-1">
+                                    <button class="btn btn-primary" id="btn-check-jurnal-staf">
+                                        <i class="fa fa-search"></i>
+                                        Cek
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Jurnal Staf Hari: <span id="hari_tanggal">{{$hari}}, {{$tanggal}}</span></h5>
+                        <br><hr>
+                        <div class="table-responsive">
+                                <table class="table" id="table-jurnal-staf" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>NIP</th>
+                                            <th>Nama Staf</th>
+                                            <th>Kode Jurnal</th>
+                                            <th>Tanggal</th>
+                                            <th>Kegiatan</th>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Status</th>
+                                            <th>Ket</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 @else
     <div class="row">
         <h3>Guru Piket</h3>

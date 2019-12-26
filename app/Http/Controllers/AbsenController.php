@@ -8,9 +8,16 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Telegram;
 
 class AbsenController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource. 
      *
@@ -85,8 +92,14 @@ class AbsenController extends Controller
                             'ket' => 'diabsen'
                         ]);
 
+            $kode = explode('_',$request->input('kode_absen'));
+            $mapel = 'App\Mapel'::where('kode_mapel', $kode[3])->first();
 
             // return redirect('/dashboard');
+            $msg = "Bpk/Ibu ".$request->user()->fullname. "\nHari, Tanggal: ".$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel ."\ntelah memeriksa kehadiran siswa kelas ".$kode[4] .". \nJumlah Siswa: " . count($nisns) . "\nHadir: " . $jh . "\nIjin: ". $ji . "\nSakit: " . $js . "\nAlpa: " . $ja . "\nTelat: " .$jt . "\nJurnal: " . $request->input('jurnal');
+
+            $this->sendTelegram($msg);
+
             return response()->json(['status' => 'sukses', 'msg' => 'Data Absen disimpan. ;)']);
         } catch (\Exception $e) {
             // return back()->withErrors(['status' => 'error', 'errCode' => $e->getCode(), 'errMsg' => $e->geMessage()]);

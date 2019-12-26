@@ -662,3 +662,51 @@
 		</div>
 	</div>
 </div>
+
+{{-- Jurnal Staf --}}
+<div class="modal fade" id="modal-jurnal-staf" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				
+				<h5 class="modal-title">Isi Jurnal </h5>
+				<button class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-jurnal-staf">
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label for="tanggal">Tanggal</label>
+							<input type="date" name="tanggal" class="form-control" id="tanggal">
+						</div>
+						<div class="form-group col-sm-6">
+							<label for="lokasi">Tempat</label>
+							<input type="text" name="lokasi" class="form-control" id="lokasi">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-12">
+							<label for="kegiatan">Uraian Kegiatan</label>
+							<textarea name="kegiatan" id="kegiatan" class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label for="mulai">Mulai</label>
+							<input type="time" class="form-control" id="mulai" name="mulai">
+						</div>
+						<div class="form-group col-sm-6">
+							<label for="selesai">Selesai</label>
+							<input type="time" class="form-control" id="selesai" name="selesai">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-12 d-flex justify-contents-center">
+							<button class="btn btn-primary block-center" id="btn-submit-jurnal-staf"><i class="fa fa-save"></i> Simpan</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

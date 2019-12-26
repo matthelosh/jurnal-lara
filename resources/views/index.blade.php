@@ -65,5 +65,25 @@
 				@break
 			@endswitch
 		@endif
+	@elseif(Auth::user()->level == 'staf')
+		@switch($page)
+			@case('dashboard')
+				@include('layouts.defaultcontent')
+			@break
+			@case('profilku')
+				@include('dash-guru.profilku')
+			@break
+			
+		@endswitch
+	@elseif(Auth::user()->level == 'katu')
+		@switch($page)
+			@case('dashboard')
+				@include('layouts.defaultcontent')
+			@break
+			@case('profilku')
+				@include('dash-guru.profilku')
+			@break
+			
+		@endswitch
 	@endif
 @endsection

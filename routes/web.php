@@ -53,6 +53,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/profil/{username}', 'DashController@profil')->name('profiluser');
 	Route::get('/siswaku', 'DashController@siswaku')->name('indexsiswaku')->middleware('forGuru');
 	Route::get('/rekap-absen', 'DashController@rekapAbsen')->name('indexrekapwali')->middleware('forGuru');
+	// Route::get('/rekap-absen/siswa/{nisn}/bulan/{bulan}/tahun/{tahun}','DashController@rekapAbsen')->name('detilrekapwali')->middleware('forGuru');
 	
 });
 
@@ -138,6 +139,13 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	Route::post('/upload/foto', 'UserController@updateFoto')->name('gantifoto');
 	Route::post('/getsiswaku', 'SiswaController@getSiswaku')->name('getsiswaku')->middleware('forGuru');
+
+	// Staf
+	Route::get('/jurnalku', 'JurnalController@jurnalKu')->name('jurnalku');
+	Route::post('/jurnal/isi', 'JurnalController@create')->name('createjurnal');
+	Route::put('/jurnal/update/{kode_jurnal}', 'JurnalController@update')->name('jurnal');
+	Route::post('/jurnal/stafs/{tanggal}', 'JurnalController@jurnalStaf')->name('jurnalstaf');
+	Route::put('/jurnal/validasi/{valid}/kode/{kode_jurnal}', 'JurnalController@validasi')->name('validasijurnal');
 });
 
 

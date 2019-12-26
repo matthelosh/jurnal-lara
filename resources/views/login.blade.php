@@ -8,7 +8,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-        <link rel="stylesheet" href="">
+        <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">

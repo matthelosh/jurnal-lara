@@ -42,6 +42,10 @@ class User extends Authenticatable
         return $this->hasMany(\App\Jadwal, 'guru_id', 'nip');
     }
 
+    public function jurnals()
+    {
+        return $this->hasMany('App\Jurnal', 'staf_id', 'nip');
+    }
     public static function boot()
     {
         parent::boot();
