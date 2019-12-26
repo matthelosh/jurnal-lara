@@ -3,10 +3,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuruMiddleware;
+// use Illuminate\Routing\Route;
 
 Route::get('/', function (Request $request) {
 	$sekolah = \App\Sekolah::first();
-	$request->session()->put('sekolah', $sekolah->nama_sekolah);
+	if(!$sekolah) {
+		$nama_sekolah = 'Belum Ada Sekolah';
+	} else {
+		$nama_sekolah = $sekolah->nama_sekolah;
+	}
+	$request->session()->put('sekolah', $nama_sekolah);
 	if(Auth::check()){
 		return redirect('/dashboard');
 	}
@@ -54,6 +60,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/siswaku', 'DashController@siswaku')->name('indexsiswaku')->middleware('forGuru');
 	Route::get('/rekap-absen', 'DashController@rekapAbsen')->name('indexrekapwali')->middleware('forGuru');
 	// Route::get('/rekap-absen/siswa/{nisn}/bulan/{bulan}/tahun/{tahun}','DashController@rekapAbsen')->name('detilrekapwali')->middleware('forGuru');
+
+	// Ka TU
+	Route::get('/stafs', 'DashController@indexStafs')->name('indexstafs');
+	
 	
 });
 
@@ -114,6 +124,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::get('/edit/data-sekolah', 'SekolahController@edit')->name('editsekolah');
 	Route::post('/upload/logo', 'SekolahController@updateLogo')->name('updatelogo');
 	Route::put('/update/sekolah', 'SekolahController@update')->name('updatesekolah');
+	Route::post('/create/sekolah', 'SekolahController@create')->name('createsekolah');
 
 	// Logabsen
 	Route::post('/aktifkan-jadwal', 'LogabsenController@activate')->name('activatejadwal');
@@ -136,6 +147,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// Select2
 	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');
 	Route::post('/select/guru', 'UserController@select')->name('selectguru');
+	Route::post('/select/stafs', 'UserController@selectStafs')->name('selectstafs');
 
 	Route::post('/upload/foto', 'UserController@updateFoto')->name('gantifoto');
 	Route::post('/getsiswaku', 'SiswaController@getSiswaku')->name('getsiswaku')->middleware('forGuru');
@@ -146,6 +158,8 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::put('/jurnal/update/{kode_jurnal}', 'JurnalController@update')->name('jurnal');
 	Route::post('/jurnal/stafs/{tanggal}', 'JurnalController@jurnalStaf')->name('jurnalstaf');
 	Route::put('/jurnal/validasi/{valid}/kode/{kode_jurnal}', 'JurnalController@validasi')->name('validasijurnal');
+	Route::post('/stafs', 'UserController@getStafs')->name('getstafs');
+	Route::post('/jurnal/laporan', 'JurnalController@laporan')->name('laporanjurnalstaf');
 });
 
 

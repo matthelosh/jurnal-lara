@@ -9,6 +9,7 @@ use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 
 class UserController extends Controller
 {
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        return Datatables::of(User::all())->addIndexColumn()->addColumn('qr', function($user) {
+        return Datatables::of(User::where('level', '!=', 'admin'))->addIndexColumn()->addColumn('qr', function($user) {
             return QrCode::size(50)->generate('/dashboard/users/detail/'.$user->username);
         })->rawColumns(['qr'])->make(true);
     }
@@ -33,6 +34,24 @@ class UserController extends Controller
             $gurus = User::where('level', 'guru')->select('nip', 'fullname')->get();
         } else {
             $gurus = User::where('level', 'guru')->select('nip', 'fullname')->where('fullname', 'like', '%'.$search.'%')->get();
+        }
+
+        $response = [];
+        foreach($gurus as $guru)
+        {
+            array_push($response, ["id" =>$guru->nip,"text" => $guru->fullname]);
+        }
+
+        return response()->json($response);
+    }
+    public function selectStafs(Request $request)
+    {
+        $search = $request->input('q');
+
+        if ($search == '') {
+            $gurus = User::where('level', 'staf')->select('nip', 'fullname')->get();
+        } else {
+            $gurus = User::where('level', 'staf')->select('nip', 'fullname')->where('fullname', 'like', '%'.$search.'%')->get();
         }
 
         $response = [];
@@ -186,5 +205,12 @@ class UserController extends Controller
         {
             return response()->json(['status' => 'gagal', 'msg' => $e->getMessage()]);
         }
+    }
+
+    public function getStafs(Request $request)
+    {
+        $stafs = 'App\User'::where('level', 'staf')->get();
+
+        return DataTables::of($stafs)->addIndexColumn()->make(true);
     }
 }

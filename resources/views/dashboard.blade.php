@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('/DataTables/Responsive-2.2.3/css/responsive.dataTables.css') }}">
     <link rel="stylesheet" href="{{ asset('/DataTables/Responsive-2.2.3/css/responsive.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/select2/css/select2-bootstrap.min.css') }}">
     <link href="{{ asset('/css/light-bootstrap-dashboard.css?v=2.0.0 ') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('/css/utama.css') }}" rel="stylesheet" />
@@ -71,7 +72,7 @@
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="{{ asset('/js/plugins/bootstrap-switch.js')}}"></script>
  {{-- Google Maps Plugin    --}}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR API KEY"></script>
+{{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR API KEY"></script> --}}
 <!--  Chartist Plugin  -->
 <script src="{{ asset('/js/plugins/chartist.min.js') }}"></script>
 <!--  Notifications Plugin    -->

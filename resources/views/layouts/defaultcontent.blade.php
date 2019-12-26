@@ -30,6 +30,7 @@
                                 <table class="table table-sm" id="table-log-absen" width="100%">
                                     <thead>
                                         <tr>
+                                            <th>Tanggal</th>
                                             <th>Kelas</th>
                                             <th>Mapel</th>
                                             <th>Guru</th>

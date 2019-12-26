@@ -45,7 +45,7 @@
                     @if(Session::get('error'))
                         <div class="alert bg-danger text-white">{{ Session::get('error') }}</div>
                     @endif
-                    <div class="alert bg-info text-white" id="demo"></div>
+                    {{-- <div class="alert bg-info text-white" id="demo"></div> --}}
                 </div>
                 
             </div>
@@ -57,89 +57,5 @@
             <script src="{{ asset('/js/sweetalert.js') }}"></script>
             <script src="{{ asset('/select2/js/select2.min.js') }}"></script>
             <script src="{{ asset('/js/umum.js') }}"></script>
-            {{-- <script>
-                var headers =  {
-                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                };
-               
-
-                var x = document.getElementById("demo");
-                var long = 112.646883;
-                var lat = -8.034246;
-                    function getLocation(sekolah) {
-                        if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(pos){
-                            // alert(pos.coords.latitude+', '+pos.coords.longitude);
-                            var distance = distanceBetween(Number(sekolah.lat), Number(sekolah.long), pos.coords.latitude, pos.coords.longitude, "K");
-                            // console.log("geo dis: " + distance);
-                            // $("#demo").html("<h4>" + Math.round(distance) + "Km</h4>");
-                            if ( distance > 0.5){
-                                $('#demo').html('Pastikan Anda berada di area sekolah. Saat ini Anda berjarak kurang lebih '+Math.round(distance)+' Km dari sekolah. ;)');
-                            } else {
-                                $('#demo').html('Silahkan masuk. Anda sudah berada di area sekolah.');
-                            }
-                        }, showError);
-                        } else {
-                        var status = document.getElementById("demo");
-                        status.innerHTML = "Geolocation is not supported by this browser.";
-                        }
-                    }
-                    function distanceBetween(lat1, lon1, lat2, lon2, unit) {
-
-                        var rlat1 = Math.PI * lat1 / 180
-                        var rlat2 = Math.PI * lat2 / 180
-                        var rlon1 = Math.PI * lon1 / 180
-                        var rlon2 = Math.PI * lon2 / 180
-                        var theta = lon1 - lon2
-                        var rtheta = Math.PI * theta / 180
-                        var dist = Math.sin(rlat1) * Math.sin(rlat2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.cos(rtheta);
-                        dist = Math.acos(dist)
-                        dist = dist * 180 / Math.PI
-                        dist = dist * 60 * 1.1515
-                        if (unit == "K") {
-                        dist = dist * 1.609344
-                        }
-                        if (unit == "N") {
-                        dist = dist * 0.8684
-                        }
-                        return dist
-                        
-                    }
-                    // show our errors for debuging
-                    function showError(error) {
-                        var x = document.getElementById("demo");
-                        switch (error.code) {
-                        case error.PERMISSION_DENIED:
-                            x.innerHTML = "Mohon aktifkan lokasi untuk browser. :)"
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            x.innerHTML = "Location information is unavailable.";
-                            break;
-                        case error.TIMEOUT:
-                            x.innerHTML = "The request to get location timed out.";
-                            break;
-                        case error.UNKNOWN_ERROR:
-                            x.innerHTML = "An unknown error occurred :(";
-                            break;
-                        }
-                    }
-
-                    $(document).ready(function(){
-                        var sekolah;
-                        $.ajax({
-                            url: '/ajax/getsekolah',
-                            type: 'post',
-                            headers: headers,
-                            dataType: 'json',
-                            success: function(res) {
-                                console.log(res);
-                                sekolah = res.data;  
-                                getLocation(res.data);
-                            }
-                        })
-                        
-                    })
-                // });
-            </script> --}}
         </body>
     </html>

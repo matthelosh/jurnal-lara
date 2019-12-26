@@ -20,7 +20,7 @@
            
 		</div>
 		<div class="card-body">
-            
+        @if($info_sekolah)
 			<table width="100%">
                 <tr>
                     <td>NPSN</td>
@@ -99,10 +99,12 @@
                 </tr>
                 
             </table>
-			
+        @else
+            <div class="alert alert-danger">Data Sekolah Belum dibuat. <button class="btn btn-sm" id="btn-create-sekolah"><i class="fa fa-plus"></i> Buat Sekarang</button></div>
+        @endif
 		</div>
 	</div>
-	<div class="card">
+	{{-- <div class="card">
         <div class="card-body" style="width:400px">
             <div class="container">
                     <form class="col s12" id="form-lokasi-sekolah">
@@ -125,6 +127,6 @@
         
                 </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 

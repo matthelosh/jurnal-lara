@@ -147,4 +147,9 @@ class DashController extends Controller
     }
 
 // End Guru
+// Ka Tu
+    public function indexStafs(Request $request)
+    {
+        return view('index', ['page' => 'stafs']);
+    }
 }

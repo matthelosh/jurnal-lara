@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+	$.fn.select2.defaults.set( "theme", "bootstrap" );
     var headers =  {
         'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
     };
@@ -23,6 +24,21 @@ $(document).ready(function() {
 		ajax:{
 			headers: headers,
 			url: '/ajax/select/guru',
+			type: 'post',
+			dataType: 'json',
+			delay: 250,
+			processResults: function(response) {
+				return {
+					results: response
+				};
+			},
+			cache: true
+		}
+	});
+	$('.selStaf').select2({
+		ajax:{
+			headers: headers,
+			url: '/ajax/select/stafs',
 			type: 'post',
 			dataType: 'json',
 			delay: 250,

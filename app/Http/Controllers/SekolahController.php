@@ -24,9 +24,30 @@ class SekolahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            Sekolah::create([
+                'npsn' => $request->input('npsn'), 
+                'nss'  => $request->input('nss'), 
+                'nama_sekolah' => $request->input('nama_sekolah'), 
+                'kepsek' => $request->input('kepsek'), 
+                'nip_kepsek' => $request->input('nip_kepsek'), 
+                'lat' => $request->input('lat'),
+                'long' => $request->input('long'),
+                'alamat_sekolah' => $request->input('alamat_sekolah'), 
+                'kelurahan' => $request->input('kelurahan'), 
+                'kec' => $request->input('kec'), 
+                'kota' => $request->input('kota'), 
+                'prov' => $request->input('prov'), 
+                'telepon' => $request->input('telepon'), 
+                'email' => $request->input('email'), 
+                'website' => $request->input('website')
+            ]);
+            return response()->json(['status' => 'sukses', 'msg' => 'Data sekolah dibuat.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getCode(). ' : '. $e->getMessage()]);
+        }
     }
 
     /**

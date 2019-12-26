@@ -80,8 +80,8 @@
 			@case('dashboard')
 				@include('layouts.defaultcontent')
 			@break
-			@case('profilku')
-				@include('dash-guru.profilku')
+			@case('stafs')
+				@include('dash-katu.stafs')
 			@break
 			
 		@endswitch

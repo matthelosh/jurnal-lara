@@ -31,9 +31,14 @@ $(document).ready(function(){
             });
         });
 
-    	var tusers = $('#table-users').on('init.dt', function(){
+		var tusers = $('#table-users')
+		.on('init.dt', function(){
+			
+		})
+		.on('draw.dt', function(){
 			$('#progress').removeClass('progress d-flex').addClass('d-none');
-		}).DataTable({
+		})
+		.DataTable({
     		dom: 'Bftlp',
     		processing: true,
     		serverSide: true,
@@ -80,7 +85,7 @@ $(document).ready(function(){
                 },
                 {
                     extend: 'excel',
-                    text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                    text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                     messageTop: new Date(),
                     title: 'Data Pengguna',
                     exportOptions: {
@@ -257,7 +262,7 @@ $(document).ready(function(){
                 },
                 {
                     extend: 'excel',
-                    text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                    text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                     messageTop: new Date(),
                     title: 'Data Siswa',
                     exportOptions: {
@@ -440,7 +445,7 @@ $(document).ready(function(){
                 },
                 {
                     extend: 'excel',
-                    text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                    text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                     messageTop: new Date(),
                     title: 'Data Rombel',
                     exportOptions: {
@@ -915,7 +920,7 @@ $(document).ready(function(){
                 },
                 {
                     extend: 'excel',
-                    text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                    text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                     messageTop: new Date(),
                     title: 'Mata Pelajaran',
                     exportOptions: {
@@ -1104,7 +1109,7 @@ $(document).ready(function(){
             },
             {
                 extend: 'excel',
-                text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                 messageTop: new Date(),
                 title: 'Jadwal Pelajaran',
                 exportOptions: {
@@ -1311,6 +1316,7 @@ $(document).ready(function(){
 			success: function(res) {
 				if (res.status == 'sukses') {
 					$('#form-data-sekolah #id').val(res.data.id);
+					$('#form-data-sekolah #mode').val('update');
 					$('#npsn').val(res.data.npsn);
 					$('#nss').val(res.data.nss);
 					$('#nama_sekolah').val(res.data.nama_sekolah);
@@ -1334,16 +1340,27 @@ $(document).ready(function(){
 		})
 	});
 
+	$('#btn-create-sekolah').on('click', function() {
+		$('#form-data-sekolah #mode').val('create');
+		$('#modal-sekolah').modal();
+	});
+
 	$(document).on('submit', '#form-data-sekolah', function(e) {
 		e.preventDefault();
 		var data = $(this).serialize();
+		var mode = ($('#form-data-sekolah #mode').val() == 'update') ? 'put': 'post';
+		// alert()
 		$.ajax({
-			url: '/ajax/update/sekolah',
-			type:'put',
+			url: '/ajax/'+ $('#form-data-sekolah #mode').val() +'/sekolah',
+			type:mode,
 			data: data,
 			headers: headers,
+			beforeSend: function() {
+				$('#progress').addClass('d-flex progree').removeClass('d-none');
+			},
 			success: function(res) {
 				if ( res.status == 'sukses' ) {
+					$('#progress').removeClass('d-flex progree').addClass('d-none');
 					Swal.fire('info', res.msg, 'info');
 					window.location.reload();
 				} else {
@@ -1450,7 +1467,7 @@ $(document).ready(function(){
             },
             {
                 extend: 'excel',
-                text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+                text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
                 messageTop: new Date(),
                 title: 'jadwal Harian',
                 exportOptions: {
@@ -1490,6 +1507,7 @@ $(document).ready(function(){
 			} ],
 		'order': [[1, 'asc']],
 		columns: [
+			{ data: 'tanggal', name: 'tanggal'},
 			{ data: 'rombels.nama_rombel', name: 'rombels.nama_rombel'},
 			{ data: 'mapels.nama_mapel', name: 'mapels.nama_mapel'},
 			{ data: 'gurus.fullname', name: 'gurus.fullname'},
@@ -1649,7 +1667,7 @@ $(document).ready(function(){
 				},
 				{
 					extend: 'excel',
-					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
 					messageTop: new Date(),
 					title: 'jadwal Harian',
 					stripHtml: false,
@@ -1725,7 +1743,7 @@ $(document).ready(function(){
 				},
 				{
 					extend: 'excel',
-					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
 					messageTop: new Date(),
 					title: 'jadwal Harian',
 				},
@@ -1802,7 +1820,7 @@ $(document).ready(function(){
 				},
 				{
 					extend: 'excel',
-					text: '<span style="color: green;"><i class="fa fa-file-excel-o"></i> Excel</span>',
+					text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
 					messageTop: new Date(),
 					title: 'jadwal Harian',
 				},
@@ -1860,5 +1878,91 @@ $(document).ready(function(){
 		}).on('draw.dt', function(){
 			$('#progress').removeClass('progress d-flex').addClass('d-none');
 		})
+	});
+
+
+	// Laporan Jurnal Pegawai
+	$(document).on('submit', '#form-cek-jurnal-staf', function(e) {
+		e.preventDefault();
+
+		var data = $(this).serialize();
+
+		var tlaporanjurnal = $('#table-laporan-jurnal')
+			.on('draw.dt', function(){
+				$('#progress').removeClass('d-flex progress').addClass('d-none');
+			})
+			.on('init.dt', function(){
+				$('#progress').removeClass('d-flex progress').addClass('d-none');
+			})
+			.DataTable({
+				dom: 'Bftlip',
+				buttons: [
+					{
+						extend: 'copy',
+						text: '<span style="color: orangered;"><i class="fa fa-copy"></i> Salin</span>'
+					},
+					{
+						extend: 'excel',
+						text: '<span style="color: green;"><i class="fa fa-file-excel"></i> Excel</span>',
+						messageTop: new Date(),
+						title: 'jadwal Harian',
+					},
+					{
+						extend: 'print',
+						text: '<span style="color: teal;"><i class="fa fa-print"></i> Cetak</span>',
+						exportOptions: {
+							stripHtml: false
+						},
+						title: 'Laporan Jurnal Staf '+$('select[name="staf"] option:selected').text(),
+						messageTop: '<h4>Bulan '+$('select[name="bulan"] option:selected').text() +' '+$('select[name="tahun"] option:selected').text()+'</h4>'
+						// messageBottom: `<div style="position:relative;display:block;width: 100%;">
+						// 					<div style="position:relative;margin-right:20px!important;">
+						// 						Malang, 12-09-2019<br>
+						// 						Guru Pengajar
+						// 						<br>
+						// 						<br>
+						// 						<br>
+						// 						<b><u>Joko Susilo</u></b><br>
+						// 						NIP. 19871209 201909 1 003
+						// 					</div>
+						// 				</div>`
+					}
+				],
+				
+				serverSide: true,
+				processing: true,
+				responsive: true,
+				lengthMenu: [
+					[10, 25, 50, 100, -1],
+					['10', '25', '50', '100', 'Semua']
+				],
+				ajax: {
+					url: '/ajax/jurnal/laporan?staf='+$('select[name="staf"]').val()+'&bulan='+$('select[name="bulan"]').val()+'&tahun='+$('select[name="tahun"]').val(),
+					// data: data,
+					type: 'post',
+					headers: headers,
+					beforeSend: function(){
+						$('#progress').addClass('progress d-flex').removeClass('d-none');
+					}
+				},
+				"columnDefs": [ {
+					"searchable": false,
+					"orderable": false,
+					"targets": 0
+					} ],
+				'order': [[1, 'asc']],
+				columns: [
+					{ data: 'DT_RowIndex', 'orderable': false},
+					{ data: 'kode_jurnal', text: 'kode_jurnal'},
+					{ data: 'tanggal', text: 'tanggal'},
+					{ data: 'kegiatan', text: 'kegiatan'},
+					{ data: 'lokasi', text: 'lokasi'},
+					{ data: 'mulai', text: 'mulai'},
+					{ data: 'selesai', text: 'selesai'},
+					{ data: 'status', text: 'status'},
+					{ data: 'ket', text: 'ket'},
+				],
+			})
+
 	});
 });

@@ -433,6 +433,7 @@
 			<div class="modal-body">
 				<form action="" class="form" id="form-data-sekolah">
 					<input type="hidden" name="id" id="id">
+					<input type="hidden" name="mode" id="mode">
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="form-group">
