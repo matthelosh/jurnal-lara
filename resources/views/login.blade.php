@@ -45,7 +45,7 @@
                     @if(Session::get('error'))
                         <div class="alert bg-danger text-white">{{ Session::get('error') }}</div>
                     @endif
-                    {{-- <div class="alert bg-info text-white" id="demo"></div> --}}
+                    
                 </div>
                 
             </div>
