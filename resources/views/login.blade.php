@@ -6,8 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>LOGIN | {{Session::get('sekolah')}}</title>
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet"> -->
         <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
@@ -32,8 +32,8 @@
                         <div class="logo-front"><img src="/img/logo.png" alt="Logo" width="100px"></div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <div class="text-greet d-none d-md-block">
-                            <h3 class="text-white text-center">Selamat Datang <br> di Jurnal Presensi {{Session::get('sekolah')}}</h3>
+                        <div class="text-greet">
+                            <h3 class="text-white text-center">Selamat Datang <br> di Jurnal+ {{Session::get('sekolah')}}</h3>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

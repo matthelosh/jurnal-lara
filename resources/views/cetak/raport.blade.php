@@ -21,17 +21,17 @@
                                     <tr>
                                         <td>Nama Peserta Didik</td>
                                         <td>:</td>
-                                        <td>Bejo Kumayangan</td>
+                                        <td>{{ $data->nama_siswa }}</td>
                                     </tr>
                                     <tr>
                                         <td>NISN/NIS</td>
                                         <td>:</td>
-                                        <td>987978968 / 1025</td>
+                                        <td>{{ $data->nisn }} / {{ $data->nis }}</td>
                                     </tr>
                                     <tr>
                                         <td>Nama Sekolah</td>
                                         <td>:</td>
-                                        <td>SD NEgeri 1 Bedalisodo</td>
+                                        <td>{{ Session::get('sekolah') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Alamat Sekolah</td>
@@ -47,17 +47,17 @@
                                     <tr>
                                         <td>Kelas</td>
                                         <td>:</td>
-                                        <td>VI (Enam)</td>
+                                        <td>{{ $data->rombels->nama_rombel }}</td>
                                     </tr>
                                     <tr>
                                         <td>Semester</td>
                                         <td>:</td>
-                                        <td>11 (Ganjil)</td>
+                                        <td>{{ $_GET['semester'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Tahun Pelajaran</td>
                                         <td>:</td>
-                                        <td>2019/2020</td>
+                                        <td>{{ $_GET['tapel'] }}</td>
                                     </tr>
                                 </tbody>
                             </table>

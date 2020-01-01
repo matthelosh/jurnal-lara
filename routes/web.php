@@ -3,7 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuruMiddleware;
-use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
 	$sekolah = \App\Sekolah::first();

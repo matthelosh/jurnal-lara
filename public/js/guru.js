@@ -430,8 +430,12 @@ $(document).ready(function(){
 		// Raport
 
 		$(document).on('click', '.btn-print-raport', function() {
-			
-			var win = window.open(window.location.origin+'/dashboard/cetak/raport?nisn=10','', '', '');
+			var nisn = $('.form-ambil-raport #siswa_id').val(), semester = $('.form-ambil-raport #semester').val(), tapel = $('.form-ambil-raport #tapel').val();
+			if( nisn == '0' || semester == "0") {
+				Swal.fire('Error', 'Pastikan Nama Siswa dan Semester sudah terpilih', 'error');
+				return false;
+			} else {
+				var win = window.open(window.location.origin+`/dashboard/cetak/raport?nisn=${nisn}&semester=${semester}&tapel=${tapel}`,'', '', '');
 			// var body = document.getElementsByClassName('raport');
 			// var page = `
 			// 			<!doctype html>
@@ -442,13 +446,13 @@ $(document).ready(function(){
 			// 				<body></body>
 			// 				</html>
 
-			// 			`;
-			// win.document.write(page);
-			setTimeout(function(){
-				win.print();
-				win.close();
-			}, 500);
-			
+				// 			`;
+				// win.document.write(page);
+				setTimeout(function(){
+					win.print();
+					win.close();
+				}, 500);
+			}
 			// win.close();
 		})
 });

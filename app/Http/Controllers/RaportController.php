@@ -29,7 +29,8 @@ class RaportController extends Controller
 
     public function cetak(Request $request)
     {
-        return view('cetak.raport', ['page' => 'pas']);
+        $data = 'App\Siswa'::where('nisn', $request->query('nisn'))->with('rombels')->first();
+        return view('cetak.raport', ['page' => 'pas', 'data' => $data]);
     }
 
     /**
