@@ -63,6 +63,9 @@
 				@case('rekap_absen')
 					@include('dash-guru.rekap_absen')
 				@break
+				@case('raport')
+					@include('dash-guru.raport')
+				@break
 			@endswitch
 		@endif
 	@elseif(Auth::user()->level == 'staf')

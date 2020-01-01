@@ -97,7 +97,21 @@
                     <td>:</td>
                     <td> {{$info_sekolah->website}}</td>
                 </tr>
-                
+                <tr>
+                    <td>Mode GPS</td>
+                    <td>:</td>
+                    <td>
+                        <div class="custom-control custom-switch">
+                            @php($checked = ($info_sekolah->gps == 'on') ? 'checked' : '')
+                            <input type="checkbox" class="custom-control-input" id="gps-switch" {{ $checked }}>
+                            <label for="gps-switch" class="custom-control-label">{{ $info_sekolah->gps }}</label>
+                        </div>
+                    </td>
+                </tr>
+                {{-- <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch1">
+                    <label class="custom-control-label" for="switch1">Toggle me</label>
+                </div> --}}
             </table>
         @else
             <div class="alert alert-danger">Data Sekolah Belum dibuat. <button class="btn btn-sm" id="btn-create-sekolah"><i class="fa fa-plus"></i> Buat Sekarang</button></div>

@@ -26,6 +26,25 @@ class MapelController extends Controller
         }
     }
 
+    public function select(Request $request)
+    {
+        $search = $request->input('q');
+
+        if ($search == '') {
+            $mapels = Mapel::select('kode_mapel', 'nama_mapel')->get();
+        } else {
+            $mapels = Mapel::select('kode_mapel', 'nama_mapel')->where('nama_mapel', 'like', '%'.$search.'%')->get();
+        }
+
+        $response = [];
+        foreach($mapels as $mapel)
+        {
+            array_push($response, ["id" =>$mapel->kode_mapel,"text" => $mapel->nama_mapel]);
+        }
+
+        return response()->json($response);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

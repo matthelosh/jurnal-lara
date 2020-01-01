@@ -1,0 +1,52 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("./../fonts/Montserrat/Montserrat-Regular.ttf");
+}
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url("./../fonts/Montserrat/Montserrat-Light.ttf");
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("./../fonts/Nunito/Nunito-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Nunito-Light";
+    src: url("./../fonts/Nunito/Nunito-Light.ttf");
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url("./../fonts/Lato/Lato-Regular.ttf");
+}
+@font-face {
+    font-family: "Lato-Light";
+    src: url("./../fonts/Lato/Lato-Light.ttf");
+}
+@font-face {
+    font-family: "OpenSans";
+    src: url("./../fonts/Open_Sans/OpenSans-Regular.ttf");
+}
+@font-face {
+    font-family: "OpenSans-Light";
+    src: url("./../fonts/Open_Sans/OpenSans-Light.ttf");
+}
+@font-face {
+    font-family: "Poppins";
+    src: url("./../fonts/Poppins/Poppins-Regular.ttf");
+}
+@font-face {
+    font-family: "Poppins-Light";
+    src: url("./../fonts/Poppins/Poppins-Light.ttf");
+}
+@font-face {
+    font-family: "MarkScript";
+    src: url("./../fonts/Marck_Script/MarckScript-Regular.ttf");
+}
+@font-face {
+    font-family: "UbuntuCondensed";
+    src: url("./../fonts/Ubuntu_Condensed/UbuntuCondensed-Regular.ttf");
+}
+

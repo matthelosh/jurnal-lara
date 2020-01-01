@@ -38,11 +38,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-8">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="txt-fullname" id="txt-fullname" placeholder="Nama Lengkap">
                                 </div>
                             </div>
+							<div class="col-sm-4">
+								<select name="jk" id="jk" class="form-control">
+									<option value="0">Jenis Kelamin</option>
+									<option value="l">Laki-laki</option>
+									<option value="p">Perempuan</option>
+								</select>
+							</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-8">
@@ -83,55 +90,168 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				
 				<div class="card">
-					<form action="" class="form" id="form-add-siswa">
-						<input type="hidden" id="id_siswa">
-						<input type="hidden" class="mode-form">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<input type="text" class="form-control" name="nis" id="nis" placeholder="NIS">
+					
+					<div class="card-body">
+						
+						<form action="" class="form" id="form-add-siswa" enctype="multipart/form-data">
+							<input type="hidden" id="id_siswa">
+							<input type="hidden" class="mode-form">
+							<div class="row">
+								<div class="col-sm-3">
+									<img class="img img-thumbnail img-siswa tootltip" id="img-holder" src="/img/avatar-siswa-l.png" alt="Foto Siswa" width="100px" onclick="document.getElementById('img-siswa').click()" style="cursor:pointer;" title="Click untuk mengganti foto.">
+									<input type="file" name="img-siswa" id="img-siswa" style="display:none;" onchange="document.getElementById('img-holder').src = window.URL.createObjectURL(this.files[0])">
 								</div>
+								
+								<div class="form-group col-sm-4">
+										<label for="nis">NIS</label>
+										<input type="text" class="form-control" name="nis" id="nis" placeholder="NIS">
+								</div>
+								<div class="form-group col-sm-5">
+										<label for="nisn">NISN</label>
+										<input type="text" class="form-control" name="nisn" id="nisn" placeholder="NISN">
+								</div>
+								
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<input type="text" class="form-control" name="nisn" id="nisn" placeholder="NISN">
-								</div>
+							<div class="row">
+									<div class="form-group col-sm-8">
+										<label for="nama_siswa">Nama Lengkap</label>
+										<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="jk">Jenis Kelamin</label>
+										<select name="jk" id="jk_siswa" class="form-control">
+											<option value="0">Jenis Kelamin</option>
+											<option value="l">Laki-laki</option>
+											<option value="p">Perempuan</option>
+										</select>
+									</div>
 							</div>
-						</div>
+							<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="rombel_siswa">Rombel</label>
+										{{-- <input type="text" class="form-control" id="rombel_siswa" name="rombel_id" placeholder="Rombel"> --}}
+										<select name="rombel_id" id="rombel_siswa" class="selRombel"></select>
+									</div>
+									<div class="form-group col-sm-6">
+										<label for="ortu">Ortu</label>
+										<input type="text" class="form-control" name="ortu_id" id="ortu_id">
+									</div>
+							</div>
+							<hr>
+							<div class="card-action">
+									<div class="form-group col-sm-12 d-flex justify-content-center">
+										<div class="btn-group">
+											<button class="btn btn-danger btn-sm" data-dismiss="modal">Batal</button>&nbsp;
+											<button class="btn btn-info btn-sm" type="submit">Simpan</button>
+										</div>
+									</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{-- Modal ortu --}}
+<div class="modal fade" id="modal-ortu">
+	<div class="modal-dialog modal-full" style="width:100%;max-width:95%!important;bottom:0!important;">
+		<div class="modal-content">
+			<div class="modal-header bg-secondary" style="padding-top:5px;">
+				<h4 style="margin:0!important;">Data Orang Tua</h4>
+				<button class="close" data-dismiss="modal" style="padding:5px!important;margin-top:-5px;">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="" class="form" id="form-ortu">
+				<input type="hidden" name="mode" value="create">
+				<input type="hidden" name="id_ortu" value="">
+					<div class="container">
 						<div class="row">
-							<div class="col-sm-8">
-								<div class="form-group">
-									<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
-								</div>
+							<div class="col-sm-4">
+								<label for="nik_aktif">NIK Ortu</label>
+								<input type="text" class="form-control" id="nik_aktif" name="nik_aktif" required>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
-									<select name="jk" id="jk" class="form-control">
-										<option value="0">Jenis Kelamin</option>
-										<option value="l">Laki-laki</option>
-										<option value="p">Perempuan</option>
-									</select>
-								</div>
+								<label for="email_aktif">Email Ortu</label>
+								<input type="text" class="form-control" id="email_aktif" name="email_aktif">
 							</div>
 						</div>
+						<hr>
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<input type="text" class="form-control" id="rombel_id" name="rombel_id" placeholder="Rombel">
-								</div>
+							<div class="col-sm-4">
+								<table>
+									<tr>
+										<td>Nama Ayah</td>
+										<td><input type="text" class="form-control" id="nama_ayah" name="nama_ayah"></td>
+									</tr>
+									<tr>
+										<td>Pekerjaan Ayah</td>
+										<td><input type="text" class="form-control" id="job_ayah" name="job_ayah"></td>
+									</tr>
+									<tr>
+										<td>Alamat Ayah</td>
+										<td><textarea  class="form-control" id="alamat_ayah" name="alamat_ayah"></textarea></td>
+									</tr>
+									<tr>
+										<td>HP Ayah</td>
+										<td><input type="text" class="form-control" id="hp_ayah" name="hp_ayah"></td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-sm-4">
+								<table>
+									<tr>
+										<td>Nama Ibu</td>
+										<td><input type="text" class="form-control" id="nama_ibu" name="nama_ibu" required></td>
+									</tr>
+									<tr>
+										<td>Pekerjaan ibu</td>
+										<td><input type="text" class="form-control" id="job_ibu" name="job_ibu"></td>
+									</tr>
+									<tr>
+										<td>Alamat ibu</td>
+										<td><textarea  class="form-control" id="alamat_ibu" name="alamat_ibu"></textarea></td>
+									</tr>
+									<tr>
+										<td>HP ibu</td>
+										<td><input type="text" class="form-control" id="hp_ibu" name="hp_ibu"></td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-sm-4">
+								<table>
+									<tr>
+										<td>Nama wali</td>
+										<td><input type="text" class="form-control" id="nama_wali" name="nama_wali"></td>
+									</tr>
+									<tr>
+										<td>Pekerjaan wali</td>
+										<td><input type="text" class="form-control" id="job_wali" name="job_wali"></td>
+									</tr>
+									<tr>
+										<td>Alamat wali</td>
+										<td><textarea  class="form-control" id="alamat_wali" name="alamat_wali"></textarea></td>
+									</tr>
+									<tr>
+										<td>HP wali</td>
+										<td><input type="text" class="form-control" id="hp_wali" name="hp_wali"></td>
+									</tr>
+								</table>
 							</div>
 						</div>
+						<hr>
 						<div class="row">
-							<div class="form-group">
-								<div class="btn-group float-right">
-									<button class="btn btn-danger btn-sm" type="reset">Batal</button>&nbsp;
-									<button class="btn btn-info btn-sm" type="submit">Simpan</button>
+							<div class="col-sm-12">
+								<div style="display:flex; justify-content:center;">
+									<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Simpan</button>
 								</div>
 							</div>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -142,7 +262,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Tambah Rombel</h4>
+				<h4 class="modal-title">Buat Rombel</h4>
 				<button class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -164,14 +284,16 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<input type="text" class="form-control" id="guru_id" name="guru_id" placeholder="Wali Kelas">
+								<select type="text" class="form-control selGuru" id="guru_id" name="guru_id" placeholder="Wali Kelas" style="width:100%">
+									<option value="0">-- Pilih Wali Kelas --</option>
+								</select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="float-right">
-								<button class="btn btn-sm btn-danger" type="reset">batal</button>
+								<button class="btn btn-sm btn-danger" data-dismiss="modal">batal</button>
 								<button class="btn btn-sm btn-info btn-submit-rombel" type="submit">Simpan</button>
 							</div>
 						</div>
@@ -373,14 +495,25 @@
 					<input type="hidden" name="mode-form" class="mode-form">
 					<div class="row">
 						
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="hari" name="hari" placeholder="Hari" required>
+								<select class="form-control selHari" id="hari" name="hari" placeholder="Hari" required style="width:100%">
+									<option value="0">--Hari--</option>
+									<option value="Senin">Senin</option>
+									<option value="Selasa">Selasa</option>
+									<option value="Rabu">Rabu</option>
+									<option value="Kamis">Kamis</option>
+									<option value="Jumat">Jumat</option>
+									<option value="Sabtu">Sabtu</option>
+									<option value="Minggu">Minggu</option>
+								</select>
 							</div>
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 							<div class="form-group">
-								<input type="text" class="form-control" id="guru_id" name="guru_id" placeholder="ID/NIP Guru" required>
+								<select class="form-control selGuru" id="nip_guru" name="nip_guru" placeholder="ID/NIP Guru" required style="width:100%">
+									<option value="0">-- Pilih Guru --</option>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -388,19 +521,55 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<input type="text" class="form-control" name="mapel_id" id="mapel_id" placeholder="Kode Mapel">
+								<select class="form-control selMapel" name="mapel_id" id="mapel_id" placeholder="Kode Mapel" style="width:100%">
+									<option value="0">-- Pilih Mapel --</option>
+								</select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-8">
+						<div class="col-sm-5">
 							<div class="form-group">
-								<input type="text" class="form-control" name="rombel_id" id="rombel_id" placeholder="Kode Rombel">
+								<select  class="form-control selRombel" name="rombel_id" id="rombel_id" placeholder="Kode Rombel" style="width:100%">
+									<option value="0">-- Pilih Rombel --</option>
+								</select>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-2">
+							Jamke:
+						</div>
+						<div class="col-sm-2">
 							<div class="form-group">
-								<input type="text" class="form-control" name="jamke" id="jampe" placeholder="Jamke">
+								{{-- <input type="text" class="form-control" name="jamke" id="jamke" placeholder="Jamke"> --}}
+								<select class="form-control" name="jamstart" id="jamstart" placeholder="Mulai">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-1">s/d</div>
+						<div class="col-sm-2">
+							<div class="form-group">
+								{{-- <input type="text" class="form-control" name="jamke" id="jamke" placeholder="Jamke"> --}}
+								<select class="form-control" name="jamend" id="jamend" placeholder="Selesai">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option></select>
 							</div>
 						</div>
 						
@@ -694,11 +863,11 @@
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<label for="mulai">Mulai</label>
-							<input type="time" class="form-control" id="mulai" name="mulai">
+							<input type="time" class="form-control" id="mulai-jurnal" name="mulai">
 						</div>
 						<div class="form-group col-sm-6">
 							<label for="selesai">Selesai</label>
-							<input type="time" class="form-control" id="selesai" name="selesai">
+							<input type="time" class="form-control" id="selesai-jurnal" name="selesai">
 						</div>
 					</div>
 					<div class="row">

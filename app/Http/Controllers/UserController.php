@@ -76,6 +76,7 @@ class UserController extends Controller
                 'username' => $request->input('txt-username'),
                 'password' => Hash::make($request->input('txt-password')),
                 'fullname' => $request->input('txt-fullname'),
+                'jk'       => $request->input('jk'),
                 'email'    => $request->input('txt-email'),
                 'hp'       => $request->input('txt-hp'),
                 'level'    => $request->input('txt-level')
@@ -154,6 +155,7 @@ class UserController extends Controller
                     'nip' => $request->input('txt-nip'),
                     'username' => $request->input('txt-username'),
                     'fullname' => $request->input('txt-fullname'),
+                    'jk' => $request->input('jk'),
                     'hp' => $request->input('txt-hp'),
                     'email' => $request->input('txt-email'),
                     'level' => $request->input('txt-level')

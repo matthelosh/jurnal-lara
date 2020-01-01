@@ -48,13 +48,18 @@ class SiswaController extends Controller
     public function create(Request $request)
     {
         //
+        $foto = $request->file('img-siswa');
+        // dd($request->);
+        $new_name = $request->input('nisn').'.jpg';
         try {
             Siswa::create([
                 'nis' => $request->input('nis'),
                 'nisn' => $request->input('nisn'),
                 'nama_siswa' => $request->input('nama_siswa'),
+                'foto' => '/siswas/'.$new_name,
                 'jk' => $request->input('jk'),
-                'rombel_id' => $request->input('rombel_id')
+                'rombel_id' => $request->input('rombel_id'),
+                'ortu_id' => $request->input('ortu_id')
             ]);
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Siswa: '.$request->input('nama_siswa'). ' tersimpan']);
@@ -65,6 +70,27 @@ class SiswaController extends Controller
                 return response()->json(['status' => 'gagal', 'msg' => 'NIS / NISN sudah digunakan untuk siswa lain.']);
             }
         }
+    }
+
+    // Select2 Siswaku
+    public function selSiswaKu(Request $request)
+    {
+        $rombel = 'App\Rombel'::where('guru_id', $request->user()->nip)->first();
+        $search = $request->input('q');
+
+        if ($search == '') {
+            $siswas = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->select('nisn', 'nama_siswa')->get();
+        } else {
+            $siswas = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->select('nisn', 'nama_siswa')->where('nama_siswa', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        $response = [];
+        foreach($siswas as $siswa)
+        {
+            array_push($response, ["id" =>$siswa->nisn,"text" => $siswa->nama_siswa]);
+        }
+
+        return response()->json($response);
     }
 
     public function getMembers(Request $request, $rombel_id)
@@ -174,13 +200,20 @@ class SiswaController extends Controller
     public function update(Request $request, $id_siswa)
     {
         //
+
+        $foto = $request->file('img-siswa');
+        // dd($request->);
+        $new_name = $request->input('nisn').'.jpg';
         try {
+            $foto->move(public_path('img/siswas'),$new_name);
             Siswa::find($id_siswa)->update([
                 'nis' => $request->input('nis'),
                 'nisn' => $request->input('nisn'),
+                'foto' => '/siswas/'.$new_name,
                 'nama_siswa' => $request->input('nama_siswa'),
                 'jk' => $request->input('jk'),
                 'rombel_id' => $request->input('rombel_id'),
+                'ortu_id' => $request->input('ortu_id')
             ]);
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Siswa: '.$request->input('nama_siswa'). 'telah diperbarui.']);

@@ -3,7 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuruMiddleware;
-// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
 	$sekolah = \App\Sekolah::first();
@@ -13,6 +13,7 @@ Route::get('/', function (Request $request) {
 		$nama_sekolah = $sekolah->nama_sekolah;
 	}
 	$request->session()->put('sekolah', $nama_sekolah);
+	$request->session()->put('gps', $sekolah->gps);
 	if(Auth::check()){
 		return redirect('/dashboard');
 	}
@@ -60,6 +61,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/siswaku', 'DashController@siswaku')->name('indexsiswaku')->middleware('forGuru');
 	Route::get('/rekap-absen', 'DashController@rekapAbsen')->name('indexrekapwali')->middleware('forGuru');
 	// Route::get('/rekap-absen/siswa/{nisn}/bulan/{bulan}/tahun/{tahun}','DashController@rekapAbsen')->name('detilrekapwali')->middleware('forGuru');
+	Route::get('/raport', 'DashController@indexRaport')->name('indexraportwali')->middleware('forGuru');
+	Route::get('/cetak/raport', 'RaportController@cetak')->name('cetakraport');
+	
 
 	// Ka TU
 	Route::get('/stafs', 'DashController@indexStafs')->name('indexstafs');
@@ -84,6 +88,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/add/siswa', 'SiswaController@create')->name('createsiswa');
 	Route::put('/update/siswa/{id}', 'SiswaController@update')->name('updatesiswa');
 	Route::delete('/delete/siswa/{nisn}', 'SiswaController@delete')->name('deletesiswa');
+	Route::post('/siswa/sel-siswaku', 'SiswaController@selSiswaKu')->name('selsiswaku')->middleware('forGuru');
 
 	// Rombel
 	// Route::get('/rombels', 'RombelController@index')->name('indexrombels');
@@ -110,8 +115,9 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	// Jadwal
 	Route::get('/jadwals', 'JadwalController@index')->name('indexjadwal');
-	Route::post('/add/jadwal', 'JadwalController@create')->name('createjadwal');
+	Route::post('/jadwal/create', 'JadwalController@create')->name('createjadwal');
 	Route::delete('/delete/jadwal/{id}', 'JadwalController@delete')->name('deletejadwal');
+	Route::put('/jadwal/update/{id}', 'JadwalController@update')->name('updatejadwal');
 
 	// Jampel
 	Route::post('/add/jampel', 'JampelController@create')->name('createjampel');
@@ -125,6 +131,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/upload/logo', 'SekolahController@updateLogo')->name('updatelogo');
 	Route::put('/update/sekolah', 'SekolahController@update')->name('updatesekolah');
 	Route::post('/create/sekolah', 'SekolahController@create')->name('createsekolah');
+	Route::put('/gps/{mode}', 'SekolahController@toggleGps')->name('togglegps')->middleware('forAdmin');
 
 	// Logabsen
 	Route::post('/aktifkan-jadwal', 'LogabsenController@activate')->name('activatejadwal');
@@ -148,6 +155,8 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::post('/select/rombel', 'RombelController@select')->name('selectrombel');
 	Route::post('/select/guru', 'UserController@select')->name('selectguru');
 	Route::post('/select/stafs', 'UserController@selectStafs')->name('selectstafs');
+	Route::post('/select/mapels', 'MapelController@select')->name('selectmapels');
+
 
 	Route::post('/upload/foto', 'UserController@updateFoto')->name('gantifoto');
 	Route::post('/getsiswaku', 'SiswaController@getSiswaku')->name('getsiswaku')->middleware('forGuru');
@@ -160,6 +169,11 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::put('/jurnal/validasi/{valid}/kode/{kode_jurnal}', 'JurnalController@validasi')->name('validasijurnal');
 	Route::post('/stafs', 'UserController@getStafs')->name('getstafs');
 	Route::post('/jurnal/laporan', 'JurnalController@laporan')->name('laporanjurnalstaf');
+
+	// Ortu
+	Route::get('/ortu/get-one/{nik}', 'OrtuController@getOne')->name('getoneortu');
+	Route::post('/ortu/create', 'OrtuController@create')->name('createoneortu');
+	Route::put('/ortu/update', 'OrtuController@update')->name('updateortu');
 });
 
 

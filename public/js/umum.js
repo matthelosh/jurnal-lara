@@ -32,7 +32,7 @@ $(document).ready(function() {
 					results: response
 				};
 			},
-			cache: true
+			cache: true,
 		}
 	});
 	$('.selStaf').select2({
@@ -50,6 +50,44 @@ $(document).ready(function() {
 			cache: true
 		}
 	});
+	$('.selMapel').select2({
+		ajax:{
+			headers: headers,
+			url: '/ajax/select/mapels',
+			type: 'post',
+			dataType: 'json',
+			delay: 250,
+			processResults: function(response) {
+				return {
+					results: response
+				};
+			},
+			cache: false
+		}
+	});
+
+	$('.selSiswaKu').select2({
+		ajax: {
+			headers: headers,
+			url: '/ajax/siswa/sel-siswaku',
+			type: 'post',
+			dataType: 'json',
+			delay: 250,
+			processResults: function(response) {
+				return {
+					results: response
+				}
+			},
+			cache: true
+		}
+	});
+
+	$('.selHari').select2();
+
+	// var gps = sessionStorage.getItem('gps');
+	// if ( gps == 'on' ) {
+		
+	// }
 
 	var sekolah;
 	$.ajax({
@@ -58,9 +96,20 @@ $(document).ready(function() {
 		headers: headers,
 		dataType: 'json',
 		success: function(res) {
-			console.log(res);
-			sekolah = res.data;  
-			// getLocation(res.data);
+			// console.log(res);
+			sekolah = res.data;
+			sessionStorage.setItem('gps', sekolah.gps);
+			
+			// setTimeout(function() {
+				if(sekolah.gps == 'on') {
+					// getLocation(res.data);
+					var pesan = 'Mohon aktifkan GPS di perangkat Anda dan pastikan Anda berada di lingkungan sekolah, demi kenyamanan dalam melakukan presensi siswa.';
+					$('#info-login').html(pesan).removeClass('d-none');
+				} else {
+					$('#demo').html('Mode GPS tidak aktif. Silahkan langsung masuk.')
+				}
+			// }, 500);
+			// getLocation(res.data)
 			// initialize(res.data);
 		}
 	})
@@ -69,12 +118,14 @@ $(document).ready(function() {
 	// var long = 112.646883;
 	// var lat = -8.034246;
 	// 	function getLocation(sekolah) {
+	// 		// alert('hi');
 	// 		if (navigator.geolocation) {
 	// 		navigator.geolocation.getCurrentPosition(function(pos){
 	// 			// alert(pos.coords.latitude+', '+pos.coords.longitude);
 	// 			var distance = distanceBetween(sekolah.lat, sekolah.long, pos.coords.latitude, pos.coords.longitude, "K");
 	// 			// console.log("geo dis: " + distance);
 	// 			// $("#demo").html("<h4>" + Math.round(distance) + "Km</h4>");
+	// 			// alert(distance);
 	// 			if ( distance > 0.5){
 	// 				$('#demo').html('Pastikan Anda berada di area sekolah. Saat ini Anda berjarak kurang lebih '+Math.round(distance)+' Km dari sekolah. ;)'+pos.coords.latitude+', '+pos.coords.longitude+' Posisi Sekolah: '+sekolah.lat+', '+sekolah.long);
 	// 			} else {

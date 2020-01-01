@@ -52,14 +52,14 @@ class JadwalController extends Controller
         //
         $cek = Jadwal::where([
             'hari' => $request->input('hari'),
-            'guru_id' => $request->input('guru_id'),
-            'jamke' => $request->input('jamke')
+            'guru_id' => $request->input('nip_guru'),
+            'jamke' => $request->input('start').'-'. $request->input('jamend')
         ])->with('rombels')->first();
 
         $cek2 = Jadwal::where([
             'hari' => $request->input('hari'),
             'rombel_id' => $request->input('rombel_id'),
-            'jamke' => $request->input('jamke')
+            'jamke' => $request->input('start').'-'. $request->input('jamend')
         ])->with('users', 'rombels')->first();
         if ( $cek ) {
             return response()->json(['status' => 'gagal', 'msg' => 'Guru ini sudah ada jadwal di kelas '. $cek->rombels->nama_rombel . ' untuk hari '.$cek->hari. ', jam ke '.$cek->jamke]);
@@ -69,14 +69,14 @@ class JadwalController extends Controller
         } 
 
         try {
-            $kode_jadwal = strtolower(substr($request->input('hari'), 0, 3)).'_'.$request->input('mapel_id').'_'.$request->input('rombel_id').'_'.$request->input('jamke');
+            $kode_jadwal = strtolower(substr($request->input('hari'), 0, 3)).'_'.$request->input('mapel_id').'_'.$request->input('rombel_id').'_'.$request->input('start').'-'. $request->input('jamend');
             Jadwal::create([
                 'kode_jadwal' => $kode_jadwal,
                 'hari' => $request->input('hari'),
-                'guru_id' => $request->input('guru_id'),
+                'guru_id' => $request->input('nip_guru'),
                 'mapel_id' => $request->input('mapel_id'),
                 'rombel_id' => $request->input('rombel_id'),
-                'jamke' => $request->input('jamke')
+                'jamke' => $request->input('jamstart').'-'. $request->input('jamend')
             ]);
 
             return response()->json(['status' => 'sukses', 'msg' => 'Jadwal baru tersimpan']);
@@ -131,9 +131,23 @@ class JadwalController extends Controller
      * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jadwal $jadwal)
+    public function update(Request $request,$id)
     {
-        //
+        try {
+            $kode_jadwal = strtolower(substr($request->input('hari'), 0, 3)).'_'.$request->input('mapel_id').'_'.$request->input('rombel_id').'_'.$request->input('start').'-'. $request->input('jamend');
+            Jadwal::find($id)->update([
+                'kode_jadwal' => $kode_jadwal,
+                'hari' => $request->input('hari'),
+                'guru_id' => $request->input('nip_guru'),
+                'mapel_id' => $request->input('mapel_id'),
+                'rombel_id' => $request->input('rombel_id'),
+                'jamke' => $request->input('jamstart').'-'. $request->input('jamend')
+            ]);
+
+            return response()->json(['status' => 'sukses', 'msg' => 'Jadwal diperbarui']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getCode().':'.$e->getMessage() ]);
+        }
     }
 
     /**

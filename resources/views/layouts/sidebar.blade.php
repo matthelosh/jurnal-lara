@@ -90,6 +90,12 @@
                                 <p>Absenku</p>
                             </a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/nilais">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>Entri Nilai</p>
+                            </a>
+                        </li>
                         
                         @if(Session::get('wali') == true)
                         <li>
@@ -102,6 +108,12 @@
                             <a class="nav-link" href="/dashboard/rekap-absen">
                                 <i class="nc-icon nc-chart-pie-36"></i>
                                 <p>Rekap Absen</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/raport">
+                                <i class="nc-icon nc-layers-3"></i>
+                                <p>Rapor</p>
                             </a>
                         </li>
                         

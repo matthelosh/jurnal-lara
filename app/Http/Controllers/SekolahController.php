@@ -143,6 +143,19 @@ class SekolahController extends Controller
         return response()->json(['status' => 'sukses', 'msg' => 'Data lokasi diperbarui.']);
     }
 
+    public function toggleGps(Request $request, $mode)
+    {
+        $gps = ($mode == 'activate') ? 'on' : 'off';
+        $text = ($mode == 'activate') ? 'Diaktifkan' : 'Dinonaktifkan';
+        try {
+            Sekolah::find(1)->update(['gps' => $gps]);
+
+            return response()->json(['status' => 'sukses', 'msg' => 'GPS berhasil '.$text ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getCode().':'.$e->getMEssage() ]);
+        }
+    }
+
     public function updateLogo(Request $request)
     {   
         try

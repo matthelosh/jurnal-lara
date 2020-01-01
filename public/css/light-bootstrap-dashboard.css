@@ -433,7 +433,7 @@ body>.navbar-collapse .nav li .nav-link {
     opacity: .86;
     border-radius: 4px;
     display: block;
-    padding: 10px 15px;
+    padding: 5px 15px;
 }
 
 .sidebar .nav li .nav-link:hover,
@@ -447,7 +447,7 @@ body>.navbar-collapse .nav li .nav-link p {
     margin: 0;
     line-height: 31px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: uppercase;
     display: inline-flex;
 }

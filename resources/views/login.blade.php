@@ -14,6 +14,14 @@
         <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">
         <link href="{{ asset('css/umum.css') }}" rel="stylesheet">
         <body>
+            <div class="custom-control custom-switch" style="position: absolute; top: 20px; right: 20px">
+                {{-- {{ Session::get('gps') }} --}}
+                @php($checked = (Session::get('gps') == 'on') ? 'checked' : '')
+                   
+                    <input type="checkbox" class="custom-control-input" id="gps-switch" {{ $checked }} disabled>
+                     <label for="gps-switch" class="custom-control-label">GPS</label>
+                
+            </div>
             <div class="bg-container">
                 <div class="bg">
                 </div>
@@ -45,7 +53,7 @@
                     @if(Session::get('error'))
                         <div class="alert bg-danger text-white">{{ Session::get('error') }}</div>
                     @endif
-                    {{-- <div class="alert bg-info text-white" id="demo"></div> --}}
+                    <div class="alert bg-info text-white d-none" id="info-login"></div>
                 </div>
                 
             </div>

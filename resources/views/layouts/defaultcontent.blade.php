@@ -85,6 +85,14 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <div class="alert alert-danger info-gps" id="info-gps"></div>
+            </div>
+        </div>
+    </div>
 @elseif(Auth::user()->level == 'staf')
     <div class="row">
         <div class="container">

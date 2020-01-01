@@ -153,7 +153,13 @@
 	line-height: 1.5em;
 }
 
-
+.sidebar .nav li .nav-link p {
+	font-family: "OpenSans"!important;
+}
+.logo a {
+	font-family: "UbuntuCondensed"!important;
+	line-height: 1em!important;
+}
 .progress{
 	position: fixed;
 	top:0;
@@ -204,3 +210,67 @@
 	background: #b1bd59;
 	color: #efefef;
 }*/
+
+input, select {
+	height: 34px!important;
+	border: 1px solid #ccc;
+}
+
+#form-add-siswa .form-group,
+#form-add-siswa label {
+	margin-bottom: 2px!important;
+	padding-top: 0!important;
+	padding-bottom: 0!important;
+}
+/* #form-add-siswa textarea */
+#form-ortu input.form-control,
+#form-add-siswa input.form-control,
+#form-add-siswa select
+ {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	height: 30px;
+}
+
+#jamstart,#jamend {
+	padding-left: 1px!important;
+	padding-right: 1px!important;
+}
+
+/* Raposrt */
+.raport{
+	font-size: 12pt;
+}
+.raport table[border="1"] {
+	border-collapse: collapse;
+}
+.raport table.table-sikap th,
+.raport table.table-k3 th {
+	text-align: center;
+	background: #ccc;
+}
+
+.raport table td {
+	padding: 0 5px;
+}
+
+.raport table.table-sikap td,
+.raport table.table-k3 td {
+	text-align: center;
+}
+
+@media print {
+	@page {
+		width: 21.59cm;
+		height: 27cm;
+		
+	}
+
+	.raport {
+		margin: 1cm 2cm;
+	}
+
+	.raport table[border="1"] {
+		border-collapse:collapse;
+	}
+}

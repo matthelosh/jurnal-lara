@@ -336,4 +336,119 @@ $(document).ready(function(){
 			});
 		}
 	});
+
+
+	// GPS MODE
+	var sekolah;
+	$.ajax({
+		url: '/ajax/getsekolah',
+		type: 'post',
+		headers: headers,
+		dataType: 'json',
+		success: function(res) {
+			// console.log(res);
+			sekolah = res.data;
+			sessionStorage.setItem('gps', sekolah.gps);
+			
+			// setTimeout(function() {
+				if(sessionStorage.getItem('gps') == 'on') {
+					getLocation(res.data);
+				} else {
+					$('#demo').html('Mode GPS tidak aktif. Silahkan langsung masuk.')
+				}
+			// }, 500);
+			// getLocation(res.data)
+			// initialize(res.data);
+		}
+	})
+
+	var x = document.getElementById("info-gps");
+
+		var x = document.getElementById("info-gps");
+		function getLocation(sekolah) {
+			// alert('hi');
+			if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(pos){
+				// alert(pos.coords.latitude+', '+pos.coords.longitude);
+				var distance = distanceBetween(sekolah.lat, sekolah.long, pos.coords.latitude, pos.coords.longitude, "K");
+				// console.log("geo dis: " + distance);
+				// $("#demo").html("<h4>" + Math.round(distance) + "Km</h4>");
+				// alert(distance);
+				if ( distance > 0.5){
+					$('#info-gps').html('Pastikan Anda berada di area sekolah. Saat ini Anda berjarak kurang lebih '+Math.round(distance)+' Km dari sekolah. ;)'+pos.coords.latitude+', '+pos.coords.longitude+' Posisi Sekolah: '+sekolah.lat+', '+sekolah.long);
+				} else {
+					$('#info-gps').html('Silahkan masuk. Anda sudah berada di area sekolah.');
+				}
+			}, showError);
+			} else {
+			var status = document.getElementById("demo");
+			status.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+		function distanceBetween(lat1, lon1, lat2, lon2, unit) {
+
+			var rlat1 = Math.PI * lat1 / 180
+			var rlat2 = Math.PI * lat2 / 180
+			var rlon1 = Math.PI * lon1 / 180
+			var rlon2 = Math.PI * lon2 / 180
+			var theta = lon1 - lon2
+			var rtheta = Math.PI * theta / 180
+			var dist = Math.sin(rlat1) * Math.sin(rlat2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.cos(rtheta);
+			dist = Math.acos(dist)
+			dist = dist * 180 / Math.PI
+			dist = dist * 60 * 1.1515
+			if (unit == "K") {
+			dist = dist * 1.609344
+			}
+			if (unit == "N") {
+			dist = dist * 0.8684
+			}
+			return dist
+			
+		}
+		// show our errors for debuging
+		function showError(error) {
+			var x = document.getElementById("info-gps");
+			switch (error.code) {
+			case error.PERMISSION_DENIED:
+				x.innerHTML = "Mohon aktifkan lokasi untuk browser. :)"
+				break;
+			case error.POSITION_UNAVAILABLE:
+				x.innerHTML = "Location information is unavailable.";
+				break;
+			case error.TIMEOUT:
+				x.innerHTML = "The request to get location timed out.";
+				break;
+			case error.UNKNOWN_ERROR:
+				x.innerHTML = "An unknown error occurred :(";
+				break;
+			}
+		}
+		
+		
+
+		// Raport
+
+		$(document).on('click', '.btn-print-raport', function() {
+			
+			var win = window.open(window.location.origin+'/dashboard/cetak/raport?nisn=10','', '', '');
+			// var body = document.getElementsByClassName('raport');
+			// var page = `
+			// 			<!doctype html>
+			// 				<html><head><title>Raport</title>
+			// 				<link href="${window.location.origin}/css/bootstrap.min.css" rel="stylesheet">
+			// 				<link href="${window.location.origin}/css/umum.css" rel="stylesheet">
+			// 				</head>
+			// 				<body></body>
+			// 				</html>
+
+			// 			`;
+			// win.document.write(page);
+			setTimeout(function(){
+				win.print();
+				win.close();
+			}, 500);
+			
+			// win.close();
+		})
 });
