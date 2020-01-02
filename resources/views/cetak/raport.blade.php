@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Raport {{ $page }}</title>
+    <title>Raport {{ $page }} {{ $data->nama_siswa }}</title>
     <link rel="stylesheet" href="http://{{ $_SERVER['HTTP_HOST'] }}/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="http://{{ $_SERVER['HTTP_HOST'] }}/css/umum.css" type="text/css">
 </head>
-<body>
+<body onload="cetak()" onafterprint="tutup()">
     <div class="container-fluid">
+    @if($page == 'pas')
         <div class="row">
             <div class="raport">
                 <div class="kop-raport">
@@ -31,12 +33,12 @@
                                     <tr>
                                         <td>Nama Sekolah</td>
                                         <td>:</td>
-                                        <td>{{ Session::get('sekolah') }}</td>
+                                        <td>{{ $sekolah->nama_sekolah }}</td>
                                     </tr>
                                     <tr>
                                         <td>Alamat Sekolah</td>
                                         <td>:</td>
-                                        <td style="width: 65%; ">Jl. Raya Sengon No. 293 Dalisodo Kec. Wagir <br>Kab. Malang 65168</td>
+                                        <td style="width: 65%; ">{{ $sekolah->alamat_sekolah }} {{ $sekolah->kelurahan }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,35 +92,37 @@
                 <hr>
                 <br>
                 <h5>B. Kompetensi Pengetahuan dan Keterampilan</h5>
-                @for ($i = 0; $i < 6; $i++)
+                
                     <table border="1" width="100%" class="table-k3">
                         <thead class="thead-inverse">
                             <tr>
-                                <th rowspan="2">No</th>
-                                <th rowspan="2">Mupel</th>
+                                <th>No</th>
+                                <th >Mupel</th>
                                 <th colspan="4">Pengetahuan</th>
                                 <th colspan="4">Keterampilan</th>
                             </tr>
-                                <th>Nilai</th>
-                                <th>75</th>
-                                <th>Predikat</th>
-                                <th>B</th>
-                                <th>Nilai</th>
-                                <th>98</th>
-                                <th>Predikat</th>
-                                <th>A</th>
-                            <tr>
 
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td scope="row">
+                            @for ($i = 0; $i < 6; $i++)
+                                <tr >
+                                    <td rowspan="3">
                                         {{ $i+1 }}
                                     </td>
-                                    <td>
+                                    <td rowspan="3">
                                         Mapel
                                     </td>
+                                    <td style="background: #ccc">Nilai</td>
+                                    <td style="background: #ccc">75</td>
+                                    <td style="background: #ccc">Predikat</td>
+                                    <td style="background: #ccc">B</td>
+                                    <td style="background: #ccc">Nilai</td>
+                                    <td style="background: #ccc">98</td>
+                                    <td style="background: #ccc">Predikat</td>
+                                    <td style="background: #ccc">A</td>
+                                <tr>
+                                <tr>
                                     <td colspan="4">
                                         Deskripsi Pengetahuan
                                     </td>
@@ -126,13 +130,14 @@
                                         Deskripsi Keterampilan
                                     </td>
                                 </tr>
+                            @endfor 
                             </tbody>
                     </table>
                     {{-- <hr>  --}}
-                @endfor 
+                
                 <br>
                 <h5>C. Muatan Lokal</h5>
-                <table border="1" width="100%">
+                <table border="1" width="100%" class="table-mulok">
                     <thead>
                         <tr>
                             <th colspan="2">Muatan Lokal</th>
@@ -161,7 +166,7 @@
                 </table>
                 <br>
                 <h5>D. Ekstrakurikuler</h5>
-                <table border="1">
+                <table border="1" class="table-ekskul">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -187,8 +192,8 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti unde ad minima, sit quas architecto voluptates nam sunt facilis totam natus, quasi, rerum atque vero nostrum iste tempore iure veritatis?
                 </div>
                 <br>
-                <h5>Ketidakhadiran</h5>
-                <table border="1">
+                <h5>F. Ketidakhadiran</h5>
+                <table border="1" class="table-kehadiran">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -214,9 +219,63 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="row">
+                    <div class="col-sm-3 text-center">
+                        Mengetahui <br>
+                        Orang Tua/Wali Murid
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <u>............................................</u>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3  text-center">
+                        {{ $sekolah->kelurahan }}, <span id="tanggal"></span><br>
+                        Wali Kelas {{ $data->rombels->nama_rombel }}
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <u><b>{{ Auth::user()->fullname }}</b></u><br>
+                        NIP. {{ Auth::user()->nip }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4  text-center">
+                        Mengetahui, <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <u><b>{{ $sekolah->kepsek}}</b></u><br>
+                        NIP. {{ $sekolah->nip_kepsek }}
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
             </div>
         </div>
-    </div>
+        
     
+    @elseif($page == 'pts')
+        <h3>Raport PTS</h3>
+    @endif
+    </div>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script>
+        function cetak() {
+            var date = new Date();
+            var bulans = ['Januari', 'Pebruari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'Nopember', 'Desember'];
+            var tanggal = date.getDate()+' '+ bulans[date.getMonth()] + ' ' +date.getFullYear();
+            tgl = document.getElementById('tanggal');
+            tgl.innerHTML = tanggal;
+            window.print();
+        }
+        function tutup() {
+            window.close();
+        }
+    </script>
 </body>
 </html>

@@ -244,6 +244,10 @@ input, select {
 .raport table[border="1"] {
 	border-collapse: collapse;
 }
+
+.raport table.table-mulok th,
+.raport table.table-ekskul th,
+.raport table.table-kehadiran th,
 .raport table.table-sikap th,
 .raport table.table-k3 th {
 	text-align: center;

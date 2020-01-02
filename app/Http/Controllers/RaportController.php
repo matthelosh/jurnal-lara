@@ -17,6 +17,12 @@ class RaportController extends Controller
         //
     }
 
+    public function sekolah()
+    {
+        $sekolah = 'App\Sekolah'::first();
+
+        return $sekolah;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -30,7 +36,8 @@ class RaportController extends Controller
     public function cetak(Request $request)
     {
         $data = 'App\Siswa'::where('nisn', $request->query('nisn'))->with('rombels')->first();
-        return view('cetak.raport', ['page' => 'pas', 'data' => $data]);
+        $sekolah = $this->sekolah();
+        return view('cetak.raport', ['page' => 'pas', 'data' => $data, 'sekolah' => $sekolah]);
     }
 
     /**

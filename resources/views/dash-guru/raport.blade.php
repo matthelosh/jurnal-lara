@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group col-sm-2">
                             <label for="tapel">Semester</label>  
-                            <select name="tapel" id="tapel" class="form-control">
+                            <select name="tapel" id="tapel" class="form-control" style="font-size: 0.9em;">
                                 <option value="0">Pilih Tahun Pelajaran</option>
                                 @php
                                     $th = date('Y');
@@ -40,7 +40,7 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-1">
-                            <label for=""><span style="color:rgba(0,0,0,0);">Cari</span></label>
+                            <label for=""><span style="color:rgba(0,0,0,0);">Cek raport</span></label>
                             <button class="btn btn-danger btn-sm" style="border:none; background: red; color: #efefef;height: 34px;"><i class="fa fa-search" aria-hidden="true" ></i></button>
                         </div>
                         <div class="form-group col-sm-1">

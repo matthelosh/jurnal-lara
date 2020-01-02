@@ -448,10 +448,10 @@ $(document).ready(function(){
 
 				// 			`;
 				// win.document.write(page);
-				setTimeout(function(){
-					win.print();
-					win.close();
-				}, 500);
+				// setTimeout(function(){
+				// 	win.print();
+				// 	win.close();
+				// }, 500);
 			}
 			// win.close();
 		})
