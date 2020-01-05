@@ -1528,7 +1528,7 @@ $(document).ready(function(){
 				}).done(res => {
 					Swal.fire('Info', res.msg, 'info');
 					sessionStorage.setItem('gps', (url == 'activate') ? 'on' : 'off');
-					window.location.reload();
+					// window.location.reload();
 				}).fail(err => {
 					Swal.fire('Error', err.msg, 'error');
 					return false;
@@ -2165,4 +2165,28 @@ $(document).ready(function(){
 			})
 
 	});
+
+	// Cek SMS
+	$(document).on('click', '#btn-cek-sms', function() {
+		$.ajax({
+			url: '/ajax/sms/cek',
+			type: 'post',
+			headers: headers,
+			dataType: 'json',
+			success: function(res) {
+				var datas = '';
+				res.data.forEach((item, index) => [
+					datas += `<tr>
+								<td>${index+1}</td>
+								<td>${item.SenderNumber}</td>
+								<td>${item.TextDecoded}</td>
+								<td>${item.ReceivingDateTime}</td>
+								<td>${item.Processed}</td>
+							</tr>`
+				]);
+
+				$('#table-inbox-sms tbody').html(datas); 
+			}
+		})
+	})
 });

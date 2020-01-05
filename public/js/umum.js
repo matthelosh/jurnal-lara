@@ -232,4 +232,20 @@ $(document).ready(function() {
 	// 			}
 	// 		})
 	// 	 });
+
+	$(document).on('submit','#form-kirim-pesan', function(e) {
+		e.preventDefault();
+
+		var data = $(this).serialize();
+
+		$.ajax({
+			url: '/ajax/sms/kirim', 
+			type: 'post',
+			headers: headers,
+			data: data,
+			success: function(res) {
+				Swal.fire('info', res.msg, 'info');
+			}
+		})
+	})
 });

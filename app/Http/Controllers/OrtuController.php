@@ -27,20 +27,21 @@ class OrtuController extends Controller
         // dd($request->input('nik_aktif'));
         try {
             Ortu::create([
-                'nik_aktif'     => $request->input('nik_aktif'),
-                'email_aktif'     => $request->input('email_aktif'),
+                'nik'     => $request->input('nik_aktif'),
+                'email'     => $request->input('email_aktif'),
+                'hp'        => $request->input('hp_aktif'),
                 'nama_ayah'     => $request->input('nama_ayah'),
                 'job_ayah'     => $request->input('job_ayah'),
-                'hp_ayah'     => $request->input('hp_ayah'),
-                'alamat_ayah'     => $request->input('alamat_ayah'),
                 'nama_ibu'     => $request->input('nama_ibu'),
                 'job_ibu'     => $request->input('job_ibu'),
-                'hp_ibu'     => $request->input('hp_ibu'),
-                'alamat_ibu'     => $request->input('alamat_ibu'),
+                'jl'        => $request->input('jl_ortu'),
+                'desa'     => $request->input('desa_ortu'),
+                'kec'     => $request->input('kec_ortu'),
+                'kab'     => $request->input('kab_ortu'),
+                'prov'     => $request->input('prov_ortu'),
+                
                 'nama_wali'     => $request->input('nama_wali'),
                 'job_wali'     => $request->input('job_wali'),
-                'hp_wali'     => $request->input('hp_wali'),
-                'alamat_wali'     => $request->input('alamat_wali')
                 
             ]);
 
@@ -65,7 +66,7 @@ class OrtuController extends Controller
     {
         $msg = '';
         try {
-            $ortu = Ortu::where('nik_aktif', $nik)->first();
+            $ortu = Ortu::where('nik', $nik)->first();
             $msg = ( $ortu ) ? 'Data Ortu ditemukan.' : 'Data Ortu tidak ditemukan.';
             return response()->json(['status' => 'sukses', 'msg' => $msg, 'data' => $ortu ]);
         } catch(\Exception $e)
@@ -107,21 +108,21 @@ class OrtuController extends Controller
     {
         try {
             Ortu::where('id', $request->input('id_ortu'))->update([
-                'nik_aktif'     => $request->input('nik_aktif'),
-                'email_aktif'     => $request->input('email_aktif'),
+                'nik'     => $request->input('nik_aktif'),
+                'email'     => $request->input('email_aktif'),
+                'hp'        => $request->input('hp_aktif'),
                 'nama_ayah'     => $request->input('nama_ayah'),
                 'job_ayah'     => $request->input('job_ayah'),
-                'hp_ayah'     => $request->input('hp_ayah'),
-                'alamat_ayah'     => $request->input('alamat_ayah'),
                 'nama_ibu'     => $request->input('nama_ibu'),
                 'job_ibu'     => $request->input('job_ibu'),
-                'hp_ibu'     => $request->input('hp_ibu'),
-                'alamat_ibu'     => $request->input('alamat_ibu'),
+                'jl'     => $request->input('jl_ortu'),
+                'desa'     => $request->input('desa_ortu'),
+                'kec'     => $request->input('kec_ortu'),
+                'kab'     => $request->input('kab_ortu'),
+                'prov'     => $request->input('prov_ortu'),
+                
                 'nama_wali'     => $request->input('nama_wali'),
                 'job_wali'     => $request->input('job_wali'),
-                'hp_wali'     => $request->input('hp_wali'),
-                'alamat_wali'     => $request->input('alamat_wali')
-                
             ]);
             return response()->json([ 'status' => 'sukses', 'msg' => 'Ortu diperbarui.' ]);
         } catch (\Exception $e) {

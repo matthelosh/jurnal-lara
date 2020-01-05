@@ -69,7 +69,7 @@
                         <h3>Tidak ada jadwal mengajar :)</h3>
                     </div>
                 @else
-                    <div class="card-deck">
+                    <div class="card-deck card-jadwal">
                         @foreach($jadwals ?? '' as $jadwal)
                             <div class="card {{ ($jadwal->ket == 'jamkos') ? 'bg-danger-gradient' : 'bg-success-gradient' }} " >
                                 <div class="card-body text-white">

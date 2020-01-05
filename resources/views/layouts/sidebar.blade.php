@@ -92,7 +92,7 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/nilais">
-                                <i class="nc-icon nc-notes"></i>
+                                <i class="nc-icon nc-paper-2"></i>
                                 <p>Entri Nilai</p>
                             </a>
                         </li>

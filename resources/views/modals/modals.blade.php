@@ -178,10 +178,15 @@
 								<label for="email_aktif">Email Ortu</label>
 								<input type="text" class="form-control" id="email_aktif" name="email_aktif">
 							</div>
+							<div class="col-sm-4">
+								<label for="hp_aktif">HP Ortu</label>
+								<input type="text" class="form-control" id="hp_aktif" name="hp_aktif">
+							</div>
 						</div>
 						<hr>
 						<div class="row">
 							<div class="col-sm-4">
+								<h5>DATA ORANG TUA</h5>
 								<table>
 									<tr>
 										<td>Nama Ayah</td>
@@ -192,18 +197,6 @@
 										<td><input type="text" class="form-control" id="job_ayah" name="job_ayah"></td>
 									</tr>
 									<tr>
-										<td>Alamat Ayah</td>
-										<td><textarea  class="form-control" id="alamat_ayah" name="alamat_ayah"></textarea></td>
-									</tr>
-									<tr>
-										<td>HP Ayah</td>
-										<td><input type="text" class="form-control" id="hp_ayah" name="hp_ayah"></td>
-									</tr>
-								</table>
-							</div>
-							<div class="col-sm-4">
-								<table>
-									<tr>
 										<td>Nama Ibu</td>
 										<td><input type="text" class="form-control" id="nama_ibu" name="nama_ibu" required></td>
 									</tr>
@@ -211,17 +204,36 @@
 										<td>Pekerjaan ibu</td>
 										<td><input type="text" class="form-control" id="job_ibu" name="job_ibu"></td>
 									</tr>
-									<tr>
-										<td>Alamat ibu</td>
-										<td><textarea  class="form-control" id="alamat_ibu" name="alamat_ibu"></textarea></td>
-									</tr>
-									<tr>
-										<td>HP ibu</td>
-										<td><input type="text" class="form-control" id="hp_ibu" name="hp_ibu"></td>
-									</tr>
 								</table>
 							</div>
 							<div class="col-sm-4">
+								<h5>ALAMAT ORANG TUA</h5>
+								<table>
+									<tr>
+										<td>Jl / Dusun</td>
+										<td><input type="text" class="form-control" id="jl_ortu" name="jl_ortu" required></td>
+									</tr>
+									<tr>
+										<td>Desa / Kelurahan</td>
+										<td><input type="text" class="form-control" id="desa_ortu" name="desa_ortu"></td>
+									</tr>
+									<tr>
+										<td>Kecamatan</td>
+										<td><input type="text" class="form-control" id="kec_ortu" name="kec_ortu"></td>
+									</tr>
+									<tr>
+										<td>Kabupaten / Kota</td>
+										<td><input type="text" class="form-control" id="kab_ortu" name="kab_ortu"></td>
+									</tr>
+									<tr>
+										<td>Propinsi</td>
+										<td><input type="text" class="form-control" id="prov_ortu" name="prov_ortu"></td>
+									</tr>
+									
+								</table>
+							</div>
+							<div class="col-sm-4">
+								<h5>DATA WALI (Jika Ada)</h5>
 								<table>
 									<tr>
 										<td>Nama wali</td>
@@ -231,14 +243,7 @@
 										<td>Pekerjaan wali</td>
 										<td><input type="text" class="form-control" id="job_wali" name="job_wali"></td>
 									</tr>
-									<tr>
-										<td>Alamat wali</td>
-										<td><textarea  class="form-control" id="alamat_wali" name="alamat_wali"></textarea></td>
-									</tr>
-									<tr>
-										<td>HP wali</td>
-										<td><input type="text" class="form-control" id="hp_wali" name="hp_wali"></td>
-									</tr>
+									
 								</table>
 							</div>
 						</div>

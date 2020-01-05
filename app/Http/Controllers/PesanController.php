@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Telegram;
+use Illuminate\Support\Facades\DB;
 
 class PesanController extends Controller
 {
@@ -70,5 +71,28 @@ class PesanController extends Controller
         }
 
         return response()->json(['status' => 'sukses', 'msg' => 'Pesan telah dikirmikan. ;)']);
+    }
+
+    public function sendSMS(Request $request)
+    {
+        try {
+            DB::connection('mysql2')->insert('insert into outbox (Text, DestinationNumber, CreatorID, TextDecoded) values(?,?,?, ?)',['Tes', $request->input('nomor'), 'Program', $request->input('pesan')]); 
+
+            return response()->json(['status' => 'sukses','msg' => 'Pesan Terkirim']);
+        }catch(\Exception $e)
+        {
+            return response()->json(['status' => 'gagal', 'msg' => $e->getCode().':' .$e->getMessage()]);
+        }
+    }
+
+    public function cekSMS(Request $request)
+    {
+        $pesans = DB::connection('mysql2')->select('SELECT * FROM inbox');
+        // dd($pesans);
+        foreach($pesans as $pesan)
+        {
+            DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID,TextDecoded) VALUES(?,?,?)', [ $pesan->SenderNumber, 'Jurnal', 'Pesan Anda telah diterima. Menunggu Proses Selanjutnya']);
+        }
+        return response()->json(['status' => 'sukses', 'data' => $pesans]);
     }
 }

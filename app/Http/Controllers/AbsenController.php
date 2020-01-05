@@ -72,6 +72,8 @@ class AbsenController extends Controller
                     $jt++;
                 }
 
+                
+
                 \App\Absen::create([
                     'absen_id' => $request->input('kode_absen'),
                     'siswa_id' => $nisn,
@@ -99,6 +101,14 @@ class AbsenController extends Controller
             $msg = "Bpk/Ibu ".$request->user()->fullname. "\nHari, Tanggal: ".$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel ."\ntelah memeriksa kehadiran siswa kelas ".$kode[4] .". \nJumlah Siswa: " . count($nisns) . "\nHadir: " . $jh . "\nIjin: ". $ji . "\nSakit: " . $js . "\nAlpa: " . $ja . "\nTelat: " .$jt . "\nJurnal: " . $request->input('jurnal');
 
             $this->sendTelegram($msg);
+
+            // Jika nisn . ket = a, cari ortu, kirim sms
+            if($ket == 'a') {
+                $siswa = 'App\Siswa'::where('nisn', $nisn)->with('ortus')->first();
+                $hp = $siswa->ortus->hp;
+
+                DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID,TextDecoded) VALUES(?,?,?)', [ $hp, 'Presensi Siswa', 'Maaf! Putra Bpk/ibu a.n'. $siswa->nama_siswa.' pada hari ini'.$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel . ', Jam Ke: '.$kode[5].'tidak masuk kelas.']);
+            }
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Absen disimpan. ;)']);
         } catch (\Exception $e) {

@@ -9,10 +9,10 @@
         <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet"> -->
         <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">
-        <link href="{{ asset('css/umum.css') }}" rel="stylesheet">
+        <link href="https://{{$_SERVER['HTTP_HOST']}}/css/app.css" rel="stylesheet">
+        <link href="https://{{$_SERVER['HTTP_HOST']}}/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://{{$_SERVER['HTTP_HOST']}}/select2/css/select2.min.css">
+        <link href="https://{{$_SERVER['HTTP_HOST']}}/css/umum.css" rel="stylesheet">
         <body>
             <div class="custom-control custom-switch" style="position: absolute; top: 20px; right: 20px">
                 {{-- {{ Session::get('gps') }} --}}
@@ -57,13 +57,13 @@
                 </div>
                 
             </div>
-            <script src="{{ asset('js/app.js') }}"></script>
-            <script src="{{ asset('/js/core/jquery.3.2.1.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('/js/core/popper.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('/js/core/bootstrap.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('/js/geo.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('/js/sweetalert.js') }}"></script>
-            <script src="{{ asset('/select2/js/select2.min.js') }}"></script>
-            <script src="{{ asset('/js/umum.js') }}"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}/js/app.js"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/core/popper.min.js" type="text/javascript"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/core/bootstrap.min.js" type="text/javascript"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/geo.min.js" type="text/javascript"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/sweetalert.js"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//select2/js/select2.min.js"></script>
+            <script src="https://{{$_SERVER['HTTP_HOST']}}//js/umum.js"></script>
         </body>
     </html>

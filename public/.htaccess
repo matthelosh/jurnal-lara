@@ -4,6 +4,9 @@
     </IfModule>
 
     RewriteEngine On
+    # Force SSL
+    rewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

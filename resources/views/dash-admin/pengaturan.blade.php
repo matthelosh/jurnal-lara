@@ -75,27 +75,44 @@
 		<div class="d-flex justify-content-around justify-content-center">
 			<div class="card">
 				<div class="card-header">
-					<h4>Data Pemangku Kepentingan</h4>
+					<h4>Cek SMS Masuk</h4>
+					<button class="btn btn-sm" id="btn-cek-sms">Cek SMS</button>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-sm">
+						<table class="table table-sm" id="table-inbox-sms">
 							<thead>
 								<tr>
-									<th>Nama</th>
-									<th>Jabatan</th>
-									<th>ChatID Telegram</th>
+									<th>No</th>
+									<th>No HP Pengirim</th>
+									<th>Pesan</th>
+									<th>Waktu</th>
+									<th>Diproses?</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>Mattsoleh</td>
-									<td>Developer</td>
-									<td>580331755</td>
-								</tr>
+								
 							</tbody>
 						</table>
 					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h4>Kirim SMS</h4>
+				</div>
+				<div class="card-body">
+					<form action="" id="form-kirim-pesan">
+						<div class="form-group">
+							<label for="nomor">Nomor</label>
+							<input type="text" name="nomor" id="nomor" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="pesan">Pesan</label>
+							<input type="text" name="pesan" id="pesan" class="form-control">
+						</div>
+						<button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Kirim</button>
+					</form>
 				</div>
 			</div>
 		</div>

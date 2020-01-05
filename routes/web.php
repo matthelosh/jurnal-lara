@@ -62,7 +62,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/rekap-absen', 'DashController@rekapAbsen')->name('indexrekapwali')->middleware('forGuru');
 	// Route::get('/rekap-absen/siswa/{nisn}/bulan/{bulan}/tahun/{tahun}','DashController@rekapAbsen')->name('detilrekapwali')->middleware('forGuru');
 	Route::get('/raport', 'DashController@indexRaport')->name('indexraportwali')->middleware('forGuru');
-	Route::get('/cetak/raport', 'RaportController@cetak')->name('cetakraport');
+	Route::get('/cetak/raport/{periode}', 'RaportController@cetak')->name('cetakraport');
+	Route::get('/cetak/siswa/biodata', 'SiswaController@cetakBiodata')->name('cetakbiodata');
 	
 
 	// Ka TU
@@ -92,7 +93,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 
 	// Rombel
 	// Route::get('/rombels', 'RombelController@index')->name('indexrombels');
-	Route::get('/rombels', 'RombelController@index')->name('indexrombels');
+	Route::get('/rombels', 'RombelController@index')->name('indexrombels'); 
 	Route::post('/add/rombel', 'RombelController@create')->name('createrombel');
 	Route::put('/update/rombel/{rombel_id}', 'RombelController@update')->name('updaterombel');
 	Route::delete('/delete/rombel/{rombel_id}', 'RombelController@delete')->name('deleterombel');
@@ -174,6 +175,10 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	Route::get('/ortu/get-one/{nik}', 'OrtuController@getOne')->name('getoneortu');
 	Route::post('/ortu/create', 'OrtuController@create')->name('createoneortu');
 	Route::put('/ortu/update', 'OrtuController@update')->name('updateortu');
+
+	// SMS
+	Route::post('/sms/kirim', 'PesanController@sendSMS')->name('sendsms');
+	Route::post('/sms/cek','PesanController@cekSMS')->name('ceksms');
 });
 
 
@@ -191,3 +196,4 @@ Route::group(['prefix' => 'import', 'as' => 'import.'], function() {
 // 	Route::get('/dashboard', 'DashController@indexGuru')->name('dashguru');
 // 	Route::get('/siswa', 'DashController@guruSiswa')->name('siswa');
 // });
+URL::forceScheme('https');

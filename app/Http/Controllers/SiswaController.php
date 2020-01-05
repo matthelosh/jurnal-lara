@@ -40,6 +40,13 @@ class SiswaController extends Controller
         }
     }
 
+    public function cetakBiodata(Request $request)
+    {
+        $siswa = Siswa::where('nisn', $request->query('nisn'))->with('ortus')->first();
+        $sekolah = 'App\Sekolah'::first();
+        return view('cetak.biodata', ['siswa' => $siswa, 'sekolah' => $sekolah]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -203,16 +210,19 @@ class SiswaController extends Controller
 
         $foto = $request->file('img-siswa');
         // dd($request->);
-        $new_name = $request->input('nisn').'.jpg';
+        $new_name = '0';
         try {
-            $foto->move(public_path('img/siswas'),$new_name);
+            if($foto != null) {
+                $foto->move(public_path('img/siswas'),$new_name);
+                $new_name = '/siswas/'.$request->input('nisn').'.jpg';
+            }
             Siswa::find($id_siswa)->update([
                 'nis' => $request->input('nis'),
                 'nisn' => $request->input('nisn'),
-                'foto' => '/siswas/'.$new_name,
+                'foto' => $new_name,
                 'nama_siswa' => $request->input('nama_siswa'),
                 'jk' => $request->input('jk'),
-                'rombel_id' => $request->input('rombel_id'),
+                // 'rombel_id' => $request->input('rombel_id'),
                 'ortu_id' => $request->input('ortu_id')
             ]);
 
@@ -247,7 +257,7 @@ class SiswaController extends Controller
     public function getSiswaku(Request $request)
     {
         $rombel = 'App\Rombel'::where('guru_id', $request->user()->nip)->first();
-        $siswakus = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->get();
+        $siswakus = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->with('rombels', 'ortus')->get();
 
         return FacadesDataTables::of($siswakus)->addIndexColumn()->make(true);
     }

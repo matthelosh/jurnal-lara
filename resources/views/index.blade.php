@@ -58,7 +58,7 @@
 					@include('dash-guru.absenku')
 				@break
 				@case('siswaku')
-					@include('dash-guru.siswaku')
+					@include('dash-admin.siswa')
 				@break
 				@case('rekap_absen')
 					@include('dash-guru.rekap_absen')

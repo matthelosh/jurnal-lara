@@ -33,11 +33,12 @@ class RaportController extends Controller
         //
     }
 
-    public function cetak(Request $request)
+    public function cetak(Request $request, $periode)
     {
+        
         $data = 'App\Siswa'::where('nisn', $request->query('nisn'))->with('rombels')->first();
         $sekolah = $this->sekolah();
-        return view('cetak.raport', ['page' => 'pas', 'data' => $data, 'sekolah' => $sekolah]);
+        return view('cetak.raport', ['page' => $periode, 'data' => $data, 'sekolah' => $sekolah]);
     }
 
     /**
