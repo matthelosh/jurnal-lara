@@ -27,7 +27,7 @@ class DashController extends Controller
         $tanggal = date('d M Y');
         $jam = date('H:i');
 
-        $logabsens = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
+        $logabsens = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date, 'ket'=>'jamkos'])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
         $jadwals = \App\LogAbsen::where(['guru_id' => Auth::user()->nip, 'hari' => $today, 'tanggal' => $date])->with('rombels', 'mapels')->get();
         $logs=[];
         if(Auth::user()->level == 'ks') {
@@ -42,7 +42,15 @@ class DashController extends Controller
 
             foreach($data as $val) {
                 if(isset($key, $val)) {
-                    $logs[$val[$key]][] = ["nip" => $val->guru_id, "nama" => $val->gurus->fullname, "rombel" => $val->rombels->nama_rombel, "mapel" => $val->mapels->nama_mapel, "jamke" => $val->jamke, "ket" => $val->ket];
+                    if(isset($val->gurus->hp)) {
+                        if ($val->gurus->hp[0] == '0') {
+                            $wa = ltrim($val->gurus->hp, 0);
+                            $wa = '62'.$wa;
+                        } else if($val->gurus->hp[0] == '+') {
+                            $wa = ltrim($val->gurus->hp, 0);
+                        }
+                    }
+                    $logs[$val[$key]][] = ["nip" => $val->guru_id, "nama" => $val->gurus->fullname, "rombel" => $val->rombels->nama_rombel, "mapel" => $val->mapels->nama_mapel, "jamke" => $val->jamke, "ket" => $val->ket, "hp" => $wa];
                     // array_push($logs, ['nama' => 'nama']);
                 } else {
                     $logs[""][] = $val;
