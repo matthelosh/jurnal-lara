@@ -63,7 +63,7 @@ $(document).ready(function(){
 	});
 
 	// Table Absenku
-	var tabsenkus = $('#table-absenku')
+	var tabsenkus = $('#table-absenkus')
 		.on('init.dt', function(){
 			$('#progress').removeClass('progress d-flex').addClass('d-none');
 		})
@@ -133,7 +133,10 @@ $(document).ready(function(){
 			{ data: 'alpa', text: 'alpa' },
 			{ data: 'telat', text: 'telat' },
 			{ data: 'jurnal', text: 'jurnal' },
-			{ data: 'ket', text: 'ket'}
+			{ data: null, render:function(data, type, meta, row) {
+				return (data.ket == 'jamkos') ? '<button class="btn btn-danger"><i class="fa fa-exclamation"></i> Jamkos</button>' : '<div class="alert alert-success"><i class="fa fa-thumbs-up"></i> Ok</div>';
+				// return data.ket;
+			}}
 		]
 	})
 	

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\LogAbsen;
+use Ghunti\HighchartsPHP\Highchart;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Telegram;
 use Yajra\DataTables\Facades\DataTables;
-
+use ZKLib\ZKLib;
+use ZKLib\User;
 
 // '340074117','580331755', '318257876', '309322044', '249243957', '253088341', '301586792', /*P. Aziz*/'656236788', /*Pak Dwijo*/ '264390241', /*B. Devi*/ '329815907', /*P. AGung */ '827284422'
 class LogabsenController extends Controller
@@ -18,6 +20,29 @@ class LogabsenController extends Controller
         $this->middleware('auth');
     }
    
+    // Get Fingerprint record
+    public function getFinger(Request $request)
+    {
+        // $chart = new Ghunti\HighchartsPHP\Highchart();
+        // $chart->create();
+
+        $zk = new ZKLib('192.168.1.201');
+        $zk->connect();
+        $zk->disable();
+        print_r($zk->getSerialNumber());
+        echo "<hr>";
+        // $logs = $zk->getAttendance();
+
+        // dd($logs);
+        echo $zk->getIp();
+
+        $zk->enable();
+        $zk->disconnect();
+        // dd($logs);
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *

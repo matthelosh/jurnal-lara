@@ -1,8 +1,13 @@
 <nav class="navbar navbar-expand-lg " color-on-scroll="500">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="text-transform: capitalize;">
-            {{ $page }}
-        </a>
+        <ol class="breadcrumb">
+            {{-- @foreach(Request::segments() as $segment)
+                <li>
+                    <a href="{{ $segment }}">{{ $segment }}</a>
+                </li>
+                <span class="bread-separator">/</span>
+            @endforeach --}}{{ strtoupper($page) }}
+        </ol>
         <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar burger-lines"></span>
         <span class="navbar-toggler-bar burger-lines"></span>
@@ -33,13 +38,12 @@
                         @endif
                         &nbsp;
                         <span class="no-icon" id="user_fullname">{{ Auth::user()->fullname }}</span>
-                        <span class="d-none" id="user_nip">{{Auth::user()->nip}}</span>
+                        {{-- <span class="d-none" id="user_nip">{{Auth::user()->nip}}</span> --}}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">
+                    <a class="nav-link btn-exit" href="/logout">
                         <i class="nc-icon nc-button-power"></i>
-                        &nbsp;
                         <span class="no-icon">Keluar</span>
                     </a>
                 </li>

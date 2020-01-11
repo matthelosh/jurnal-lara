@@ -365,15 +365,16 @@ $(document).ready(function(){
 			// console.log(data);
 			var foto = (data.foto != '0') ? data.foto : '/avatar-siswa-l.png';
 			var ortu = (data.ortu_id != '') ? data.ortu_id : 'Tidak ada data';
+			var ayah = (data.ortus != null) ? data.ortus.nama_ayah : 'Tidak ada data';
     		$('#id_siswa').val(data.id);
     		$('#form-add-siswa .mode-form').val('put');
     		$('#nis').val(data.nis);
     		$('#nisn').val(data.nisn);
     		$('#nama_siswa').val(data.nama_siswa);
     		$('#form-add-siswa #jk_siswa').val(data.jk);
-			$('#rombel_siswa').val(data.rombel_id);
+			$('#rombel_siswa').val(data.rombel_id).append('<option value="'+data.rombel_id+'" selected>'+data.rombels.nama_rombel+'</option>').prop('disabled', 'disabled');
 			$('#form-add-siswa #img-holder').prop('src', '/img'+foto);
-			$('#form-add-siswa #ortu_id').val(ortu);
+			$('#form-add-siswa #ortu_id').val(ayah).data('nik', data.ortu_id);
     		$('.modal-title').html('Perbarui Data <b>['+data.nama_siswa+']</b>');
     		$('.btn-submit-siswa').text('Perbarui');
     		$('#modal-siswa').modal();
@@ -382,13 +383,16 @@ $(document).ready(function(){
 		$(document).on('click', '#ortu_id', function(){
 			
 			// alert($(this).val());
-			if($(this).val() == "TIdak ada data" || $(this).val() == "" || $(this).val() == null){
+			if($(this).val() == "Tidak ada data" || $(this).val() == "" || $(this).val() == null){
 				$('#form_ortu input[name="mode"]').val('create');
 				$('#form-ortu').trigger('reset');
+				// $('#modal-ortu').modal();
+				// alert($(this).val());
+				
 			} else {
 				$('#form_ortu input[name="mode"]').val('update');
 				$.ajax({
-					url: '/ajax/ortu/get-one/'+$(this).val(),
+					url: '/ajax/ortu/get-one/'+$(this).data('nik'),
 					type: 'get',
 					headers: headers,
 					beforeSend: function() {
@@ -396,22 +400,26 @@ $(document).ready(function(){
 					}
 				})
 				.done(res => {
-					$('#form-ortu input[name="id_ortu"]').val(res.data.id);
-					$('#form-ortu input[name="mode"]').val('update');
-					$('#form-ortu #nik_aktif').val(res.data.nik_aktif);
-					$('#form-ortu #email_aktif').val(res.data.email_aktif);
-					$('#form-ortu #nama_ayah').val(res.data.nama_ayah);
-					$('#form-ortu #job_ayah').val(res.data.job_ayah);
-					$('#form-ortu #alamat_ayah').val(res.data.alamat_ayah);
-					$('#form-ortu #hp_ayah').val(res.data.hp_ayah);
-					$('#form-ortu #nama_ibu').val(res.data.nama_ibu);
-					$('#form-ortu #job_ibu').val(res.data.job_ibu);
-					$('#form-ortu #alamat_ibu').val(res.data.alamat_ibu);
-					$('#form-ortu #hp_ibu').val(res.data.hp_ibu);
-					$('#form-ortu #nama_wali').val(res.data.nama_wali);
-					$('#form-ortu #job_wali').val(res.data.job_wali);
-					$('#form-ortu #alamat_wali').val(res.data.alamat_wali);
-					$('#form-ortu #hp_wali').val(res.data.hp_wali);
+					if(res.data != null) {
+						$('#form-ortu input[name="id_ortu"]').val(res.data.id);
+						$('#form-ortu input[name="mode"]').val('update');
+						$('#form-ortu #nik_aktif').val(res.data.nik);
+						$('#form-ortu #email_aktif').val(res.data.email);
+						$('#form-ortu #hp_aktif').val(res.data.hp);
+						$('#form-ortu #nama_ayah').val(res.data.nama_ayah);
+						$('#form-ortu #job_ayah').val(res.data.job_ayah);
+						$('#form-ortu #nama_ibu').val(res.data.nama_ibu);
+						$('#form-ortu #job_ibu').val(res.data.job_ibu);
+						$('#form-ortu #jl_ortu').val(res.data.jl);
+						$('#form-ortu #desa_ortu').val(res.data.desa);
+						$('#form-ortu #kec_ortu').val(res.data.kec);
+						$('#form-ortu #kab_ortu').val(res.data.kab);
+						$('#form-ortu #prov_ortu').val(res.data.prov);
+						$('#form-ortu #nama_wali').val(res.data.nama_wali);
+						$('#form-ortu #job_wali').val(res.data.job_wali);
+						$('#form-ortu #alamat_wali').val(res.data.alamat_wali);
+						
+					}
 					
 				})
 				.fail(err => {
@@ -422,6 +430,12 @@ $(document).ready(function(){
 				})
 			}
 			$('#modal-ortu').modal();
+			
+		});
+
+		$(document).on('hide.bs.modal', '#modal-siswa', function() {
+			$(this).children('form').trigger('reset');
+			$('#form-add-siswa .btn-submit-siswa').text('Simpan');
 		});
 
 		$(document).on('blur', '#nik_aktif', function() {
@@ -440,19 +454,21 @@ $(document).ready(function(){
 				}
 				$('#form-ortu input[name="id_ortu"]').val(res.data.id);
 				$('#form-ortu input[name="mode"]').val('update');
-				$('#form-ortu #email_aktif').val(res.data.email_aktif);
+				$('#form-ortu #nik_aktif').val(res.data.nik);
+				$('#form-ortu #email_aktif').val(res.data.email);
+				$('#form-ortu #hp_aktif').val(res.data.hp);
 				$('#form-ortu #nama_ayah').val(res.data.nama_ayah);
 				$('#form-ortu #job_ayah').val(res.data.job_ayah);
-				$('#form-ortu #alamat_ayah').val(res.data.alamat_ayah);
-				$('#form-ortu #hp_ayah').val(res.data.hp_ayah);
 				$('#form-ortu #nama_ibu').val(res.data.nama_ibu);
 				$('#form-ortu #job_ibu').val(res.data.job_ibu);
-				$('#form-ortu #alamat_ibu').val(res.data.alamat_ibu);
-				$('#form-ortu #hp_ibu').val(res.data.hp_ibu);
+				$('#form-ortu #jl_ortu').val(res.data.jl);
+				$('#form-ortu #desa_ortu').val(res.data.desa);
+				$('#form-ortu #kec_ortu').val(res.data.kec);
+				$('#form-ortu #kab_ortu').val(res.data.kab);
+				$('#form-ortu #prov_ortu').val(res.data.prov);
 				$('#form-ortu #nama_wali').val(res.data.nama_wali);
 				$('#form-ortu #job_wali').val(res.data.job_wali);
 				$('#form-ortu #alamat_wali').val(res.data.alamat_wali);
-				$('#form-ortu #hp_wali').val(res.data.hp_wali);
 			}).fail(err => {
 				Swal.fire('Error', err.msg, 'error');
 			}).always(function(){
@@ -1392,6 +1408,8 @@ $(document).ready(function(){
                 data = tjadwals.row(selected_row).data();
             }
 		}
+
+        console.log(data);
 		var jam = data.jamke.split('-');
 		$('#modal-jadwal .modal-title').text('Perbarui Jadwal');
         $('#form-add-jadwal .mode-form').val('put');
@@ -1399,11 +1417,19 @@ $(document).ready(function(){
 		// $('#form-add-jadwal #hari').val(data.hari);
 		$('#form-add-jadwal #hari').val(data.hari).select2().trigger('change');
 		
-		$('#form-add-jadwal #nip_guru').val(data.gurus.nip).append('<option value="'+data.gurus.nip+'" selected>'+data.gurus.fullname+'</option>')
-		
-        $('#form-add-jadwal #mapel_id').val(data.mapel_id).append('<option values="'+data.mapels.kode_mapel+'" selected>'+data.mapels.nama_mapel+'</option>');
-        // $('#form-add-jadwal #mapel_id').val(data.mapel_id).trigger('change');
-        $('#form-add-jadwal #rombel_id').val(data.rombel_id).append('<option values="'+data.rombel_id+'" selected>'+data.rombels.nama_rombel+'</option>');
+        $('#form-add-jadwal #nip_guru').val(data.gurus.nip).append('<option value="'+data.gurus.nip+'" selected>'+data.gurus.fullname+'</option>')
+		if(data.mapel_id != null) {
+            var preMapel = '<option values="'+data.mapels.kode_mapel+'" selected>'+data.mapels.nama_mapel+'</option>'   
+        } else {
+            var preMapel = '<option values="0">Pilih Mapel</option>';
+        }
+        $('#form-add-jadwal #mapel_id').val(data.mapel_id).append(preMapel);
+        if(data.rombel_id != null) {
+            var preRombel = '<option values="'+data.rombels.kode_rombel+'" selected>'+data.rombels.nama_rombel+'</option>'   
+        } else {
+            var preRombel = '<option values="0">Pilih Mapel</option>';
+        }
+        $('#form-add-jadwal #rombel_id').val(data.rombel_id).append(preRombel);
         // $('#form-add-jadwal #rombel_id').val(data.rombel_id).trigger('change');
         $('#form-add-jadwal #jamstart').val(jam[0]);
         $('#form-add-jadwal #jamend').val(jam[1]);
@@ -1418,6 +1444,7 @@ $(document).ready(function(){
 
 		$('#form-add-jadwal #hari').val(0).trigger('change');
 		$('#form-add-jadwal #mapel_id option[selected]').remove();
+        // $('#form-add-jadwal #mapel_id').val(0).trigger('reset');
 		$('#form-add-jadwal #nip_guru option[selected]').remove();
 		$('#form-add-jadwal #rombel_id option[selected]').remove();
 	})

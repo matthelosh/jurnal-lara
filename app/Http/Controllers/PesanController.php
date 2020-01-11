@@ -76,7 +76,7 @@ class PesanController extends Controller
     public function sendSMS(Request $request)
     {
         try {
-            DB::connection('mysql2')->insert('insert into outbox (Text, DestinationNumber, CreatorID, TextDecoded) values(?,?,?, ?)',['Tes', $request->input('nomor'), 'Program', $request->input('pesan')]); 
+            DB::connection('mysql2')->insert('insert into outbox (DestinationNumber, CreatorID, TextDecoded) values(?,?, ?)',[$request->input('nomor'), 'Program', $request->input('pesan')]); 
 
             return response()->json(['status' => 'sukses','msg' => 'Pesan Terkirim']);
         }catch(\Exception $e)

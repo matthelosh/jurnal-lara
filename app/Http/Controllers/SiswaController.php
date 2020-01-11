@@ -19,7 +19,7 @@ class SiswaController extends Controller
     public function index()
     {
         //
-        return Datatables::of(Siswa::all())->addIndexColumn()->make(true);
+        return Datatables::of(Siswa::with('rombels', 'ortus')->get())->addIndexColumn()->make(true);
     }
 
     public function import(Request $request)

@@ -206,9 +206,4 @@
 
         </div>
     </div>
-
-@else
-    <div class="row">
-        <h3>Guru Piket</h3>
-    </div>
 @endif

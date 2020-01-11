@@ -149,6 +149,16 @@
                             </a>
                         </li>
                     </ul>
+
+                @elseif(Auth::user()->level == 'ks')
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link">
+                                <i class="nc-icon nc-chart-pie-35"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                    </ul>
                 @endif
                 {{-- <ul class="nav">
                     <li class="nav-item  -pro">

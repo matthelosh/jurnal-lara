@@ -117,7 +117,12 @@
 							<div class="row">
 									<div class="form-group col-sm-8">
 										<label for="nama_siswa">Nama Lengkap</label>
-										<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
+										<div class="input-group">
+											<input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa">
+											<div class="input-group-append">
+												<span class="input-group-text"><i class="fa fa-id-card-alt"></i></span>
+											</div>
+										</div>
 									</div>
 									<div class="form-group col-sm-4">
 										<label for="jk">Jenis Kelamin</label>
@@ -131,13 +136,34 @@
 							<div class="row">
 									<div class="form-group col-sm-6">
 										<label for="rombel_siswa">Rombel</label>
-										{{-- <input type="text" class="form-control" id="rombel_siswa" name="rombel_id" placeholder="Rombel"> --}}
-										<select name="rombel_id" id="rombel_siswa" class="selRombel"></select>
+										<div class="input-group">
+											<select name="rombel_id" id="rombel_siswa" class="selRombel" style="width:auto"></select>
+											<div class="input-group-append">
+												<span class="input-group-text"><i class="fa fa-building"></i></span>
+											</div>
+										</div>
 									</div>
 									<div class="form-group col-sm-6">
-										<label for="ortu">Ortu</label>
-										<input type="text" class="form-control" name="ortu_id" id="ortu_id">
+										<label for="hp_siswa">No. HP</label>
+										<div class="input-group">
+											<input type="text" name="hp_siswa" class="form-control">
+											<div class="input-group-append">
+												<span class="input-group-text"><i class="fa fa-phone"></i></span>
+											</div>
+										</div>
 									</div>
+									
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="ortu">Ortu</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="ortu_id" id="ortu_id">
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="fa fa-users"></i></span>
+										</div>
+									</div>
+								</div>
 							</div>
 							<hr>
 							<div class="card-action">

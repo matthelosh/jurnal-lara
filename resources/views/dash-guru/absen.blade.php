@@ -31,16 +31,14 @@
 													<img src="/img/siswas/{{ $siswa->nisn }}.jpg" alt="Avatar" width="50px" height="50px" class="img rounded-circle">
 												@endif
 											</p>
-											{{-- @php($img=($siswa->foto == '0') ? (($siswa->jk == 'l')? '/img/avatar-siswa-l.png' : '/img/avatar-siswa-p.png') : '/img/siswas/'.$siswa->nisn.'.jpg' ) --}}
-											{{-- <div class="avatar-siswa" style="width:50px!important;height:50px!important;background: url('{{ $img }}');background-size: cover; border-radius: 50%;"></div> --}}
 											<p class="mr-3 ml-3">{{ $siswa->nisn }}</p>
 											<p style="font-size: 10pt;">{{ $siswa->nama_siswa }}</p>
 										</div>
 										<div class="d-flex justify-content-between justify-content-md-start mt-md-3">
-											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="h" class="form-control"> H<span >adir</span></label></p>
+											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="h" class="form-control" {{ ($siswa->ket == 'h') ? 'checked' : '' }}> H<span >adir</span></label></p>
 											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="i" class="form-control"> I<span>dzin</span></label></p>
 											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="s" class="form-control"> S<span>akit</span></label></p>
-											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="a" class="form-control"> A<span>lpa</span></label></p>
+											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="a" class="form-control" {{ ($siswa->ket == 'a') ? 'checked' : '' }}> A<span>lpa</span></label></p>
 											<p class="ml-md-5 mr-md-5"><label for="ket"><input type="radio" name="ket-{{ $siswa->nisn }}" id="ket-{{ $siswa->nisn }}" value="t" class="form-control"> T<span>elat</span></label></p>
 										</div>
 
@@ -67,3 +65,4 @@
 		</div>
 	</div>
 </div>
+

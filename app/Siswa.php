@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     //
-    protected $fillable = ['nis', 'nisn', 'nama_siswa', 'jk', 'rombel_id', 'foto','ortu_id'];
+    protected $fillable = ['nis', 'nisn', 'nama_siswa', 'jk', 'rombel_id', 'foto','ortu_id', 'jalan', 'desa', 'kec', 'kab', 'prov', 'hp', 'email'];
 
     public function rombels()
     {
@@ -22,5 +22,10 @@ class Siswa extends Model
     public function ortus()
     {
         return $this->belongsTo('App\Ortu', 'ortu_id', 'nik');
+    }
+
+    public function finger()
+    {
+        return $this->hasMany('App\Finger', 'nis', 'nisn');
     }
 }

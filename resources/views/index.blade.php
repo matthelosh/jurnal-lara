@@ -86,7 +86,15 @@
 			@case('stafs')
 				@include('dash-katu.stafs')
 			@break
-			
+		@endswitch
+	@elseif(Auth::user()->level == 'ks')
+		@switch($page)
+			@case('dashboard')
+				@include('dash-ks.default')
+			@break
+			@case('stafs')
+				@include('dash-katu.stafs')
+			@break
 		@endswitch
 	@endif
 @endsection

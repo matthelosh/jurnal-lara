@@ -18,10 +18,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return Datatables::of(User::where('level', '!=', 'admin'))->addIndexColumn()->addColumn('qr', function($user) {
+        if ($request->input('search[value]') =="" || $request->input('search[value]') == null) {
+            $query = User::where('level', '!=', 'admin')->get();
+        } else {
+            $query = User::where('level', '!=', 'admin')->select('nip','username','fullname')->get();
+        }
+        return Datatables::of($query)->addIndexColumn()->addColumn('qr', function($user) {
             return QrCode::size(50)->generate('/dashboard/users/detail/'.$user->username);
         })->rawColumns(['qr'])->make(true);
     }

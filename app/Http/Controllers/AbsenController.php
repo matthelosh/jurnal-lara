@@ -36,8 +36,41 @@ class AbsenController extends Controller
         $siswas = \App\Siswa::where('rombel_id', $rombel_id)->get();
         $mapel = \App\Mapel::where('kode_mapel', $kode[3])->first();
         $rombel = \App\Rombel::where('kode_rombel', $rombel_id)->first();
+        $nises = DB::table('finger')->where('tanggal', date('Y-m-d'))->where('status', 'Check-in')->get();
+        $datas = [];
+        // ['nis' => 123, 'nisn' => 123, 'nama' => 'xxx', 'ket' => 'h'];
+        // $a = array("a","b","c");
+        // $b = array("a");
+        // dd($nises);
+        $x=0;
+        foreach($siswas as $siswa)
+        {
+            $x++;
+            // if(isset($siswa->nis, $nises)) {
+            //     // $nises[$siswa->nis] = $obj;
+            //     $siswas[$x-1]['ket'] = 'h'; 
+            // } else {
+            //     $siswas[($x-1)]['ket'] = 'a'; 
+            // }
+            foreach($nises as $nis)
+            {
+                if($siswa->nis == $nis->nis) {
+                    $siswas[($x-1)]['ket'] = 'h';
+                } else {
+                    $siswas[($x-1)]['ket'] = 'a';
+                }
+            }
+        }
+
+        // dd($siswas);
 
         return view('index', ['page' => 'absen', 'siswas' => $siswas, 'mapel' => $mapel, 'rombel' => $rombel, 'kode_absen' => $kode_absen]);
+    }
+
+    public function doAbsen1(Request $request, $kode_absen)
+    {
+       $nises = DB::table('finger')->where('tanggal', date('Y-m-d'))->where('status', 'Check-in')->select('nis')->get();
+       dd($nises);
     }
 
     /**
@@ -48,7 +81,8 @@ class AbsenController extends Controller
     public function saveAbsen(Request $request)
     {
         $nisns = $request->input('nisn');
-        
+        $kode = explode('_',$request->input('kode_absen'));
+            $mapel = 'App\Mapel'::where('kode_mapel', $kode[3])->first();
 
         try {
             $jh = 0;
@@ -72,7 +106,16 @@ class AbsenController extends Controller
                     $jt++;
                 }
 
-                
+                // Jika nisn . ket = a, cari ortu, kirim sms
+                if($ket == 'a') {
+                    $siswa = 'App\Siswa'::where('nisn', $nisn)->with('ortus')->first();
+                    if($siswa->ortus != null) {
+                        $hp = $siswa->ortus->hp;
+                        // print_r($siswa->ortus);
+                        // echo '<hr>';
+                        DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID,TextDecoded) VALUES(?,?,?)', [ $hp, 'Presensi Siswa', 'Maaf! Putra Bpk/ibu a.n'. $siswa->nama_siswa.' pada hari ini'.$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel . ', Jam Ke: '.$kode[5].'tidak masuk kelas.']);
+                    }
+                }
 
                 \App\Absen::create([
                     'absen_id' => $request->input('kode_absen'),
@@ -94,23 +137,16 @@ class AbsenController extends Controller
                             'ket' => 'diabsen'
                         ]);
 
-            $kode = explode('_',$request->input('kode_absen'));
-            $mapel = 'App\Mapel'::where('kode_mapel', $kode[3])->first();
+            
 
             // return redirect('/dashboard');
             $msg = "Bpk/Ibu ".$request->user()->fullname. "\nHari, Tanggal: ".$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel ."\ntelah memeriksa kehadiran siswa kelas ".$kode[4] .". \nJumlah Siswa: " . count($nisns) . "\nHadir: " . $jh . "\nIjin: ". $ji . "\nSakit: " . $js . "\nAlpa: " . $ja . "\nTelat: " .$jt . "\nJurnal: " . $request->input('jurnal');
 
             $this->sendTelegram($msg);
 
-            // Jika nisn . ket = a, cari ortu, kirim sms
-            if($ket == 'a') {
-                $siswa = 'App\Siswa'::where('nisn', $nisn)->with('ortus')->first();
-                $hp = $siswa->ortus->hp;
+            
 
-                DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID,TextDecoded) VALUES(?,?,?)', [ $hp, 'Presensi Siswa', 'Maaf! Putra Bpk/ibu a.n'. $siswa->nama_siswa.' pada hari ini'.$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel . ', Jam Ke: '.$kode[5].'tidak masuk kelas.']);
-            }
-
-            return response()->json(['status' => 'sukses', 'msg' => 'Data Absen disimpan. ;)']);
+            // return response()->json(['status' => 'sukses', 'msg' => 'Data Absen disimpan. ;)']);
         } catch (\Exception $e) {
             // return back()->withErrors(['status' => 'error', 'errCode' => $e->getCode(), 'errMsg' => $e->geMessage()]);
             return response()->json(['status' => 'gagal', 'msg' => $e->getCode().': '.$e->getMessage()]);

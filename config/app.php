@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         
+        
 
         /*
          * Package Service Providers...
@@ -179,7 +180,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        // App\Libraries\Zklib\ZKLib::class
 
     ],
 

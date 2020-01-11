@@ -69,7 +69,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	// Ka TU
 	Route::get('/stafs', 'DashController@indexStafs')->name('indexstafs');
 	
-	
+	Route::get('/get-finger', 'LogabsenController@getFinger')->name('getfinger');
 });
 
 

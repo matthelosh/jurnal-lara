@@ -25,18 +25,33 @@ class DashController extends Controller
         $today = $haris[$day];
         $date = date('Y-m-d');
         $tanggal = date('d M Y');
+        $jam = date('H:i');
 
         $logabsens = \App\LogAbsen::where(['hari' => $today, 'tanggal' => $date])->with('gurus', 'mapels', 'rombels')->orderBy('rombel_id', 'asc')->get();
         $jadwals = \App\LogAbsen::where(['guru_id' => Auth::user()->nip, 'hari' => $today, 'tanggal' => $date])->with('rombels', 'mapels')->get();
-
-        $params = ['page' => 'dashboard', 'hari' =>$today, 'jadwals' => (Auth::user()->level == 'admin')?$logabsens:$jadwals];
-
-        // if(Auth::user()->level == 'guru') {
-        //     array_push($params, ['jadwals' => $jadwals]);
-        // }
-
-    	return view('index', ['page' => 'dashboard', 'hari' =>$today, 'jadwals' => $jadwals, 'tanggal' => $tanggal]);
+        $logs=[];
+        if(Auth::user()->level == 'ks') {
+            $logs = $this->group_by("guru_id", $logabsens);
+        }
+        // dd($logs);
+    	return view('index', ['page' => 'dashboard', 'hari' =>$today, 'jadwals' => $jadwals, 'tanggal' => $tanggal, 'logabsens' => $logs]);
     }
+
+    public function group_by($key, $data) {
+        $logs = array();
+
+            foreach($data as $val) {
+                if(isset($key, $val)) {
+                    $logs[$val[$key]][] = ["nip" => $val->guru_id, "nama" => $val->gurus->fullname, "rombel" => $val->rombels->nama_rombel, "mapel" => $val->mapels->nama_mapel, "jamke" => $val->jamke, "ket" => $val->ket];
+                    // array_push($logs, ['nama' => 'nama']);
+                } else {
+                    $logs[""][] = $val;
+                }
+            }
+
+        return $logs;
+    }
+
     public function detilUser(Request $request, $username) {
 	$user = \App\User::where('username', $username)->first();
 	return view('index', ['page' => 'detiluser', 'data' => $user]);

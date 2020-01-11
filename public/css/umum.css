@@ -341,3 +341,63 @@ input, select {
 .no-margin {
 	margin:0;
 }
+
+ol.breadcrumb {
+	margin-top:auto!important;
+	background: none;
+	text-transform: capitalize;
+}
+.bread-separator {
+	color: teal;
+	margin: auto 5px;	
+}
+
+/*Mobile Menu*/
+@media (max-width: 991px) {
+	.nav-mobile-menu {
+		margin-top:0px!important;
+	}
+	ul.nav-mobile-menu li a { 
+		text-align: center;
+		display: block;
+		
+	}
+
+	ul.nav-mobile-menu li a img {
+		height: auto;
+	}
+
+	.nav-mobile-menu .nav-item .nav-link .no-icon {
+		padding-left:0!important;
+	}
+	
+	.nav-mobile-menu .nav-item .btn-exit {
+		background: #ea4f4f;
+	}
+	.nav-mobile-menu .nav-item .btn-exit i {
+		float:none!important;
+	}
+
+	.navbar-toggler {
+		transform: translateY(-13px);
+	}
+
+	.burger-lines {
+		transition: all .35s linear;
+	}
+	.toggled .burger-lines:nth-child(1){
+		transform: rotate(45deg);
+		transition: all .35s linear;
+	}
+	.toggled .burger-lines:nth-child(3){
+		transform: rotate(-45deg);
+		transition: all .35s linear;
+	}
+	.toggled .burger-lines:nth-child(2){
+			transform: translateX(-50%);
+			transition: all .35s linear;
+			width: 150%;
+		}
+
+
+}
