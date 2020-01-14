@@ -164,7 +164,7 @@ $(document).ready(function(){
     		$('#txt-username').val(data.username);
     		$('#txt-password').val(data.password);
 			$('#txt-fullname').val(data.fullname);
-			$('#jk').val(data.jk);
+			$('#jk').val((data.jk == "" ) ? '0': data.jk );
     		$('#txt-email').val(data.email);
     		$('#txt-hp').val(data.hp);
     		$('#txt-level').val(data.level);
@@ -258,6 +258,7 @@ $(document).ready(function(){
 	            { data: 'nisn', name: 'nisn'},
 	            { data: 'nama_siswa', name: 'nama_siswa'},
 	            { data: 'jk', name: 'jk'},
+                { data: 'hp', name: 'hp'},
 	            { data: 'rombel_id', name: 'rombel_id', 'defaultContent': '<span style="color:red">Belum masuk rombel</span>'},
 	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-siswa"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-siswa"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],

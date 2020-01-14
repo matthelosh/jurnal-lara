@@ -64,6 +64,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 	Route::get('/raport', 'DashController@indexRaport')->name('indexraportwali')->middleware('forGuru');
 	Route::get('/cetak/raport/{periode}', 'RaportController@cetak')->name('cetakraport');
 	Route::get('/cetak/siswa/biodata', 'SiswaController@cetakBiodata')->name('cetakbiodata');
+	Route::get('/sms', 'DashController@indexSMS')->name('indexsmswali')->middleware('forGuru');
+
 	
 
 	// Ka TU
@@ -179,6 +181,7 @@ Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
 	// SMS
 	Route::post('/sms/kirim', 'PesanController@sendSMS')->name('sendsms');
 	Route::post('/sms/cek','PesanController@cekSMS')->name('ceksms');
+	Route::post('/sms/bulk-ortu', 'PesanController@bulkOrtu')->name('sendBulkOrtu')->middleware('forGuru');
 });
 
 

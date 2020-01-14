@@ -58,6 +58,14 @@ class SiswaController extends Controller
         $foto = $request->file('img-siswa');
         // dd($request->);
         $new_name = $request->input('nisn').'.jpg';
+        $hp_ortu = $request->input('hp_ortu');
+        if($hp_ortu[0].$hp_ortu[1] != '62'){
+            if($hp_ortu[0] == '+') {
+                $hp_ortu = ltrim($hp_ortu,0);
+            } else if($hp_ortu[0] == '0') {
+                $hp_ortu = '62'+ltrim($hp_ortu,0);
+            }
+        }
         try {
             Siswa::create([
                 'nis' => $request->input('nis'),
@@ -66,7 +74,8 @@ class SiswaController extends Controller
                 'foto' => '/siswas/'.$new_name,
                 'jk' => $request->input('jk'),
                 'rombel_id' => $request->input('rombel_id'),
-                'ortu_id' => $request->input('ortu_id')
+                'ortu_id' => $request->input('ortu_id'),
+                'hp' => $hp_ortu
             ]);
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Siswa: '.$request->input('nama_siswa'). ' tersimpan']);
@@ -211,6 +220,14 @@ class SiswaController extends Controller
         $foto = $request->file('img-siswa');
         // dd($request->);
         $new_name = '0';
+        $hp_ortu = $request->input('hp_ortu');
+        if($hp_ortu[0].$hp_ortu[1] != '62'){
+            if($hp_ortu[0] == '+') {
+                $hp_ortu = ltrim($hp_ortu,0);
+            } else if($hp_ortu[0] == '0') {
+                $hp_ortu = '62'.ltrim($hp_ortu,0);
+            }
+        }
         try {
             if($foto != null) {
                 $foto->move(public_path('img/siswas'),$new_name);
@@ -223,7 +240,8 @@ class SiswaController extends Controller
                 'nama_siswa' => $request->input('nama_siswa'),
                 'jk' => $request->input('jk'),
                 // 'rombel_id' => $request->input('rombel_id'),
-                'ortu_id' => $request->input('ortu_id')
+                'ortu_id' => $request->input('ortu_id'),
+                'hp' => $hp_ortu
             ]);
 
             return response()->json(['status' => 'sukses', 'msg' => 'Data Siswa: '.$request->input('nama_siswa'). 'telah diperbarui.']);

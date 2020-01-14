@@ -54,6 +54,7 @@
 								<th>NISN</th>
 								<th>Nama Siswa</th>
 								<th>JK</th>
+								<th>HP Ortu</th>
 								<th>Rombel</th>
 								<th>Opsi</th>
 							</tr>

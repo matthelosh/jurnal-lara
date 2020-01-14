@@ -38,12 +38,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="txt-fullname" id="txt-fullname" placeholder="Nama Lengkap">
                                 </div>
                             </div>
-							<div class="col-sm-4">
+							<div class="col-sm-5">
 								<select name="jk" id="jk" class="form-control">
 									<option value="0">Jenis Kelamin</option>
 									<option value="l">Laki-laki</option>
@@ -59,7 +59,14 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="txt-level" id="txt-level" placeholder="Level">
+                                    {{-- <input type="text" class="form-control" name="txt-level" id="txt-level" placeholder="Level"> --}}
+                                    <select name="txt-level" id="txt-level" class="form-control">
+                                    	<option value="0">Pilih Level</option>
+                                    	<option value="guru">Guru</option>
+                                    	<option value="staf">Staf TU</option>
+                                    	<option value="katu">Kepala TU</option>
+                                    	<option value="ks">Kepala Sekolah</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -144,9 +151,9 @@
 										</div>
 									</div>
 									<div class="form-group col-sm-6">
-										<label for="hp_siswa">No. HP</label>
+										<label for="hp_ortu">No. HP</label>
 										<div class="input-group">
-											<input type="text" name="hp_siswa" class="form-control">
+											<input type="text" name="hp_ortu" class="form-control" id="hp_ortu">
 											<div class="input-group-append">
 												<span class="input-group-text"><i class="fa fa-phone"></i></span>
 											</div>

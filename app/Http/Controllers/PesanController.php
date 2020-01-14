@@ -75,8 +75,9 @@ class PesanController extends Controller
 
     public function sendSMS(Request $request)
     {
+        // dd($request->all());
         try {
-            DB::connection('mysql2')->insert('insert into outbox (DestinationNumber, CreatorID, TextDecoded) values(?,?, ?)',[$request->input('nomor'), 'Program', $request->input('pesan')]); 
+            DB::connection('mysql2')->insert('insert into outbox (DestinationNumber, CreatorID, TextDecoded) values(?,?, ?)',[$request->input('nomor'), 'Jurnal', $request->input('pesan')]); 
 
             return response()->json(['status' => 'sukses','msg' => 'Pesan Terkirim']);
         }catch(\Exception $e)
@@ -85,6 +86,26 @@ class PesanController extends Controller
         }
     }
 
+    public function bulkOrtu(Request $request)
+    {
+        $rombel = 'App\Rombel'::where('guru_id', $request->user()->nip)->first();
+        $siswas = 'App\Siswa'::where('rombel_id', $rombel->kode_rombel)->get();
+        try {
+            $nohp = [];
+            foreach($siswas as $siswa)
+            {
+                if($siswa->hp != null) {
+                    DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID, TextDecoded) VALUES (?,?,?)', [$siswa->hp, 'Jurnal', $request->input('pesan')]);
+                } else {
+                    array_push($nohp, $siswa);
+                }
+            }
+            $msg = (count($nohp) > 0 ) ? 'Terkirim Semua' : count($nohp).' siswa, beluma ada nomor orang tua.';
+            return response()->json(['status' => 'sukses', 'msg' => $msg]);
+        } catch (\Exception $e) {
+            return response()->json(['status', 'msg' => $e->getCode().': '.$e->getMessage()]);
+        }
+    }
     public function cekSMS(Request $request)
     {
         $pesans = DB::connection('mysql2')->select('SELECT * FROM inbox');

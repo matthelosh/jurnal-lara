@@ -19311,8 +19311,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /run/media/mattsoleh/DATA/lara/jurnal/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /run/media/mattsoleh/DATA/lara/jurnal/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mattsoleh/Projects/lara/jurnal-dev/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mattsoleh/Projects/lara/jurnal-dev/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

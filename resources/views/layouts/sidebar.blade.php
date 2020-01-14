@@ -21,13 +21,13 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/users">
-                                <i class="nc-icon nc-single-02"></i>
+                                <i class="nc-icon nc-single-01"></i>
                                 <p>Pengguna</p>
                             </a>
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/siswa">
-                                <i class="nc-icon nc-satisfied"></i>
+                                <i class="nc-icon nc-multiple-11"></i>
                                 <p>Siswa</p>
                             </a>
                         </li>
@@ -39,7 +39,7 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/mapel">
-                                <i class="nc-icon nc-ruler-pencil"></i>
+                                <i class="nc-icon nc-archive-paper"></i>
                                 <p>Mapel</p>
                             </a>
                         </li>
@@ -64,7 +64,7 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/pengaturan">
-                                <i class="nc-icon nc-preferences-circle-rotate"></i>
+                                <i class="nc-icon nc-preferences"></i>
                                 <p>Pengaturan</p>
                             </a>
                         </li>
@@ -80,7 +80,7 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/profil/{{ Auth::user()->username }}">
-                                <i class="nc-icon nc-badge"></i>
+                                <i class="nc-icon nc-badge-13"></i>
                                 <p>Profil</p>
                             </a>
                         </li>
@@ -92,7 +92,7 @@
                         </li>
                         <li>
                             <a class="nav-link" href="/dashboard/nilais">
-                                <i class="nc-icon nc-paper-2"></i>
+                                <i class="nc-icon nc-pencil"></i>
                                 <p>Entri Nilai</p>
                             </a>
                         </li>
@@ -100,7 +100,7 @@
                         @if(Session::get('wali') == true)
                         <li>
                             <a class="nav-link" href="/dashboard/siswaku">
-                                <i class="nc-icon nc-satisfied"></i>
+                                <i class="nc-icon nc-multiple-11"></i>
                                 <p>Siswa</p>
                             </a>
                         </li>
@@ -114,6 +114,12 @@
                             <a class="nav-link" href="/dashboard/raport">
                                 <i class="nc-icon nc-layers-3"></i>
                                 <p>Rapor</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/dashboard/sms">
+                                <i class="nc-icon nc-chat-46"></i>
+                                <p>SMS Ortu</p>
                             </a>
                         </li>
                         

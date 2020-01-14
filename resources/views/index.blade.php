@@ -66,6 +66,9 @@
 				@case('raport')
 					@include('dash-guru.raport')
 				@break
+				@case('sms-ortu')
+					@include('dash-guru.sms')
+				@break
 			@endswitch
 		@endif
 	@elseif(Auth::user()->level == 'staf')

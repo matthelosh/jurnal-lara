@@ -227,6 +227,9 @@ $(document).ready(function(){
 	            { data: 'nisn', name: 'nisn'},
 	            { data: 'nama_siswa', name: 'nama_siswa'},
 	            { data: 'jk', name: 'jk'},
+	            { data: null, render: function (data, type, meta, row) {
+	            	return (data.hp == null || data.hp == "" || data.hp == undefined) ? "Masukkan No HP di menu edit" : data.hp+' <a href="https://wa.me/'+data.hp+'" style="color: #67cc89;" title="Kirim Whatsapp" target="_blank"><i class="fa fa-whatsapp fa-2x"></i></a> &nbsp; <a href="#" class="send-sms" data-toggle="tooltip" data-nomor="'+data.hp+'"><i class="fa fa-envelope fa-2x"></i></a>';
+	            }},
 	            { data: 'rombel_id', name: 'rombel_id', 'defaultContent': '<span style="color:red">Belum masuk rombel</span>'},
 	            { data: null, name: 'opsi', 'defaultContent': '<button class="btn-c btn-sm btn-warning btn-edit-siswa"><i class="fa fa-edit"></i></button> &nbsp;<button class="btn-c btn-sm btn-danger btn-delete-siswa"><i class="fa fa-trash"></i></button> ', 'targets': -1},
 	        ],
@@ -258,6 +261,75 @@ $(document).ready(function(){
     	$('#form-add-siswa .mode-form').val('post');
     	// alert($('.mode-form').val()); 
     });
+
+    $(document).on('click', '.send-sms', function(e) {
+    	e.preventDefault();
+    	$('.send-sms').tooltip({
+    		html: true,
+    		title:`<form class="form" id="form-sms-wali">
+    				<label>Kirim SMS ke ${$(this).data("nomor")}</label>
+    				<input type="hidden" value="${$(this).data("nomor")}" name="nomor">
+    				<textarea class="form-control" name="pesan"></textarea>
+    				<button type="submit" class="btn btn-primary btn-sm">Kirim</button>
+    			</form>`,
+    		trigger: 'click'
+    	});
+    })
+
+    $('body').on('click', function(e) {
+    	var $parent = $(e.target).parents('.tooltip.show');
+    	var $btnParent = $(e.target).parents('.send-sms');
+    	// console.log($btnParent);
+    	if($parent.length == 0 && $btnParent.length == 0) {
+    		// $btnParent.tooltip(smsTooltipOpts);
+    		$('.tooltip').tooltip('hide');
+    	} 
+    })
+
+    // Kirim SMS Per Siswa
+    $(document).on('submit', '#form-sms-wali', function(e) {
+    	e.preventDefault();
+    	var data = $(this).serialize();
+    	$.ajax({
+    		url: '/ajax/sms/kirim',
+    		type: 'post',
+    		headers: headers,
+    		data: data,
+    		beforeSend: function(){
+    			$('#progress').addClass('progress d-flex').removeClass('d-none');
+    		}
+    	}).done(res => {
+    		Swal.fire('Info', res.msg, 'info');
+    	}).fail(err => {
+    		Swal.fire('Error', err.msg, 'error');
+    	}).always(function(){
+    		$('#progress').removeClass('progress d-flex').addClass('d-none');
+    	})
+    })
+
+    // Kirim ke semua ortu
+    $(document).on('submit', '#form-sms-bulk-ortu', function(e) {
+    	e.preventDefault();
+    	var data = $(this).serialize();
+    	$.ajax({
+    		url: '/ajax/sms/bulk-ortu',
+    		type: 'post', 
+    		data: data,
+    		headers: headers,
+    		beforeSend: function(){
+    			$('#progress').addClass('d-flex progress').removeClass('d-none');
+    		}
+    	})
+    	.done(res => {
+    		Swal.fire('Info', res.msg, 'info');
+    	})
+    	.fail(err=> {
+    		Swal.fire('Error', err.msg, 'error');
+    	})
+    	.always(function(){
+    		$('#progress').removeClass('d-flex progress').addClass('d-none');
+    	})
+    })
 
     $(document).on('submit', '#form-add-siswa', function(e) {
     	e.preventDefault();

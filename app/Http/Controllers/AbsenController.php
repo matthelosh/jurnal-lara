@@ -110,7 +110,7 @@ class AbsenController extends Controller
                 if($ket == 'a') {
                     $siswa = 'App\Siswa'::where('nisn', $nisn)->with('ortus')->first();
                     if($siswa->ortus != null) {
-                        $hp = $siswa->ortus->hp;
+                        $hp = $siswa->hp;
                         // print_r($siswa->ortus);
                         // echo '<hr>';
                         DB::connection('mysql2')->insert('INSERT INTO outbox (DestinationNumber, CreatorID,TextDecoded) VALUES(?,?,?)', [ $hp, 'Presensi Siswa', 'Maaf! Putra Bpk/ibu a.n'. $siswa->nama_siswa.' pada hari ini'.$this->hari().", ".date('d M y H:i:s'). "\nMapel: ". $mapel->nama_mapel . ', Jam Ke: '.$kode[5].'tidak masuk kelas.']);

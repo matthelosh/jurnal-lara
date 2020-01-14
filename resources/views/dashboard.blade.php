@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/select2/css/select2-bootstrap.min.css') }}">
     <link href="{{ asset('/css/light-bootstrap-dashboard.css?v=2.0.0 ') }}" rel="stylesheet" />
+    <link href="{{ asset('/nc-icon-free/css/style.css') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('/css/utama.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/umum.css') }}" rel="stylesheet" />

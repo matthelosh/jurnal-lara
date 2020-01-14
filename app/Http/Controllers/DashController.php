@@ -173,6 +173,11 @@ class DashController extends Controller
     {
         return view('index', ['page' => 'raport']);
     }
+
+    public function indexSMS()
+    {
+        return view('index', ['page' => 'sms-ortu']);
+    }
 // End Guru
 // Ka Tu
     public function indexStafs(Request $request)
