@@ -33,7 +33,7 @@ class SiswaController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             // dd($e->getCode());
             if ($e->getCode() == '23000') {
-                return back()->with(['status' => 'gagal', 'msg' => 'Mohon Dicek lagi. Ada siswa dengan nis/nisn yang sama sudah ada dalam basis data.']);
+                return back()->with(['status' => 'gagal', 'msg' => $e->getMessage()]);
             } else {
                 return back()->with(['status' => 'gagal', 'msg' => $e->getCode().' : '.$e->getMessage()]);
             }
@@ -221,11 +221,13 @@ class SiswaController extends Controller
         // dd($request->);
         $new_name = '0';
         $hp_ortu = $request->input('hp_ortu');
-        if($hp_ortu[0].$hp_ortu[1] != '62'){
-            if($hp_ortu[0] == '+') {
-                $hp_ortu = ltrim($hp_ortu,0);
-            } else if($hp_ortu[0] == '0') {
-                $hp_ortu = '62'.ltrim($hp_ortu,0);
+        if($request->input('hp_ortu')) {
+            if($hp_ortu[0].$hp_ortu[1] != '62'){
+                if($hp_ortu[0] == '+') {
+                    $hp_ortu = ltrim($hp_ortu,0);
+                } else if($hp_ortu[0] == '0') {
+                    $hp_ortu = '62'.ltrim($hp_ortu,0);
+                }
             }
         }
         try {

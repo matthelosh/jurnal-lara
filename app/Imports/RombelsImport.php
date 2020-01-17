@@ -19,7 +19,8 @@ class RombelsImport implements ToModel, WithHeadingRow
             //
             'kode_rombel' => $row['kode_rombel'],
             'nama_rombel' => $row['nama_rombel'],
-            'guru_id'     => $row['guru_id']
+            'guru_id'     => $row['guru_id'],
+            'tingkat' => $row['tingkat']
         ]);
     }
 }

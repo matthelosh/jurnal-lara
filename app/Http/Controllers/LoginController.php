@@ -12,6 +12,8 @@ class LoginController extends Controller
     {
     	$credentials = $request->only('username', 'password');
 
+      
+
     	if(Auth::attempt($credentials))
     	{
             $wali = \App\Rombel::where('guru_id', Auth::user()->nip)->first();

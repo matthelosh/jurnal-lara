@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'fullname', 'jk', 'hp', 'nip', 'level', 'jk', 'role'
+        'username', 'email', 'password', 'api_token', 'fullname', 'jk', 'hp', 'nip', 'level', 'jk', 'role'
     ];
 
     /**
@@ -59,5 +59,14 @@ class User extends Authenticatable
     public function logabsens()
     {
         $this->hasMany('App\LogAbsen', 'guru_id', 'nip');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

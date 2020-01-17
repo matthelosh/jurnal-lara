@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rombel extends Model
 {
     //
-    protected $fillable = ['kode_rombel', 'nama_rombel', 'guru_id'];
+    protected $fillable = ['kode_rombel', 'nama_rombel', 'guru_id', 'tingkat'];
 
     public function gurus()
     {

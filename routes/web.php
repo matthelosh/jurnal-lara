@@ -29,7 +29,7 @@ Route::get('/logout', function() {
 // 	Route::post('/do', 'AbsenController@saveAbsen')->name('saveabsen')->middleware('forGuru');
 // });
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'auth'], function() {
 	Route::get('/', 'DashController@index')->name('dashboardindex');
 
 	// Dashboard Admin
@@ -75,13 +75,13 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 });
 
 
-Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
+Route::group(['prefix' => 'ajax', 'as' => 'ajax.', 'middleware' => 'auth'], function() {
 	// Umum
 	Route::post('/getsekolah', 'SekolahController@show')->name('datasekolah');
 	Route::put('/update-lokasi-sekolah', 'SekolahController@updateLokasi')->name('updatelokasi');
 
 
-	Route::get('/users', 'UserController@index')->name('indexusers');
+	Route::get('/users', 'UserController@index')->name('indexusers')->middleware('auth');
 	Route::post('/add/user', 'UserController@create')->name('adduser');
 	Route::delete('/delete/user/{nip}', 'UserController@destroy')->name('destroyuser');
 	Route::put('/update/user/{id}', 'UserController@update')->name('updateuser');

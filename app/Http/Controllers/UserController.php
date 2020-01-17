@@ -10,9 +10,21 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    public function userIndexApi(Request $request)
+    {
+        $users = User::all();
+        return response()->json(['status' => 'sukses', 'data' => $users]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -79,6 +91,7 @@ class UserController extends Controller
                 'nip' => $request->input('txt-nip'),
                 'username' => $request->input('txt-username'),
                 'password' => Hash::make($request->input('txt-password')),
+                'api_token' => Str::random(60),
                 'fullname' => $request->input('txt-fullname'),
                 'jk'       => $request->input('jk'),
                 'email'    => $request->input('txt-email'),

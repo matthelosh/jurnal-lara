@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Middleware\JwtMiddelware;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => '/', 'as' => 'api.', 'middleware' => 'TokenMiddleware'], function(){
+	Route::get('/', function(){
+		return response()->json(['status' => 'sukses', 'msg' => 'Root Api']);
+	});
+
+	Route::get('/siswas', 'Api\SiswaController@index');
 });
